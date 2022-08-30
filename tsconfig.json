@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "allowJs": true
+  },
+  // 컴파일에 포함되지 않는것
+  "exclude": ["node_modules"],
+  // 컴파일에 포함하는 것
+  "include": ["index.ts"],
+  "compileOnSave": true
+}

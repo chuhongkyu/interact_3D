@@ -3,7 +3,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
-import { Cat } from "./cat";
+import { Cat } from "./Cat";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
