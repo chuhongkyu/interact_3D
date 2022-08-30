@@ -1,7 +1,17 @@
-import { AnimationMixer } from "three";
+import { AnimationMixer, THREE } from "three";
+
+interface Info {
+  scene: THREE.Scene;
+  meshes: THREE.Mesh;
+  gltfLoader: THREE.GLTFLoader;
+  modelSrc: string;
+}
 
 export class Player {
-  constructor(info) {
+  moving: Boolean;
+  actions: [];
+
+  constructor(info: Info) {
     this.moving = false;
     info.gltfLoader.load(info.modelSrc, (glb) => {
       glb.scene.traverse((child) => {
@@ -15,6 +25,7 @@ export class Player {
       this.modelMesh.name = "ilbuni";
       info.scene.add(this.modelMesh);
       info.meshes.push(this.modelMesh);
+      console.log(this.modelMesh);
 
       this.actions = [];
 
