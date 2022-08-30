@@ -3,7 +3,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
-import { Mario } from "./Mario";
+import { Cat } from "./cat";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -106,18 +106,18 @@ spotMesh.rotation.x = -Math.PI / 2;
 spotMesh.receiveShadow = true;
 scene.add(spotMesh);
 
-const treePMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(3, 3),
+const catSpot = new THREE.Mesh(
+  new THREE.CircleGeometry(1.5, 30),
   new THREE.MeshStandardMaterial({
     color: "blue",
     transparent: true,
     opacity: 0.5,
   })
 );
-treePMesh.position.set(-5, 0.005, 5);
-treePMesh.rotation.x = -Math.PI / 2;
-treePMesh.receiveShadow = true;
-scene.add(treePMesh);
+catSpot.position.set(-5, 0.005, 5);
+catSpot.rotation.x = -Math.PI / 2;
+catSpot.receiveShadow = true;
+scene.add(catSpot);
 
 const gltfLoader = new GLTFLoader();
 
@@ -130,10 +130,10 @@ const house = new House({
   z: 2,
 });
 
-const bluehouse = new House({
+const cat = new Cat({
   gltfLoader,
   scene,
-  modelSrc: "/models/house.glb",
+  modelSrc: "/models/cat.glb",
   x: -5,
   y: -1.3,
   z: 2,
@@ -145,15 +145,6 @@ const player = new Player({
   gltfLoader,
   modelSrc: "/models/ilbuni.glb",
 });
-
-const mario = new Mario({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "/models/mario.glb",
-});
-
-// mario.actions.play();
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -201,38 +192,38 @@ function draw() {
       }
       //블루 하우스
       if (
-        Math.abs(treePMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(treePMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(catSpot.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(catSpot.position.z - player.modelMesh.position.z) < 1.5
       ) {
-        if (!bluehouse.visible) {
+        if (!cat.visible) {
           console.log("나와");
-          bluehouse.visible = true;
-          treePMesh.material.color.set("skyblue");
-          gsap.to(bluehouse.modelMesh.position, {
+          cat.visible = true;
+          catSpot.material.color.set("skyblue");
+          gsap.to(cat.modelMesh.position, {
             //나타 날때
-            duration: 2.5,
-            y: 1,
+            duration: 0.5,
+            y: 0.7,
             ease: "Bounce.easeOut",
           });
           // 카메라 포지션 변경
           gsap.to(camera.position, {
-            duration: 2,
+            duration: 1,
             y: 1,
           });
         }
-      } else if (bluehouse.visible) {
+      } else if (cat.visible) {
         console.log("들어가");
-        bluehouse.visible = false;
-        treePMesh.material.color.set("blue");
-        gsap.to(bluehouse.modelMesh.position, {
+        cat.visible = false;
+        catSpot.material.color.set("blue");
+        gsap.to(cat.modelMesh.position, {
           //사라질 때
-          duration: 2.5,
+          duration: 1,
           y: -1.3,
         });
         // 카메라 포지션 변경
         gsap.to(camera.position, {
           duration: 1,
-          y: 5,
+          y: 3,
         });
       }
 
