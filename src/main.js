@@ -4,6 +4,7 @@ import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
 import { Cat } from "./cat";
+import { lifeGroup } from "./lifeGroup";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -347,3 +348,4 @@ canvas.addEventListener("touchmove", (e) => {
 });
 
 draw();
+lifeGroup();
