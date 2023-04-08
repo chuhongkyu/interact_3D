@@ -4,6 +4,7 @@ import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
 import { Hole } from "./Hole";
+import { makeUI } from "./UI";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -145,6 +146,21 @@ const player = new Player({
   gltfLoader,
   modelSrc: "/models/mario.glb",
 });
+
+makeUI(()=>{
+  player.actions[2].play();
+  let jump = gsap.to(player.modelMesh.position, {
+    duration: 0.2,
+    delay:0.5,
+    y: 1,
+    ease: "easeOut",
+  })
+  
+  setTimeout(()=>{
+    jump.reverse();
+    player.actions[2].stop();
+  }, 1100)
+})
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
