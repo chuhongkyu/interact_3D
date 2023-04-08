@@ -3,11 +3,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
-import { Mario } from "./Mario";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
-const floorTexture = textureLoader.load("/images/grid.png");
+const floorTexture = textureLoader.load("/images/bg.png");
 floorTexture.wrapS = THREE.RepeatWrapping;
 floorTexture.wrapT = THREE.RepeatWrapping;
 floorTexture.repeat.x = 10;
@@ -143,17 +142,8 @@ const player = new Player({
   scene,
   meshes,
   gltfLoader,
-  modelSrc: "/models/ilbuni.glb",
-});
-
-const mario = new Mario({
-  scene,
-  meshes,
-  gltfLoader,
   modelSrc: "/models/mario.glb",
 });
-
-// mario.actions.play();
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -181,7 +171,7 @@ function draw() {
       // 걸어가는 상태
       angle = Math.atan2(
         destinationPoint.z - player.modelMesh.position.z,
-        destinationPoint.x - player.modelMesh.position.x
+        destinationPoint.x - player.modelMesh.position.x,
       );
       player.modelMesh.position.x += Math.cos(angle) * 0.05;
       player.modelMesh.position.z += Math.sin(angle) * 0.05;
@@ -197,7 +187,6 @@ function draw() {
         Math.abs(destinationPoint.z - player.modelMesh.position.z) < 0.03
       ) {
         player.moving = false;
-        console.log("멈춤");
       }
       //블루 하우스
       if (
@@ -221,7 +210,6 @@ function draw() {
           });
         }
       } else if (bluehouse.visible) {
-        console.log("들어가");
         bluehouse.visible = false;
         treePMesh.material.color.set("blue");
         gsap.to(bluehouse.modelMesh.position, {
@@ -256,7 +244,6 @@ function draw() {
           });
         }
       } else if (house.visible) {
-        console.log("들어가");
         house.visible = false;
         spotMesh.material.color.set("yellow");
         gsap.to(house.modelMesh.position, {
