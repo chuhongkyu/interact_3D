@@ -3,6 +3,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import { House } from "./House";
 import gsap from "gsap";
+import { Hole } from "./Hole";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -82,9 +83,9 @@ meshes.push(floorMesh);
 const pointerMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(0.7, 0.7),
   new THREE.MeshBasicMaterial({
-    color: "crimson",
+    color: "black",
     transparent: true,
-    opacity: 0.5,
+    opacity: 0.2,
   })
 );
 pointerMesh.rotation.x = -Math.PI / 2;
@@ -129,13 +130,13 @@ const house = new House({
   z: 2,
 });
 
-const bluehouse = new House({
+const greenHole = new Hole({
   gltfLoader,
   scene,
-  modelSrc: "/models/house.glb",
-  x: -5,
-  y: -1.3,
-  z: 2,
+  modelSrc: "/models/hole.glb",
+  x: -9.5,
+  y: -1.8,
+  z: 8.5,
 });
 
 const player = new Player({
@@ -188,34 +189,35 @@ function draw() {
       ) {
         player.moving = false;
       }
-      //블루 하우스
+
+      // 그린 홀
       if (
         Math.abs(treePMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(treePMesh.position.z - player.modelMesh.position.z) < 1.5
-      ) {
-        if (!bluehouse.visible) {
-          console.log("나와");
-          bluehouse.visible = true;
+      ){
+        if (!greenHole.visible) {
+          greenHole.visible = true;
           treePMesh.material.color.set("skyblue");
-          gsap.to(bluehouse.modelMesh.position, {
+          gsap.to(greenHole.modelMesh.position, {
             //나타 날때
-            duration: 2.5,
-            y: 1,
-            ease: "Bounce.easeOut",
+            duration: 1,
+            y: 0,
+            ease: "easeOut",
+            // ease: "Bounce.easeOut",
           });
           // 카메라 포지션 변경
           gsap.to(camera.position, {
-            duration: 2,
+            duration: 1,
             y: 1,
           });
         }
-      } else if (bluehouse.visible) {
-        bluehouse.visible = false;
+      } else if (greenHole.visible) {
+        greenHole.visible = false;
         treePMesh.material.color.set("blue");
-        gsap.to(bluehouse.modelMesh.position, {
+        gsap.to(greenHole.modelMesh.position, {
           //사라질 때
-          duration: 2.5,
-          y: -1.3,
+          duration: 1,
+          y: -1.8,
         });
         // 카메라 포지션 변경
         gsap.to(camera.position, {
@@ -230,7 +232,6 @@ function draw() {
         Math.abs(spotMesh.position.z - player.modelMesh.position.z) < 1.5
       ) {
         if (!house.visible) {
-          console.log("나와");
           house.visible = true;
           spotMesh.material.color.set("seagreen");
           gsap.to(house.modelMesh.position, {
