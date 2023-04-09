@@ -3,6 +3,7 @@ import { AnimationMixer } from "three";
 export class Player {
   constructor(info) {
     this.moving = false;
+    this.lives = 3; // 추가
 
     info.gltfLoader.load(info.modelSrc, (glb) => {
       glb.scene.traverse((child) => {
