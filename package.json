@@ -1,12 +1,12 @@
 {
-  "name": "threejs-study",
+  "name": "interact_3D",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress",
     "start": "webpack serve --progress",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
