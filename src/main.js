@@ -5,6 +5,7 @@ import { House } from "./House";
 import gsap from "gsap";
 import { Hole } from "./Hole";
 import { makeUI } from "./UI";
+import { Coin } from "./Coin";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -138,6 +139,15 @@ const greenHole = new Hole({
   x: -9.5,
   y: -1.8,
   z: 8.5,
+});
+
+const coin = new Coin({
+  gltfLoader,
+  scene,
+  modelSrc: "/models/coin.glb",
+  x: 0,
+  y: 1.2,
+  z: 0,
 });
 
 const player = new Player({
