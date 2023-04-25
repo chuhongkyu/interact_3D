@@ -1,0 +1,29 @@
+body {
+	overflow: hidden;
+	margin: 0;
+}
+#three-canvas {
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+#container_ui{
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.__icon{
+	font-size: 15px;
+	color: black;
+	background: bisque;
+	width: fit-content;
+	padding: 0px 20px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -126,7 +126,7 @@ const gltfLoader = new GLTFLoader();
 const house = new House({
   gltfLoader,
   scene,
-  modelSrc: "/models/house.glb",
+  modelSrc: "./models/house.glb",
   x: 5,
   y: -1.3,
   z: 2,
@@ -135,7 +135,7 @@ const house = new House({
 const greenHole = new Hole({
   gltfLoader,
   scene,
-  modelSrc: "/models/hole.glb",
+  modelSrc: "./models/hole.glb",
   x: -9.5,
   y: -1.8,
   z: 8.5,
@@ -144,7 +144,7 @@ const greenHole = new Hole({
 const coin = new Coin({
   gltfLoader,
   scene,
-  modelSrc: "/models/coin.glb",
+  modelSrc: "./models/coin.glb",
   x: 0,
   y: 1.2,
   z: 0,
@@ -154,7 +154,7 @@ const player = new Player({
   scene,
   meshes,
   gltfLoader,
-  modelSrc: "/models/mario.glb",
+  modelSrc: "./models/mario.glb",
 });
 
 makeUI(()=>{
