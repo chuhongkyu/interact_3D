@@ -9,7 +9,7 @@ import { Coin } from "./Coin";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
-const floorTexture = textureLoader.load("/images/bg.png");
+const floorTexture = textureLoader.load("./images/bg.png");
 floorTexture.wrapS = THREE.RepeatWrapping;
 floorTexture.wrapT = THREE.RepeatWrapping;
 floorTexture.repeat.x = 10;
