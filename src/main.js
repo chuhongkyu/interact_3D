@@ -1,11 +1,11 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
-import { House } from "./House";
 import gsap from "gsap";
 import { Hole } from "./Hole";
 import { makeUI } from "./UI";
 import { Coin } from "./Coin";
+import { Box } from "./Box";
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -123,10 +123,10 @@ scene.add(treePMesh);
 
 const gltfLoader = new GLTFLoader();
 
-const house = new House({
+const box = new Box({
   gltfLoader,
   scene,
-  modelSrc: "./models/house.glb",
+  modelSrc: "./models/box.glb",
   x: 5,
   y: -1.3,
   z: 2,
@@ -257,10 +257,10 @@ function draw() {
         Math.abs(spotMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(spotMesh.position.z - player.modelMesh.position.z) < 1.5
       ) {
-        if (!house.visible) {
-          house.visible = true;
+        if (!box.visible) {
+          box.visible = true;
           spotMesh.material.color.set("seagreen");
-          gsap.to(house.modelMesh.position, {
+          gsap.to(box.modelMesh.position, {
             duration: 1,
             y: 1,
             ease: "Bounce.easeOut",
@@ -270,10 +270,10 @@ function draw() {
             y: 3,
           });
         }
-      } else if (house.visible) {
-        house.visible = false;
+      } else if (box.visible) {
+        box.visible = false;
         spotMesh.material.color.set("yellow");
-        gsap.to(house.modelMesh.position, {
+        gsap.to(box.modelMesh.position, {
           duration: 0.5,
           y: -1.3,
         });
