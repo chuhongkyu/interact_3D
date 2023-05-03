@@ -6,6 +6,18 @@ import { Hole } from "./Hole";
 import { makeUI } from "./UI";
 import { Coin } from "./Coin";
 import { Box } from "./Box";
+import { Enemy } from "./Enemy";
+
+let LIFES = 3;
+
+const lifes = document.getElementById('container_ui_top')
+const life_number = lifes.querySelectorAll('span');
+
+function updateLifes() {
+  for (let i = life_number.length - 1; i >= LIFES; i--) {
+    lifes.removeChild(life_number[i]);
+  }
+}
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -121,6 +133,21 @@ treePMesh.rotation.x = -Math.PI / 2;
 treePMesh.receiveShadow = true;
 scene.add(treePMesh);
 
+const enemyMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(2, 2),
+  new THREE.MeshStandardMaterial({
+    color: "blue",
+    transparent: true,
+    opacity: 0.5,
+  })
+);
+enemyMesh.position.set(0, 0.005, 5);
+enemyMesh.rotation.x = -Math.PI / 2;
+enemyMesh.receiveShadow = true;
+scene.add(enemyMesh);
+
+
+
 const gltfLoader = new GLTFLoader();
 
 const box = new Box({
@@ -155,6 +182,16 @@ const player = new Player({
   meshes,
   gltfLoader,
   modelSrc: "./models/mario.glb",
+});
+
+const enemy = new Enemy({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/turttle.glb",
+  x: 0,
+  y: 0.6,
+  z: 5.4,
 });
 
 makeUI(()=>{
@@ -234,7 +271,7 @@ function draw() {
           // 카메라 포지션 변경
           gsap.to(camera.position, {
             duration: 1,
-            y: 1,
+            y: 3,
           });
         }
       } else if (greenHole.visible) {
@@ -252,7 +289,24 @@ function draw() {
         });
       }
 
-      //레드 하우스
+      if (
+        Math.abs(enemyMesh.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(enemyMesh.position.z - player.modelMesh.position.z) < 1.5
+      ){
+        if (!enemy.visible) {
+          enemy.visible = true;
+          gsap.to(enemy.modelMesh.position, {
+            //나타 날때
+            duration: 3,
+            z: 15,
+            ease: "easeOut",
+            // ease: "Bounce.easeOut",
+          });
+        }
+        
+      }
+
+      //box
       if (
         Math.abs(spotMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(spotMesh.position.z - player.modelMesh.position.z) < 1.5
