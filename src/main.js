@@ -108,7 +108,7 @@ pointerMesh.receiveShadow = true;
 scene.add(pointerMesh);
 
 const spotMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(3, 3),
+  new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
     color: "yellow",
     transparent: true,
@@ -121,7 +121,7 @@ spotMesh.receiveShadow = true;
 scene.add(spotMesh);
 
 const treePMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(3, 3),
+  new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
     color: "blue",
     transparent: true,
@@ -136,9 +136,8 @@ scene.add(treePMesh);
 const enemyMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
-    color: "blue",
     transparent: true,
-    opacity: 0.5,
+    opacity: 0.1,
   })
 );
 enemyMesh.position.set(0, 0.005, 5);
@@ -168,14 +167,23 @@ const greenHole = new Hole({
   z: 8.5,
 });
 
-const coin = new Coin({
+const mainHole = new Hole({
   gltfLoader,
   scene,
-  modelSrc: "./models/coin.glb",
-  x: 0,
-  y: 1.2,
-  z: 0,
+  modelSrc: "./models/hole.glb",
+  x: -4.3,
+  y: 0.5,
+  z: 6.5,
 });
+
+// const coin = new Coin({
+//   gltfLoader,
+//   scene,
+//   modelSrc: "./models/coin.glb",
+//   x: 0,
+//   y: 1.2,
+//   z: 0,
+// });
 
 const player = new Player({
   scene,
@@ -221,7 +229,7 @@ function draw() {
   const delta = clock.getDelta();
 
   if (player.mixer) player.mixer.update(delta);
-
+  
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
   }
@@ -233,6 +241,7 @@ function draw() {
 
     if (player.moving) {
       // 걸어가는 상태
+      
       angle = Math.atan2(
         destinationPoint.z - player.modelMesh.position.z,
         destinationPoint.x - player.modelMesh.position.x,
@@ -288,7 +297,7 @@ function draw() {
           y: 5,
         });
       }
-
+      //터틀백
       if (
         Math.abs(enemyMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(enemyMesh.position.z - player.modelMesh.position.z) < 1.5
@@ -297,8 +306,15 @@ function draw() {
           enemy.visible = true;
           gsap.to(enemy.modelMesh.position, {
             //나타 날때
-            duration: 3,
+            duration: 2,
             z: 15,
+            ease: "easeOut",
+            // ease: "Bounce.easeOut",
+          });
+          gsap.to(enemy.modelMesh.rotation, {
+            //나타 날때
+            duration: 2,
+            y: 15,
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
@@ -341,10 +357,26 @@ function draw() {
       player.actions[1].stop();
       player.actions[0].play();
     }
+    if(mainHole.modelMesh){
+      gsap.to(mainHole.modelMesh.position, {
+        duration: 1,
+        y: -5.5,
+        ease: "Bounce.easeOut",
+      });
+    }
+    // if(coin.modelMesh){
+    //   gsap.to(coin.modelMesh.rotation, {
+    //     duration: 1,
+    //     y: 15,
+    //     repeat: -1,
+    //     ease: "Bounce.easeOut",
+    //   });
+    // }
   }
 
   renderer.render(scene, camera);
   renderer.setAnimationLoop(draw);
+
 }
 
 function checkIntersects() {
@@ -424,3 +456,4 @@ canvas.addEventListener("touchmove", (e) => {
 });
 
 draw();
+
