@@ -29,6 +29,8 @@ export class Player {
       this.actions[0] = this.mixer.clipAction(idle);
       this.actions[1] = this.mixer.clipAction(walk);
       this.actions[2] = this.mixer.clipAction(glb.animations[2]);
+      this.actions[3] = this.mixer.clipAction(glb.animations[3]);
+      this.actions[4] = this.mixer.clipAction(glb.animations[4]);
       this.actions[0].play();
     });
   }

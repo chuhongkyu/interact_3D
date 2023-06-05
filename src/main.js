@@ -3,7 +3,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import gsap from "gsap";
 import { Hole } from "./Hole";
-import { makeUI } from "./UI";
+import { makeMotion, makeUI, makeWalking } from "./UI";
 import { Coin } from "./Coin";
 import { Box } from "./Box";
 import { Enemy } from "./Enemy";
@@ -202,17 +202,23 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
+makeMotion(()=>{
+  player.actions[4].play();
+  setTimeout(()=>{
+    player.actions[4].stop();
+  }, 1100)
+})
+
+makeWalking(()=>{
+  player.actions[3].play();
+  setTimeout(()=>{
+    player.actions[3].stop();
+  }, 1100)
+})
+
 makeUI(()=>{
   player.actions[2].play();
-  let jump = gsap.to(player.modelMesh.position, {
-    duration: 0.2,
-    delay:0.5,
-    y: 1,
-    ease: "easeOut",
-  })
-  
   setTimeout(()=>{
-    jump.reverse();
     player.actions[2].stop();
   }, 1100)
 })
