@@ -1,1 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mr.chu 3D project</title><link rel="stylesheet" href="./main.css"><script defer="defer" src="362.min.js"></script><script defer="defer" src="main.min.js"></script></head><body><canvas id="three-canvas"></canvas><div id="container_ui_bottom"><div class="__icon __jumping">Jumping</div></div><div id="container_ui_top"><div class="__icon __lifes"><span></span> <span></span> <span></span></div></div></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mr.chu 3D project</title><link rel="stylesheet" href="./main.css"><script defer="defer" src="362.min.js"></script><script defer="defer" src="main.min.js"></script></head><body><canvas id="three-canvas"></canvas><div class="modal show"><p>안녕하세요.😀<br>여기는 FE 추홍규가 제작한 마리오 월드입니다.<br>가볍게 즐겨주세요.</p></div><div id="container_ui_bottom"><div class="__icon __jumping">Jumping</div><div class="__icon __walking">walking</div><div class="__icon __motion">motion</div></div><div id="container_ui_top"><div class="__icon __lifes"><span></span> <span></span> <span></span></div></div><script>document.addEventListener("DOMContentLoaded", function() {
+			const modal = document.querySelector(".modal");
+
+			setTimeout(function() {
+				modal.classList.remove("show");
+			}, 3000);
+		});</script></body></html>
