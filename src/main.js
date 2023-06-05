@@ -7,6 +7,7 @@ import { makeMotion, makeUI, makeWalking } from "./UI";
 import { Coin } from "./Coin";
 import { Box } from "./Box";
 import { Enemy } from "./Enemy";
+import { Rocket } from "./Rocket";
 
 let LIFES = 3;
 
@@ -157,6 +158,28 @@ const box = new Box({
   y: -1.3,
   z: 2,
 });
+
+const rocket = new Rocket({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/rocket.glb",
+  x: 30,
+  y: 0,
+  z: -3,
+});
+
+const rocketMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(6, 6),
+  new THREE.MeshStandardMaterial({
+    color: "blue",
+    transparent: true,
+    opacity: 0.3,
+  })
+);
+rocketMesh.position.set(10, 0.005, -4);
+rocketMesh.rotation.x = -Math.PI / 2;
+rocketMesh.receiveShadow = true;
+scene.add(rocketMesh);
 
 const greenHole = new Hole({
   gltfLoader,
@@ -324,8 +347,32 @@ function draw() {
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
+        } 
+      }
+
+      //로켓
+      if(
+        Math.abs(rocketMesh.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5
+      ){
+        if (!rocket.visible) {
+          rocket.visible = true;
+          gsap.to(rocket.modelMesh.position, {
+            //나타 날때
+            duration: 2,
+            x: -10,
+            ease: "easeOut",
+            // ease: "Bounce.easeOut",
+          });
+        }else if (rocket.visible) {
+          rocket.visible = false;
+          rocketMesh.material.color.set("blue");
+          gsap.to(rocket.modelMesh.position, {
+            //사라질 때
+            duration: 1,
+            y: -5
+          })
         }
-        
       }
 
       //box
