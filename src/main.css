@@ -24,8 +24,14 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: rgba(0, 0, 0, 0.3);
 }
-
+#container_ui_bottom .__icon{
+	border-right: 1px solid black;
+}
+#container_ui_bottom .__icon:last-of-type{
+	border-right: none;
+}
 .__icon{
 	font-size: 15px;
 	color: black;
@@ -49,3 +55,25 @@ body {
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
 }
+.modal {
+	display: none;
+	position: fixed;
+	top: 70%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	z-index: 9999;
+	min-width: 310px;
+	transition: 0.5s;
+}
+  
+  .modal p {
+	margin: 0;
+  }
+  
+  .modal.show {
+	display: block;
+  }
