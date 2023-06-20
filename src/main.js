@@ -9,15 +9,31 @@ import { Box } from "./Box";
 import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
 
-let LIFES = 3;
+let LIFES = 2;
 
-const lifes = document.getElementById('container_ui_top')
-const life_number = lifes.querySelectorAll('span');
+const lifes = document.querySelector('#container_ui_top .__lifes')
+let ROCKET_FEILD = false;
+
+function makeStage1($data){
+  $data ? document.body.classList.add('type1') : document.body.classList.remove('type1')
+  let modal = document.querySelector('.modal')
+  modal.innerHTML = `
+                      <p>three.js는 무궁 무진한 웹의 발전을 주었습니다.<br>
+                        3D는 사용자들에게 특별한 경험을 만들어 줍니다.
+                      </p>
+                    `
+  modal.classList.add('show')
+  setTimeout(()=>{
+    document.body.classList.remove('type1')
+    modal.classList.remove('show')
+    ROCKET_FEILD = false
+    updateLifes()
+  },5000)
+}
 
 function updateLifes() {
-  for (let i = life_number.length - 1; i >= LIFES; i--) {
-    lifes.removeChild(life_number[i]);
-  }
+  let life_number = lifes.querySelectorAll('span');
+  life_number[0].classList.remove('active')
 }
 
 // Texture
@@ -163,13 +179,13 @@ const rocket = new Rocket({
   gltfLoader,
   scene,
   modelSrc: "./models/rocket.glb",
-  x: 30,
+  x: 20,
   y: 0,
   z: -3,
 });
 
 const rocketMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(6, 6),
+  new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
     color: "blue",
     transparent: true,
@@ -225,12 +241,12 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
-makeMotion(()=>{
-  player.actions[4].play();
-  setTimeout(()=>{
-    player.actions[4].stop();
-  }, 1100)
-})
+// makeMotion(()=>{
+//   player.actions[4].play();
+//   setTimeout(()=>{
+//     player.actions[4].stop();
+//   }, 1100)
+// })
 
 makeWalking(()=>{
   player.actions[3].play();
@@ -355,23 +371,38 @@ function draw() {
         Math.abs(rocketMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5
       ){
+        ROCKET_FEILD = true;
+        makeStage1(ROCKET_FEILD);
         if (!rocket.visible) {
           rocket.visible = true;
           gsap.to(rocket.modelMesh.position, {
             //나타 날때
             duration: 2,
             x: -10,
+            y: 0,
+            z: -3,
+
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
+          // 카메라 포지션 변경
+          gsap.to(camera.position, {
+            duration: 1,
+            y: 3,
+          });
+          
         }else if (rocket.visible) {
           rocket.visible = false;
           rocketMesh.material.color.set("blue");
-          gsap.to(rocket.modelMesh.position, {
-            //사라질 때
+          // gsap.to(rocket.modelMesh.position, {
+          //   //사라질 때
+          //   duration: 1,
+          //   y: -5
+          // })
+          gsap.to(camera.position, {
             duration: 1,
-            y: -5
-          })
+            y: 5,
+          });
         }
       }
 
