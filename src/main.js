@@ -26,8 +26,12 @@ function makeStage1($data){
   setTimeout(()=>{
     document.body.classList.remove('type1')
     modal.classList.remove('show')
-    ROCKET_FEILD = false
     updateLifes()
+    gsap.to(camera.position, {
+      duration: 1,
+      y: 5,
+    });
+    scene.remove(rocketMesh);
   },5000)
 }
 
@@ -369,10 +373,11 @@ function draw() {
       //로켓
       if(
         Math.abs(rocketMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5 && !ROCKET_FEILD
       ){
         ROCKET_FEILD = true;
         makeStage1(ROCKET_FEILD);
+        
         if (!rocket.visible) {
           rocket.visible = true;
           gsap.to(rocket.modelMesh.position, {
@@ -393,16 +398,12 @@ function draw() {
           
         }else if (rocket.visible) {
           rocket.visible = false;
-          rocketMesh.material.color.set("blue");
+          rocketMesh.material.color.set("black");
           // gsap.to(rocket.modelMesh.position, {
           //   //사라질 때
           //   duration: 1,
           //   y: -5
           // })
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 5,
-          });
         }
       }
 

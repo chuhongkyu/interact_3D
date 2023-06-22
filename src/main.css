@@ -70,7 +70,9 @@ body {
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
 	filter: brightness(0%);
+	transition: 0.5s;
 }
+
 .modal {
 	display: none;
 	position: fixed;
