@@ -11,10 +11,3 @@ export function makeWalking(cb){
         cb();
     })
 }
-
-// export function makeMotion(cb){
-//     const ui = document.getElementById("container_ui_bottom");
-//     ui.querySelector('.__motion').addEventListener('click',()=>{
-//         cb();
-//     })
-// }

@@ -61,6 +61,7 @@ body {
 	height: 50px;
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
+	transition: 300ms ease-in-out;
 }
 
 .__lifes span.active{
@@ -69,8 +70,10 @@ body {
 	height: 50px;
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
-	filter: brightness(0%);
-	transition: 0.5s;
+	-webkit-filter: drop-shadow(1px 1px 0 black)
+                  drop-shadow(-1px -1px 0 black);
+  	filter: brightness(0%) drop-shadow(1px 1px 0 black) 
+          drop-shadow(-1px -1px 0 black);
 }
 
 .modal {

@@ -27,6 +27,14 @@ function makeStage1($data){
                     `
   modal.classList.add('show')
   setTimeout(()=>{
+    player.actions[2].play();
+  },1500)
+
+  setTimeout(()=>{
+    player.actions[2].stop();
+  },3200)
+
+  setTimeout(()=>{
     document.body.classList.remove('type1')
     modal.classList.remove('show')
     updateLifes()
@@ -40,6 +48,8 @@ function makeStage1($data){
       ease: "easeOut",
     })
     scene.remove(rocketMesh);
+    scene.remove(rocket.modelMesh);
+    rocketMesh.geometry.dispose();
   },5000)
 }
 
@@ -236,14 +246,32 @@ const mainHole = new Hole({
   z: 6.5,
 });
 
-// const coin = new Coin({
-//   gltfLoader,
-//   scene,
-//   modelSrc: "./models/coin.glb",
-//   x: 0,
-//   y: 1.2,
-//   z: 0,
-// });
+const coin = new Coin({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/coin.glb",
+  x: 0,
+  y: 20,
+  z: 5,
+});
+
+const coin2 = new Coin({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/coin.glb",
+  x: 10,
+  y: 20,
+  z: 7,
+});
+
+const coin3 = new Coin({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/coin.glb",
+  x: 14,
+  y: 20,
+  z: 3,
+});
 
 const player = new Player({
   scene,
@@ -262,26 +290,12 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
-// makeMotion(()=>{
-//   player.actions[4].play();
+// makeWalking(()=>{
+//   player.actions[3].play();
 //   setTimeout(()=>{
-//     player.actions[4].stop();
+//     player.actions[3].stop();
 //   }, 1100)
 // })
-
-makeWalking(()=>{
-  player.actions[3].play();
-  setTimeout(()=>{
-    player.actions[3].stop();
-  }, 1100)
-})
-
-makeUI(()=>{
-  player.actions[2].play();
-  setTimeout(()=>{
-    player.actions[2].stop();
-  }, 1100)
-})
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -433,11 +447,34 @@ function draw() {
         if (!box.visible) {
           box.visible = true;
           spotMesh.material.color.set("seagreen");
+          
+          gsap.to(coin.modelMesh.position, {
+            duration: 1,
+            delay: 2,
+            y: 1,
+            ease: "Bounce.easeOut",
+          });
+
+          gsap.to(coin2.modelMesh.position, {
+            duration: 1,
+            delay: 2,
+            y: 1,
+            ease: "Bounce.easeOut",
+          });
+
+          gsap.to(coin3.modelMesh.position, {
+            duration: 1,
+            delay: 2,
+            y: 1,
+            ease: "Bounce.easeOut",
+          });
+
           gsap.to(box.modelMesh.position, {
             duration: 1,
             y: 1,
             ease: "Bounce.easeOut",
           });
+
           gsap.to(camera.position, {
             duration: 1,
             y: 3,
@@ -454,6 +491,9 @@ function draw() {
           duration: 1,
           y: 5,
         });
+        scene.remove(coin.modelMesh);
+        scene.remove(coin2.modelMesh);
+        scene.remove(coin3.modelMesh);
       }
     } else {
       // 서 있는 상태
