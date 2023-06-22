@@ -8,6 +8,7 @@ import { Coin } from "./Coin";
 import { Box } from "./Box";
 import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
+import { All } from "./All";
 
 let LIFES = 2;
 
@@ -18,8 +19,10 @@ function makeStage1($data){
   $data ? document.body.classList.add('type1') : document.body.classList.remove('type1')
   let modal = document.querySelector('.modal')
   modal.innerHTML = `
-                      <p>three.js는 무궁 무진한 웹의 발전을 주었습니다.<br>
-                        3D는 사용자들에게 특별한 경험을 만들어 줍니다.
+                      <p>개발을 하다보면 기확자, 디자이너등 다양한 직군들과 소통해야 하죠.<br>
+                         그들의 요구는 떄로는 우리를 너무 괴롭힙니다.😂<br>
+                         또한 그것을 해결하는 것은 온전히 개발자 혼자의 일 일것입니다.<br>
+                         하지만 힘내세요.😃 개발자 여러분 혼자가 아닙니다.
                       </p>
                     `
   modal.classList.add('show')
@@ -31,6 +34,11 @@ function makeStage1($data){
       duration: 1,
       y: 5,
     });
+    gsap.to(enemyAll.modelMesh.position, {
+      duration: 1,
+      y: -3,
+      ease: "easeOut",
+    })
     scene.remove(rocketMesh);
   },5000)
 }
@@ -186,6 +194,15 @@ const rocket = new Rocket({
   x: 20,
   y: 0,
   z: -3,
+});
+
+const enemyAll = new All({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/All.glb",
+  x: 10,
+  y: -3,
+  z: -6,
 });
 
 const rocketMesh = new THREE.Mesh(
@@ -377,7 +394,13 @@ function draw() {
       ){
         ROCKET_FEILD = true;
         makeStage1(ROCKET_FEILD);
-        
+        if(!enemyAll.visible){
+          gsap.to(enemyAll.modelMesh.position, {
+            duration: 2,
+            y: 0,
+            ease: "easeOut",
+          })
+        }
         if (!rocket.visible) {
           rocket.visible = true;
           gsap.to(rocket.modelMesh.position, {
@@ -399,11 +422,6 @@ function draw() {
         }else if (rocket.visible) {
           rocket.visible = false;
           rocketMesh.material.color.set("black");
-          // gsap.to(rocket.modelMesh.position, {
-          //   //사라질 때
-          //   duration: 1,
-          //   y: -5
-          // })
         }
       }
 
