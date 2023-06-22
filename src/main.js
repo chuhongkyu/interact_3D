@@ -9,49 +9,15 @@ import { Box } from "./Box";
 import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
 import { All } from "./All";
+import makeStage1 from "./MakeStage"
 
+//목숨
 let LIFES = 2;
-
 const lifes = document.querySelector('#container_ui_top .__lifes')
+
+// 1탄 Rocket필드
 let ROCKET_FEILD = false;
 
-function makeStage1($data){
-  $data ? document.body.classList.add('type1') : document.body.classList.remove('type1')
-  let modal = document.querySelector('.modal')
-  modal.innerHTML = `
-                      <p>개발을 하다보면 기확자, 디자이너등 다양한 직군들과 소통해야 하죠.<br>
-                         그들의 요구는 떄로는 우리를 너무 괴롭힙니다.😂<br>
-                         또한 그것을 해결하는 것은 온전히 개발자 혼자의 일 일것입니다.<br>
-                         하지만 힘내세요.😃 개발자 여러분 혼자가 아닙니다.
-                      </p>
-                    `
-  modal.classList.add('show')
-  setTimeout(()=>{
-    player.actions[2].play();
-  },1500)
-
-  setTimeout(()=>{
-    player.actions[2].stop();
-  },3200)
-
-  setTimeout(()=>{
-    document.body.classList.remove('type1')
-    modal.classList.remove('show')
-    updateLifes()
-    gsap.to(camera.position, {
-      duration: 1,
-      y: 5,
-    });
-    gsap.to(enemyAll.modelMesh.position, {
-      duration: 1,
-      y: -3,
-      ease: "easeOut",
-    })
-    scene.remove(rocketMesh);
-    scene.remove(rocket.modelMesh);
-    rocketMesh.geometry.dispose();
-  },5000)
-}
 
 function updateLifes() {
   let life_number = lifes.querySelectorAll('span');
@@ -290,12 +256,6 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
-// makeWalking(()=>{
-//   player.actions[3].play();
-//   setTimeout(()=>{
-//     player.actions[3].stop();
-//   }, 1100)
-// })
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -407,7 +367,21 @@ function draw() {
         Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5 && !ROCKET_FEILD
       ){
         ROCKET_FEILD = true;
-        makeStage1(ROCKET_FEILD);
+        makeStage1(ROCKET_FEILD,player,()=>{
+          updateLifes()
+          gsap.to(camera.position, {
+            duration: 1,
+            y: 5,
+          });
+          gsap.to(enemyAll.modelMesh.position, {
+            duration: 1,
+            y: -3,
+            ease: "easeOut",
+          })
+          scene.remove(rocketMesh);
+          scene.remove(rocket.modelMesh);
+          rocketMesh.geometry.dispose();
+        })
         if(!enemyAll.visible){
           gsap.to(enemyAll.modelMesh.position, {
             duration: 2,
@@ -507,14 +481,6 @@ function draw() {
         ease: "Bounce.easeOut",
       });
     }
-    // if(coin.modelMesh){
-    //   gsap.to(coin.modelMesh.rotation, {
-    //     duration: 1,
-    //     y: 15,
-    //     repeat: -1,
-    //     ease: "Bounce.easeOut",
-    //   });
-    // }
   }
 
   renderer.render(scene, camera);
