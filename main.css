@@ -2,6 +2,13 @@ body {
 	overflow: hidden;
 	margin: 0;
 }
+
+.type1{
+	overflow: hidden;
+	position: fixed;
+	pointer-events: none;
+}
+
 #three-canvas {
 	position: fixed;
 	left: 0;
@@ -55,9 +62,21 @@ body {
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
 }
+
+.__lifes span.active{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: url("./images/life.png") 100% 100%/cover no-repeat;
+	filter: brightness(0%);
+	transition: 0.5s;
+}
+
 .modal {
 	display: none;
 	position: fixed;
+	z-index: 4;
 	top: 70%;
 	left: 50%;
 	transform: translate(-50%, -50%);
