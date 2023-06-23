@@ -10,6 +10,7 @@ import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
 import { All } from "./All";
 import makeStage1 from "./MakeStage"
+import { KinBoo } from "./KingBoo";
 
 //목숨
 let LIFES = 2;
@@ -246,6 +247,29 @@ const player = new Player({
   modelSrc: "./models/mario.glb",
 });
 
+const kinBoo = new KinBoo({
+  gltfLoader,
+  scene,
+  meshes,
+  modelSrc: "./models/king-boo.glb",
+  x: -5,
+  y: 1.2,
+  z: -4,
+});
+
+const kinBooMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(4, 4),
+  new THREE.MeshStandardMaterial({
+    transparent: true,
+    opacity: 0,
+  })
+);
+kinBooMesh.position.set(-6, 0.005, -5);
+kinBooMesh.rotation.x = -Math.PI / 2;
+kinBooMesh.receiveShadow = true;
+scene.add(kinBooMesh);
+
+
 const enemy = new Enemy({
   scene,
   meshes,
@@ -255,7 +279,6 @@ const enemy = new Enemy({
   y: 0.6,
   z: 5.4,
 });
-
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -267,7 +290,7 @@ const clock = new THREE.Clock();
 // 그리기
 function draw() {
   const delta = clock.getDelta();
-
+  
   if (player.mixer) player.mixer.update(delta);
   
   if (player.modelMesh) {
@@ -275,6 +298,16 @@ function draw() {
   }
 
   if (player.modelMesh) {
+    if(!kinBoo.visible){
+      kinBoo.visible = true;
+      gsap.to(kinBoo.modelMesh.position, {
+        duration: 1,
+        y: 2,
+        ease: "easeOut",
+        repeat: -1, // 무한 반복
+        yoyo: true, // 순방향 및 역방향으로 반복
+      });
+    }
     if (isPressed) {
       raycasting();
     }
@@ -411,6 +444,24 @@ function draw() {
           rocket.visible = false;
           rocketMesh.material.color.set("black");
         }
+      }
+
+      // kingBoo
+      if (
+        Math.abs(kinBooMesh.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(kinBooMesh.position.z - player.modelMesh.position.z) < 1.5
+      ) {
+        // if(!kinBoo.visible){
+        //   kinBoo.visible = true;
+
+        //   gsap.to(kingBoo.modelMesh.position, {
+        //     duration: 1,
+        //     y: [1, 2, 3],
+        //     x: [3, 2, 1],
+        //     ease: "Bounce.easeOut",
+        //   });
+
+        // }
       }
 
       //box
