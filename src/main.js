@@ -3,7 +3,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./Player";
 import gsap from "gsap";
 import { Hole } from "./Hole";
-import { makeMotion, makeUI, makeWalking } from "./UI";
 import { Coin } from "./Coin";
 import { Box } from "./Box";
 import { Enemy } from "./Enemy";
@@ -11,18 +10,23 @@ import { Rocket } from "./Rocket";
 import { All } from "./All";
 import makeStage1 from "./MakeStage"
 import { KinBoo } from "./KingBoo";
+import { OldWorld } from "./OldWorld";
+import makeStage2 from "./MakeStage2";
 
 //목숨
-let LIFES = 2;
 const lifes = document.querySelector('#container_ui_top .__lifes')
 
 // 1탄 Rocket필드
 let ROCKET_FEILD = false;
 
+// 2탄 Old 필드
+let OLD_FEILD = false;
+
+
 
 function updateLifes() {
-  let life_number = lifes.querySelectorAll('span');
-  life_number[0].classList.remove('active')
+  let LIFES = lifes.querySelectorAll('span.active');
+  LIFES[0].classList.remove('active')
 }
 
 const info = document.querySelector('#container_ui_bottom .__info')
@@ -118,6 +122,7 @@ pointerMesh.position.y = 0.01;
 pointerMesh.receiveShadow = true;
 scene.add(pointerMesh);
 
+//box spot
 const spotMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
@@ -131,19 +136,22 @@ spotMesh.rotation.x = -Math.PI / 2;
 spotMesh.receiveShadow = true;
 scene.add(spotMesh);
 
-const treePMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
+//stage2
+const stageTwoMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(6, 6),
   new THREE.MeshStandardMaterial({
     color: "blue",
     transparent: true,
-    opacity: 0.5,
+    opacity: 0.2,
   })
 );
-treePMesh.position.set(-5, 0.005, 5);
-treePMesh.rotation.x = -Math.PI / 2;
-treePMesh.receiveShadow = true;
-scene.add(treePMesh);
+stageTwoMesh.position.set(-6, 0.005, 6);
+stageTwoMesh.rotation.x = -Math.PI / 2;
+stageTwoMesh.receiveShadow = true;
+scene.add(stageTwoMesh);
 
+
+//turttle
 const enemyMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
@@ -200,15 +208,6 @@ rocketMesh.rotation.x = -Math.PI / 2;
 rocketMesh.receiveShadow = true;
 scene.add(rocketMesh);
 
-const greenHole = new Hole({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/hole.glb",
-  x: -9.5,
-  y: -1.8,
-  z: 8.5,
-});
-
 const mainHole = new Hole({
   gltfLoader,
   scene,
@@ -216,6 +215,24 @@ const mainHole = new Hole({
   x: -4.3,
   y: 0.5,
   z: 6.5,
+});
+
+const worldHole = new OldWorld({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/world.glb",
+  x: -5,
+  y: -4,
+  z: 4,
+});
+
+const greenHole = new Hole({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/hole.glb",
+  x: -15,
+  y: -1.8,
+  z: 12,
 });
 
 const coin = new Coin({
@@ -340,20 +357,46 @@ function draw() {
         player.moving = false;
       }
 
-      // 그린 홀
+      // stage2
       if (
-        Math.abs(treePMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(treePMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(stageTwoMesh.position.x - player.modelMesh.position.x) < 3 &&
+        Math.abs(stageTwoMesh.position.z - player.modelMesh.position.z) < 3 && !OLD_FEILD
       ){
-        if (!greenHole.visible) {
-          greenHole.visible = true;
-          treePMesh.material.color.set("skyblue");
+        OLD_FEILD = true;
+        makeStage2(OLD_FEILD,player,()=>{
+          greenHole.visible = false;
+          worldHole.visible = false;
+          stageTwoMesh.material.color.set("blue");
           gsap.to(greenHole.modelMesh.position, {
-            //나타 날때
+            duration: 1,
+            y: -1.8,
+          });
+          gsap.to(worldHole.modelMesh.position, {
+            duration: 1,
+            y: -4,
+          });
+          // 카메라 포지션 변경
+          gsap.to(camera.position, {
+            duration: 1,
+            y: 5,
+          });
+          updateLifes()
+          scene.remove(stageTwoMesh);
+          stageTwoMesh.geometry.dispose();
+        })
+        if (!greenHole.visible && !worldHole.visible) {
+          worldHole.visible = true
+          greenHole.visible = true;
+          stageTwoMesh.material.color.set("blue");
+          gsap.to(greenHole.modelMesh.position, {
             duration: 1,
             y: 0,
             ease: "easeOut",
-            // ease: "Bounce.easeOut",
+          });
+          gsap.to(worldHole.modelMesh.position, {
+            duration: 1,
+            y: 0,
+            ease: "easeOut",
           });
           // 카메라 포지션 변경
           gsap.to(camera.position, {
@@ -361,19 +404,8 @@ function draw() {
             y: 3,
           });
         }
-      } else if (greenHole.visible) {
-        greenHole.visible = false;
-        treePMesh.material.color.set("blue");
-        gsap.to(greenHole.modelMesh.position, {
-          //사라질 때
-          duration: 1,
-          y: -1.8,
-        });
-        // 카메라 포지션 변경
-        gsap.to(camera.position, {
-          duration: 1,
-          y: 5,
-        });
+      } else if (greenHole.visible || worldHole.visible) {
+        
       }
       //터틀백
       if (
