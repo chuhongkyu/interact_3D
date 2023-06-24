@@ -25,6 +25,11 @@ function updateLifes() {
   life_number[0].classList.remove('active')
 }
 
+const info = document.querySelector('#container_ui_bottom .__info')
+info.addEventListener('click',()=>{
+  info.querySelector('.__info-container').classList.toggle('active')
+})
+
 // Texture
 const textureLoader = new THREE.TextureLoader();
 const floorTexture = textureLoader.load("./images/bg.png");
@@ -451,17 +456,7 @@ function draw() {
         Math.abs(kinBooMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(kinBooMesh.position.z - player.modelMesh.position.z) < 1.5
       ) {
-        // if(!kinBoo.visible){
-        //   kinBoo.visible = true;
 
-        //   gsap.to(kingBoo.modelMesh.position, {
-        //     duration: 1,
-        //     y: [1, 2, 3],
-        //     x: [3, 2, 1],
-        //     ease: "Bounce.easeOut",
-        //   });
-
-        // }
       }
 
       //box
