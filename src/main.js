@@ -22,13 +22,13 @@ let ROCKET_FEILD = false;
 // 2탄 Old 필드
 let OLD_FEILD = false;
 
-
-
+// 라이프 업데이트
 function updateLifes() {
   let LIFES = lifes.querySelectorAll('span.active');
   LIFES[0].classList.remove('active')
 }
 
+// info 클릭
 const info = document.querySelector('#container_ui_bottom .__info')
 info.addEventListener('click',()=>{
   info.querySelector('.__info-container').classList.toggle('active')
@@ -322,13 +322,16 @@ function draw() {
   if (player.modelMesh) {
     if(!kinBoo.visible){
       kinBoo.visible = true;
-      gsap.to(kinBoo.modelMesh.position, {
-        duration: 1,
-        y: 2,
-        ease: "easeOut",
-        repeat: -1, // 무한 반복
-        yoyo: true, // 순방향 및 역방향으로 반복
-      });
+      if(kinBoo.modelMesh){
+        gsap.to(kinBoo.modelMesh.position, {
+          duration: 1,
+          y: 2,
+          ease: "easeOut",
+          repeat: -1, // 무한 반복
+          yoyo: true, // 순방향 및 역방향으로 반복
+        });
+      }
+      
     }
     if (isPressed) {
       raycasting();
