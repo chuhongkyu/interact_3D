@@ -12,6 +12,7 @@ import makeStage1 from "./MakeStage"
 import { KinBoo } from "./KingBoo";
 import { OldWorld } from "./OldWorld";
 import makeStage2 from "./MakeStage2";
+import { Luisi } from "./Luisi";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -269,6 +270,13 @@ const player = new Player({
   modelSrc: "./models/mario.glb",
 });
 
+const luisi = new Luisi({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/luisi.glb",
+});
+
 const kinBoo = new KinBoo({
   gltfLoader,
   scene,
@@ -331,7 +339,8 @@ function draw() {
   const delta = clock.getDelta();
   
   if (player.mixer) player.mixer.update(delta);
-  
+  if (luisi.mixer) luisi.mixer.update(delta);
+
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
   }
