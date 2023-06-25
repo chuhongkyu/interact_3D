@@ -302,6 +302,23 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
+function movingKingBoo(){
+  if(!kinBoo.visible){
+    kinBoo.visible = true;
+    if(kinBoo.modelMesh){
+      gsap.to(kinBoo.modelMesh.position, {
+        duration: 1,
+        y: 2,
+        ease: "easeOut",
+        repeat: -1, // 무한 반복
+        yoyo: true, // 순방향 및 역방향으로 반복
+      });
+    }else{
+      
+    }
+  }
+}
+
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 let destinationPoint = new THREE.Vector3();
@@ -320,19 +337,8 @@ function draw() {
   }
 
   if (player.modelMesh) {
-    if(!kinBoo.visible){
-      kinBoo.visible = true;
-      if(kinBoo.modelMesh){
-        gsap.to(kinBoo.modelMesh.position, {
-          duration: 1,
-          y: 2,
-          ease: "easeOut",
-          repeat: -1, // 무한 반복
-          yoyo: true, // 순방향 및 역방향으로 반복
-        });
-      }
-      
-    }
+    //킹 부
+    movingKingBoo();
     if (isPressed) {
       raycasting();
     }
