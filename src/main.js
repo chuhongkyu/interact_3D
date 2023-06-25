@@ -514,6 +514,19 @@ function draw() {
         Math.abs(spotMesh.position.x - player.modelMesh.position.x) < 1.5 &&
         Math.abs(spotMesh.position.z - player.modelMesh.position.z) < 1.5
       ) {
+        if(!luisi.visible){
+          luisi.visible = true;
+          if(luisi.modelMesh){
+            gsap.to(luisi.modelMesh.rotation, {
+              duration: 2,
+              y: 3,
+              ease: "easeOut",
+              delay: 0.5,
+            });
+          }else{
+            
+          }
+        }
         if (!box.visible) {
           box.visible = true;
           spotMesh.material.color.set("seagreen");

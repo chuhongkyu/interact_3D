@@ -15,7 +15,7 @@ export class Luisi {
       this.modelMesh.position.y = 1.4;
       this.modelMesh.position.x = 5;
       this.modelMesh.position.z = 8;
-      this.modelMesh.rotation.y = 3;
+      this.modelMesh.rotation.y = 2;
       this.modelMesh.name = "luisi";
       this.modelMesh.scale.set(0.5,0.5,0.5)
 
