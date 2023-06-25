@@ -1,3 +1,5 @@
+import gsap from "gsap/gsap-core"
+
 export default function makeStage1($data, $player, $cb){
     $data ? document.body.classList.add('type1') : document.body.classList.remove('type1')
     let modal = document.querySelector('.modal')
@@ -9,12 +11,22 @@ export default function makeStage1($data, $player, $cb){
                         </p>
                       `
     modal.classList.add('show')
+    gsap.to($player.modelMesh.position, {
+      delay: 1.6,
+      duration: 0.3,
+      y: 1.8,
+    })
     setTimeout(()=>{
         $player.actions[2].play();
+        gsap.to($player.modelMesh.position, {
+          delay: 0.4,
+          y: 0,
+        })
     },1500)
   
     setTimeout(()=>{
         $player.actions[2].stop();
+        
     },3200)
   
     setTimeout(()=>{

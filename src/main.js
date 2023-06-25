@@ -182,7 +182,7 @@ const rocket = new Rocket({
   gltfLoader,
   scene,
   modelSrc: "./models/rocket.glb",
-  x: 20,
+  x: 22,
   y: 0,
   z: -3,
 });
@@ -457,10 +457,10 @@ function draw() {
         ROCKET_FEILD = true;
         makeStage1(ROCKET_FEILD,player,()=>{
           updateLifes()
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 5,
-          });
+          // gsap.to(camera.position, {
+          //   duration: 1,
+          //   y: 5,
+          // });
           gsap.to(enemyAll.modelMesh.position, {
             duration: 1,
             y: -3,
@@ -481,6 +481,7 @@ function draw() {
           rocket.visible = true;
           gsap.to(rocket.modelMesh.position, {
             //나타 날때
+            delay: 1.5,
             duration: 2,
             x: -10,
             y: 0,
@@ -490,10 +491,10 @@ function draw() {
             // ease: "Bounce.easeOut",
           });
           // 카메라 포지션 변경
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 3,
-          });
+          // gsap.to(camera.position, {
+          //   duration: 1,
+          //   y: 3,
+          // });
           
         }else if (rocket.visible) {
           rocket.visible = false;
