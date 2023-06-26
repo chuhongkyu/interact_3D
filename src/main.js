@@ -9,7 +9,7 @@ import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
 import { All } from "./All";
 import makeStage1 from "./MakeStage"
-import { KinBoo } from "./KingBoo";
+import { KingBoo } from "./KingBoo";
 import { OldWorld } from "./OldWorld";
 import makeStage2 from "./MakeStage2";
 import { Luisi } from "./Luisi";
@@ -277,28 +277,24 @@ const luisi = new Luisi({
   modelSrc: "./models/luisi.glb",
 });
 
-const kinBoo = new KinBoo({
+const kingBoo = new KingBoo({
   gltfLoader,
   scene,
   meshes,
   modelSrc: "./models/king-boo.glb",
-  x: -5,
-  y: 1.2,
-  z: -4,
 });
 
-const kinBooMesh = new THREE.Mesh(
+const kingBooMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(4, 4),
   new THREE.MeshStandardMaterial({
     transparent: true,
-    opacity: 0,
+    opacity: 0.1,
   })
 );
-kinBooMesh.position.set(-6, 0.005, -5);
-kinBooMesh.rotation.x = -Math.PI / 2;
-kinBooMesh.receiveShadow = true;
-scene.add(kinBooMesh);
-
+kingBooMesh.position.set(-5, 0.005, -5);
+kingBooMesh.rotation.x = -Math.PI / 2;
+kingBooMesh.receiveShadow = true;
+scene.add(kingBooMesh);
 
 const enemy = new Enemy({
   scene,
@@ -309,23 +305,6 @@ const enemy = new Enemy({
   y: 0.6,
   z: 5.4,
 });
-
-function movingKingBoo(){
-  if(!kinBoo.visible){
-    kinBoo.visible = true;
-    if(kinBoo.modelMesh){
-      gsap.to(kinBoo.modelMesh.position, {
-        duration: 1,
-        y: 2,
-        ease: "easeOut",
-        repeat: -1, // 무한 반복
-        yoyo: true, // 순방향 및 역방향으로 반복
-      });
-    }else{
-      
-    }
-  }
-}
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -340,14 +319,13 @@ function draw() {
   
   if (player.mixer) player.mixer.update(delta);
   if (luisi.mixer) luisi.mixer.update(delta);
+  if (kingBoo.mixer) kingBoo.mixer.update(delta)
 
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
   }
 
   if (player.modelMesh) {
-    //킹 부
-    movingKingBoo();
     if (isPressed) {
       raycasting();
     }
@@ -504,8 +482,8 @@ function draw() {
 
       // kingBoo
       if (
-        Math.abs(kinBooMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(kinBooMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(kingBooMesh.position.x - player.modelMesh.position.x) < 3 &&
+        Math.abs(kingBooMesh.position.z - player.modelMesh.position.z) < 3
       ) {
 
       }

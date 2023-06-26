@@ -1,23 +1,34 @@
 import { AnimationMixer } from "three";
 
-export class KinBoo {
-    constructor(info) {
-		this.x = info.x;
-		this.y = info.y;
-		this.z = info.z;
+export class KingBoo {
+  constructor(info) {
+    this.moving = false;
 
-		this.visible = false;
+    info.gltfLoader.load(info.modelSrc, (glb) => {
+      glb.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
 
-		info.gltfLoader.load(
-			info.modelSrc,
-			glb => {
-				this.modelMesh = glb.scene.children[0];
-				this.modelMesh.castShadow = true;
-				this.modelMesh.position.set(this.x, this.y, this.z);
-				this.modelMesh.rotation.z = 1;
-				this.modelMesh.scale.set(0.6,0.6,0.6)
-				info.scene.add(this.modelMesh);
-			}
-		);
-	}
+      this.modelMesh = glb.scene.children[0];
+      this.modelMesh.position.y = 1.8;
+      this.modelMesh.position.x = -5;
+      this.modelMesh.position.z = -4;
+      this.modelMesh.rotation.z = 0.5;
+      this.modelMesh.scale.set(0.5,0.5,0.5)
+
+      info.scene.add(this.modelMesh);
+      info.meshes.push(this.modelMesh);
+
+      this.actions = [];
+
+      this.mixer = new AnimationMixer(this.modelMesh);
+
+      const idle = glb.animations[0];
+
+      this.actions[0] = this.mixer.clipAction(idle);
+      this.actions[0].play();
+    });
+  }
 }
