@@ -13,6 +13,7 @@ import { KingBoo } from "./KingBoo";
 import { OldWorld } from "./OldWorld";
 import makeStage2 from "./MakeStage2";
 import { Luisi } from "./Luisi";
+import { Boo } from "./Boo";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -277,6 +278,36 @@ const luisi = new Luisi({
   modelSrc: "./models/luisi.glb",
 });
 
+const boo = new Boo({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/ghost.glb",
+  x: -9,
+  y: -1.3,
+  z: -3,
+});
+
+const boo1 = new Boo({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/ghost.glb",
+  x: -3,
+  y: -1.3,
+  z: -5,
+});
+
+const boo2 = new Boo({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/ghost.glb",
+  x: -1,
+  y: -1.3,
+  z: -5,
+});
+
 const kingBoo = new KingBoo({
   gltfLoader,
   scene,
@@ -468,11 +499,6 @@ function draw() {
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
-          // 카메라 포지션 변경
-          // gsap.to(camera.position, {
-          //   duration: 1,
-          //   y: 3,
-          // });
           
         }else if (rocket.visible) {
           rocket.visible = false;
@@ -482,10 +508,38 @@ function draw() {
 
       // kingBoo
       if (
-        Math.abs(kingBooMesh.position.x - player.modelMesh.position.x) < 3 &&
-        Math.abs(kingBooMesh.position.z - player.modelMesh.position.z) < 3
+        Math.abs(kingBooMesh.position.x - player.modelMesh.position.x) < 2 &&
+        Math.abs(kingBooMesh.position.z - player.modelMesh.position.z) < 2
       ) {
-
+        if(!boo.visible){
+          boo.visible = true;
+          gsap.to(boo.modelMesh.position, {
+            duration: 1,
+            y: 3,
+            ease: "easeOut",
+          });
+          gsap.to(boo1.modelMesh.position, {
+            duration: 1,
+            y: 1.3,
+            ease: "easeOut",
+          });
+          gsap.to(boo2.modelMesh.position, {
+            duration: 1,
+            y: 3,
+            ease: "easeOut",
+          });
+        }
+      } else if(boo.visible){
+        gsap.to(boo.modelMesh.position, {
+          y: -1.3,
+        });
+        gsap.to(boo1.modelMesh.position, {
+          y: -1.3,
+        });
+        gsap.to(boo2.modelMesh.position, {
+          y: -1.3,
+        });
+        box.visible = false;
       }
 
       //box
