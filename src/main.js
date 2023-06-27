@@ -408,6 +408,7 @@ function draw() {
   if (luisi.mixer) luisi.mixer.update(delta);
   if (kingBoo.mixer) kingBoo.mixer.update(delta);
   if (plant.mixer) plant.mixer.update(delta)
+  if (plant1.mixer) plant1.mixer.update(delta)
   
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
