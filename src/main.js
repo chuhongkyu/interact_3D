@@ -16,6 +16,9 @@ import { OldWorld } from "./OldWorld";
 import makeStage2 from "./MakeStage2";
 import { Luisi } from "./Luisi";
 import { Boo } from "./Boo";
+import { Plant } from "./Plant";
+import { Castle } from "./Castle";
+import makeEnd from "./MakeEndPoint";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -25,6 +28,11 @@ let ROCKET_FEILD = false;
 
 // 2탄 Old 필드
 let OLD_FEILD = false;
+
+
+// END 필드
+let END_FEILD = false;
+let END_NOT = true;
 
 // 라이프 업데이트
 function updateLifes() {
@@ -43,14 +51,14 @@ const textureLoader = new THREE.TextureLoader();
 const floorTexture = textureLoader.load("./images/bg.png");
 floorTexture.wrapS = THREE.RepeatWrapping;
 floorTexture.wrapT = THREE.RepeatWrapping;
-floorTexture.repeat.x = 10;
-floorTexture.repeat.y = 10;
+floorTexture.repeat.x = 6;
+floorTexture.repeat.y = 6;
 
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
 fontLoader.load('https://unpkg.com/three@0.77.0/examples/fonts/helvetiker_regular.typeface.json', function (font) {
   const textGroup = new THREE.Group(); // 텍스트 그룹 생성
-  const textList = ['King', 'Boo']; // 표시할 텍스트 리스트
+  const textList = ['King', 'Boo'];
 
   const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
   const textHeight = 0.4; // 텍스트 높이
@@ -133,7 +141,7 @@ scene.add(directionalLight);
 // Mesh
 const meshes = [];
 const floorMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(100, 100),
+  new THREE.PlaneGeometry(40, 40),
   new THREE.MeshStandardMaterial({
     map: floorTexture,
   })
@@ -261,6 +269,28 @@ const worldHole = new OldWorld({
   z: 4,
 });
 
+const castle = new Castle({
+  gltfLoader,
+  scene,
+  modelSrc: "./models/castle.glb",
+  x: 0,
+  y: 4,
+  z: -21,
+});
+
+const castleMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(8.5, 8.5),
+  new THREE.MeshStandardMaterial({
+    transparent: true,
+    opacity: 0.4,
+    color: "black",
+  })
+);
+castleMesh.position.set(-0.3, 0.005, -20);
+castleMesh.rotation.x = -Math.PI / 2;
+castleMesh.receiveShadow = true;
+scene.add(castleMesh);
+
 const greenHole = new Hole({
   gltfLoader,
   scene,
@@ -268,33 +298,6 @@ const greenHole = new Hole({
   x: -15,
   y: -1.8,
   z: 12,
-});
-
-const coin = new Coin({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/coin.glb",
-  x: 0,
-  y: 20,
-  z: 5,
-});
-
-const coin2 = new Coin({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/coin.glb",
-  x: 10,
-  y: 20,
-  z: 7,
-});
-
-const coin3 = new Coin({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/coin.glb",
-  x: 14,
-  y: 20,
-  z: 3,
 });
 
 const player = new Player({
@@ -310,6 +313,26 @@ const luisi = new Luisi({
   gltfLoader,
   modelSrc: "./models/luisi.glb",
 });
+
+const plant = new Plant({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/plant.glb",
+  x: 15,
+  y: 0,
+  z: 0,
+})
+
+const plant1 = new Plant({
+  scene,
+  meshes,
+  gltfLoader,
+  modelSrc: "./models/plant.glb",
+  x: -15,
+  y: 0,
+  z: 4,
+})
 
 const boo = new Boo({
   scene,
@@ -383,8 +406,9 @@ function draw() {
   
   if (player.mixer) player.mixer.update(delta);
   if (luisi.mixer) luisi.mixer.update(delta);
-  if (kingBoo.mixer) kingBoo.mixer.update(delta)
-
+  if (kingBoo.mixer) kingBoo.mixer.update(delta);
+  if (plant.mixer) plant.mixer.update(delta)
+  
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
   }
@@ -415,6 +439,16 @@ function draw() {
         Math.abs(destinationPoint.z - player.modelMesh.position.z) < 0.03
       ) {
         player.moving = false;
+      }
+
+      // endPoint
+      if (
+        Math.abs(castleMesh.position.x - player.modelMesh.position.x) < 4 &&
+        Math.abs(castleMesh.position.z - player.modelMesh.position.z) < 4
+      ){
+        makeEnd(END_NOT, END_FEILD, ()=>{
+          END_NOT = false;
+        })
       }
 
       // stage2
@@ -596,27 +630,6 @@ function draw() {
         if (!box.visible) {
           box.visible = true;
           spotMesh.material.color.set("seagreen");
-          
-          gsap.to(coin.modelMesh.position, {
-            duration: 1,
-            delay: 2,
-            y: 1,
-            ease: "Bounce.easeOut",
-          });
-
-          gsap.to(coin2.modelMesh.position, {
-            duration: 1,
-            delay: 2,
-            y: 1,
-            ease: "Bounce.easeOut",
-          });
-
-          gsap.to(coin3.modelMesh.position, {
-            duration: 1,
-            delay: 2,
-            y: 1,
-            ease: "Bounce.easeOut",
-          });
 
           gsap.to(box.modelMesh.position, {
             duration: 1,
@@ -640,15 +653,14 @@ function draw() {
           duration: 1,
           y: 5,
         });
-        scene.remove(coin.modelMesh);
-        scene.remove(coin2.modelMesh);
-        scene.remove(coin3.modelMesh);
       }
     } else {
       // 서 있는 상태
       player.actions[1].stop();
       player.actions[0].play();
     }
+
+
     if(mainHole.modelMesh){
       gsap.to(mainHole.modelMesh.position, {
         duration: 1,
