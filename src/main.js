@@ -670,7 +670,7 @@ function draw() {
         gsap.to(boo2.modelMesh.position, {
           y: -1.3,
         });
-        box.visible = false;
+        boo.visible = false;
       }
 
       //box
