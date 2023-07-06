@@ -5,7 +5,6 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Player } from "./Player";
 import gsap from "gsap";
 import { Hole } from "./Hole";
-import { Coin } from "./Coin";
 import { Box } from "./Box";
 import { Enemy } from "./Enemy";
 import { Rocket } from "./Rocket";
@@ -56,13 +55,14 @@ floorTexture.repeat.y = 6;
 
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
-fontLoader.load('https://unpkg.com/three@0.77.0/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+const fontUrl = "/fonts/Pretendard.json"
+fontLoader.load(fontUrl, function (font) {
   const textGroup = new THREE.Group(); // 텍스트 그룹 생성
-  const textList = ['King', 'Boo'];
+  const textList = ['킹 부우'];
 
   const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
-  const textHeight = 0.4; // 텍스트 높이
-  const spacing = 1.4; // 텍스트 간격
+  const textHeight = 0.3; // 텍스트 높이
+  const spacing = 1.2; // 텍스트 간격
 
   let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
   let startX = -totalWidth / 2; // 시작 위치 계산
@@ -152,6 +152,8 @@ floorMesh.receiveShadow = true;
 scene.add(floorMesh);
 meshes.push(floorMesh);
 
+
+//this is mouse
 const pointerMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(0.7, 0.7),
   new THREE.MeshBasicMaterial({
@@ -178,6 +180,33 @@ spotMesh.position.set(5, 0.005, 5);
 spotMesh.rotation.x = -Math.PI / 2;
 spotMesh.receiveShadow = true;
 scene.add(spotMesh);
+
+fontLoader.load(fontUrl, function (font) {
+  const textGroup = new THREE.Group(); // 텍스트 그룹 생성
+  const textList = ['루이지'];
+
+  const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
+  const textHeight = 0.3; // 텍스트 높이
+  const spacing = 1.2; // 텍스트 간격
+
+  let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
+  let startX = -totalWidth / 2; // 시작 위치 계산
+
+  for (let i = 0; i < textList.length; i++) {
+    const textGeometry = new TextGeometry(textList[i], {
+      font: font, // 사용할 폰트
+      size: textHeight, // 텍스트 크기
+      height: 0, // 텍스트의 두께
+    });
+    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // 텍스트의 머티리얼
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+    textMesh.position.set(startX + i * spacing, 0, 0); // 텍스트 위치 설정
+    textGroup.position.set(5.5,1.2,10)
+    textGroup.add(textMesh); // 텍스트 그룹에 추가
+  }
+  scene.add(textGroup); // 텍스트 그룹을 scene에 추가
+});
 
 //stage2
 const stageTwoMesh = new THREE.Mesh(
@@ -207,7 +236,33 @@ enemyMesh.rotation.x = -Math.PI / 2;
 enemyMesh.receiveShadow = true;
 scene.add(enemyMesh);
 
+fontLoader.load(fontUrl, function (font) {
+  const textGroup = new THREE.Group(); // 텍스트 그룹 생성
+  const textList = ['거북이?'];
 
+  const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
+  const textHeight = 0.3; // 텍스트 높이
+  const spacing = 1.2; // 텍스트 간격
+
+  let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
+  let startX = -totalWidth / 2; // 시작 위치 계산
+
+  for (let i = 0; i < textList.length; i++) {
+    const textGeometry = new TextGeometry(textList[i], {
+      font: font, // 사용할 폰트
+      size: textHeight, // 텍스트 크기
+      height: 0, // 텍스트의 두께
+    });
+    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // 텍스트의 머티리얼
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+    textMesh.position.set(startX + i * spacing, 0, 0); // 텍스트 위치 설정
+    textGroup.position.set(0.4,1.2,8)
+    textGroup.add(textMesh); // 텍스트 그룹에 추가
+  }
+
+  scene.add(textGroup); // 텍스트 그룹을 scene에 추가
+});
 
 const gltfLoader = new GLTFLoader();
 
@@ -277,6 +332,8 @@ const castle = new Castle({
   y: 4,
   z: -21,
 });
+
+castle.visible = true
 
 const castleMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(8.5, 8.5),
@@ -523,6 +580,12 @@ function draw() {
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
+          setTimeout(()=>{
+            if(enemy){
+              scene.remove(enemy.modelMesh);
+              enemyMesh.geometry.dispose();
+            }
+          },1500)
         } 
       }
 
