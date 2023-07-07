@@ -33,6 +33,10 @@ let OLD_FEILD = false;
 let END_FEILD = false;
 let END_NOT = true;
 
+
+// Plant 클릭
+let isProcessingClick = false;
+
 // 라이프 업데이트
 function updateLifes() {
   let LIFES = lifes.querySelectorAll('span.active');
@@ -681,12 +685,13 @@ function draw() {
         if(!luisi.visible){
           luisi.visible = true;
           if(luisi.modelMesh){
-            gsap.to(luisi.modelMesh.rotation, {
-              duration: 2,
-              y: 3,
-              ease: "easeOut",
-              delay: 0.5,
-            });
+            luisi.actions[2].play()
+            
+            setTimeout(()=>{
+              luisi.actions[2].stop()
+              luisi.actions[0].play()
+            },1500)
+            
           }else{
             
           }
@@ -759,6 +764,22 @@ function checkIntersects() {
     }
     break;
   }
+
+
+  const intersects2 = raycaster.intersectObject(plant.modelMesh);
+  if (intersects2.length > 0) {
+    if (!isProcessingClick) {
+      isProcessingClick = true;
+
+      // plant 메시가 클릭되었을 때의 동작을 수행합니다.
+      console.log("Plant 메시가 클릭되었습니다!");
+
+      setTimeout(() => {
+        isProcessingClick = false;
+      }, 1000);
+    }
+  }
+
 }
 
 function setSize() {
