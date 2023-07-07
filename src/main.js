@@ -55,7 +55,7 @@ floorTexture.repeat.y = 6;
 
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
-const fontUrl = "/fonts/Pretendard.json"
+const fontUrl = "./fonts/Pretendard.json"
 fontLoader.load(fontUrl, function (font) {
   const textGroup = new THREE.Group(); // 텍스트 그룹 생성
   const textList = ['킹 부우'];
