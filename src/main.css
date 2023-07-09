@@ -209,11 +209,84 @@ table {
 	transition: 0.5s;
 }
   
-  .modal p {
+.modal p {
 	margin: 0;
 	line-height: 135%;
-  }
+}
   
-  .modal.show {
+.modal.show {
 	display: block;
-  }
+}
+
+#container_ui_right{
+	display: none;
+	position: fixed;
+	right: 2px;
+	top: 50%;
+	transform: translateY(-50%);
+	padding-top: 10px;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: fit-content;
+	height: fit-content;
+	border-radius: 15px;
+}
+
+#container_ui_right .btn-container{
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 10px;
+	margin-bottom: 10px;
+}
+
+#container_ui_right .btn-container img{
+	display: block;
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	cursor: pointer;
+}
+
+#container_ui_right .__grid{
+	display: grid;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 300px;
+	height: 300px;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	gap: 5px;
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+#container_ui_right.active{
+	display: block;
+}
+
+#container_ui_right .__grid span{
+	grid-column: span 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	cursor: pointer;
+}
+
+#container_ui_right .__grid span .mushroom{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: url("./images/life.png") 100% 100%/cover no-repeat;
+	pointer-events: none;
+}
+  
+
+
+#container_ui_right .__grid span:hover{
+	border: 2px solid rgb(205, 204, 204);
+}
+  

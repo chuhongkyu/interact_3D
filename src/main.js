@@ -2,22 +2,26 @@ import * as THREE from "three";
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import { Player } from "./Player";
+import { Player } from "./modeljs/Player";
 import gsap from "gsap";
-import { Hole } from "./Hole";
-import { Box } from "./Box";
-import { Enemy } from "./Enemy";
-import { Rocket } from "./Rocket";
-import { All } from "./All";
-import makeStage1 from "./MakeStage"
-import { KingBoo } from "./KingBoo";
-import { OldWorld } from "./OldWorld";
+import { Hole } from "./modeljs/Hole";
+import { Box } from "./modeljs/Box";
+import { Enemy } from "./modeljs/Enemy";
+import { Rocket } from "./modeljs/Rocket";
+
+import { KingBoo } from "./modeljs/KingBoo";
+import { Luisi } from "./modeljs/Luisi";
+import { Boo } from "./modeljs/Boo";
+import { Plant } from "./modeljs/Plant";
+import { Castle } from "./modeljs/Castle";
+
+import { All } from "./modeljs/All";
+import { OldWorld } from "./modeljs/OldWorld";
+
 import makeStage2 from "./MakeStage2";
-import { Luisi } from "./Luisi";
-import { Boo } from "./Boo";
-import { Plant } from "./Plant";
-import { Castle } from "./Castle";
+import makeStage1 from "./MakeStage"
 import makeEnd from "./MakeEndPoint";
+import { makeInventory } from "./UI";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -36,6 +40,7 @@ let END_NOT = true;
 
 // Plant 클릭
 let isProcessingClick = false;
+let inventory = document.getElementById('container_ui_right')
 
 // 라이프 업데이트
 function updateLifes() {
@@ -365,7 +370,7 @@ const player = new Player({
   scene,
   meshes,
   gltfLoader,
-  modelSrc: "./models/mario.glb",
+  modelSrc: "./models/mario_really.glb",
 });
 
 const luisi = new Luisi({
@@ -770,7 +775,7 @@ function checkIntersects() {
   if (intersects2.length > 0) {
     if (!isProcessingClick) {
       isProcessingClick = true;
-
+      inventory.classList.add('active')
       // plant 메시가 클릭되었을 때의 동작을 수행합니다.
       console.log("Plant 메시가 클릭되었습니다!");
 
@@ -837,4 +842,4 @@ canvas.addEventListener("touchmove", (e) => {
 });
 
 draw();
-
+makeInventory()

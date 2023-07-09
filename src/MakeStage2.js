@@ -9,13 +9,13 @@ export default function makeStage2($data, $player, $cb){
                       `
     modal.classList.add('show')
     setTimeout(()=>{
-        $player.actions[3].play();
+      $player.actions[3].play();
     },1300)
   
     setTimeout(()=>{
-        $player.actions[3].stop();
+      $player.actions[3].stop();
     },4000)
-  
+
     setTimeout(()=>{
       document.body.classList.remove('type1')
       modal.classList.remove('show')

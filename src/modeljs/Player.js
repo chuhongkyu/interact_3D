@@ -23,14 +23,17 @@ export class Player {
 
       this.mixer = new AnimationMixer(this.modelMesh);
 
-      const idle = glb.animations[0];
-      const walk = glb.animations[1];
+      const idle = glb.animations[1];
+      const walk = glb.animations[2];
+      const jump = glb.animations[3];
+      const run = glb.animations[4];
+      const happy = glb.animations[0];
 
       this.actions[0] = this.mixer.clipAction(idle);
       this.actions[1] = this.mixer.clipAction(walk);
-      this.actions[2] = this.mixer.clipAction(glb.animations[2]);
-      this.actions[3] = this.mixer.clipAction(glb.animations[3]);
-      this.actions[4] = this.mixer.clipAction(glb.animations[4]);
+      this.actions[2] = this.mixer.clipAction(jump);
+      this.actions[3] = this.mixer.clipAction(run);
+      this.actions[4] = this.mixer.clipAction(happy);
       this.actions[0].play();
     });
   }
