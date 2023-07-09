@@ -22,6 +22,7 @@ import makeStage2 from "./MakeStage2";
 import makeStage1 from "./MakeStage"
 import makeEnd from "./MakeEndPoint";
 import { makeInventory } from "./UI";
+import { getMushroom, Mushroom } from "./GetMushroom";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -459,6 +460,17 @@ const enemy = new Enemy({
   z: 5.4,
 });
 
+//mushroom
+// const mushroom = new Mushroom({
+//   scene,
+//   meshes,
+//   gltfLoader,
+//   modelSrc: "./models/mushroom.glb",
+//   x: 10,
+//   y: 1.2,
+//   z: 8,
+// });
+
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 let destinationPoint = new THREE.Vector3();
@@ -473,9 +485,10 @@ function draw() {
   if (player.mixer) player.mixer.update(delta);
   if (luisi.mixer) luisi.mixer.update(delta);
   if (kingBoo.mixer) kingBoo.mixer.update(delta);
-  if (plant.mixer) plant.mixer.update(delta)
-  if (plant1.mixer) plant1.mixer.update(delta)
-  
+  if (plant.mixer) plant.mixer.update(delta);
+  if (plant1.mixer) plant1.mixer.update(delta);
+  // if (mushroom.mixer) mushroom.mixer.update(delta);
+
   if (player.modelMesh) {
     camera.lookAt(player.modelMesh.position);
   }
@@ -843,3 +856,4 @@ canvas.addEventListener("touchmove", (e) => {
 
 draw();
 makeInventory()
+getMushroom()
