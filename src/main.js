@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Player } from "./modeljs/Player";
 import gsap from "gsap";
 import { Hole } from "./modeljs/Hole";
@@ -23,6 +22,7 @@ import makeStage1 from "./MakeStage"
 import makeEnd from "./MakeEndPoint";
 import { makeInventory } from "./UI";
 import { getMushroom, Mushroom } from "./GetMushroom";
+import { createText } from "./Text";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -63,36 +63,12 @@ floorTexture.wrapT = THREE.RepeatWrapping;
 floorTexture.repeat.x = 6;
 floorTexture.repeat.y = 6;
 
+// Scene
+const scene = new THREE.Scene();
+
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
 const fontUrl = "./fonts/Pretendard.json"
-fontLoader.load(fontUrl, function (font) {
-  const textGroup = new THREE.Group(); // 텍스트 그룹 생성
-  const textList = ['킹 부우'];
-
-  const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
-  const textHeight = 0.3; // 텍스트 높이
-  const spacing = 1.2; // 텍스트 간격
-
-  let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
-  let startX = -totalWidth / 2; // 시작 위치 계산
-
-  for (let i = 0; i < textList.length; i++) {
-    const textGeometry = new TextGeometry(textList[i], {
-      font: font, // 사용할 폰트
-      size: textHeight, // 텍스트 크기
-      height: 0, // 텍스트의 두께
-    });
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // 텍스트의 머티리얼
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-    textMesh.position.set(startX + i * spacing, 0, 0); // 텍스트 위치 설정
-    textGroup.position.set(-5,1.2,-2)
-    textGroup.add(textMesh); // 텍스트 그룹에 추가
-  }
-
-  scene.add(textGroup); // 텍스트 그룹을 scene에 추가
-});
 
 
 // Renderer
@@ -106,8 +82,6 @@ renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-// Scene
-const scene = new THREE.Scene();
 
 // Camera
 const camera = new THREE.OrthographicCamera(
@@ -191,31 +165,9 @@ spotMesh.rotation.x = -Math.PI / 2;
 spotMesh.receiveShadow = true;
 scene.add(spotMesh);
 
+
 fontLoader.load(fontUrl, function (font) {
-  const textGroup = new THREE.Group(); // 텍스트 그룹 생성
-  const textList = ['루이지'];
-
-  const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
-  const textHeight = 0.3; // 텍스트 높이
-  const spacing = 1.2; // 텍스트 간격
-
-  let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
-  let startX = -totalWidth / 2; // 시작 위치 계산
-
-  for (let i = 0; i < textList.length; i++) {
-    const textGeometry = new TextGeometry(textList[i], {
-      font: font, // 사용할 폰트
-      size: textHeight, // 텍스트 크기
-      height: 0, // 텍스트의 두께
-    });
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // 텍스트의 머티리얼
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-    textMesh.position.set(startX + i * spacing, 0, 0); // 텍스트 위치 설정
-    textGroup.position.set(5.5,1.2,10)
-    textGroup.add(textMesh); // 텍스트 그룹에 추가
-  }
-  scene.add(textGroup); // 텍스트 그룹을 scene에 추가
+  createText(scene, font, ['루이지'], {x: 5.5, y: 1.2, z:10})
 });
 
 //stage2
@@ -247,31 +199,7 @@ enemyMesh.receiveShadow = true;
 scene.add(enemyMesh);
 
 fontLoader.load(fontUrl, function (font) {
-  const textGroup = new THREE.Group(); // 텍스트 그룹 생성
-  const textList = ['거북이?'];
-
-  const totalTextWidth = textList.length; // 텍스트 전체 길이 (텍스트 수와 동일하게 설정)
-  const textHeight = 0.3; // 텍스트 높이
-  const spacing = 1.2; // 텍스트 간격
-
-  let totalWidth = totalTextWidth * spacing; // 텍스트 전체 너비 계산
-  let startX = -totalWidth / 2; // 시작 위치 계산
-
-  for (let i = 0; i < textList.length; i++) {
-    const textGeometry = new TextGeometry(textList[i], {
-      font: font, // 사용할 폰트
-      size: textHeight, // 텍스트 크기
-      height: 0, // 텍스트의 두께
-    });
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // 텍스트의 머티리얼
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-    textMesh.position.set(startX + i * spacing, 0, 0); // 텍스트 위치 설정
-    textGroup.position.set(0.4,1.2,8)
-    textGroup.add(textMesh); // 텍스트 그룹에 추가
-  }
-
-  scene.add(textGroup); // 텍스트 그룹을 scene에 추가
+  createText(scene, font, ['거북이?'], {x: 0.4, y: 1.2, z:8})
 });
 
 const gltfLoader = new GLTFLoader();
@@ -449,6 +377,10 @@ kingBooMesh.position.set(-5, 0.005, -5);
 kingBooMesh.rotation.x = -Math.PI / 2;
 kingBooMesh.receiveShadow = true;
 scene.add(kingBooMesh);
+
+fontLoader.load(fontUrl, function (font) {
+  createText(scene, font, ['킹 부우'], {x: -5, y: 1.2, z:-2})
+});
 
 const enemy = new Enemy({
   scene,
