@@ -4,7 +4,7 @@ export class Castle {
 		this.y = info.y;
 		this.z = info.z;
 
-		this.visible = false;
+		this.visible = true;
 		this.modelMesh = null; 
 
 		info.gltfLoader.load(

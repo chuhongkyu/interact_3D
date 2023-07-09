@@ -3,18 +3,13 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Player } from "./modeljs/Player";
 import gsap from "gsap";
-import { Hole } from "./modeljs/Hole";
-import { Box } from "./modeljs/Box";
-import { Enemy } from "./modeljs/Enemy";
-import { Rocket } from "./modeljs/Rocket";
+import { Basic } from "./modeljs/Basic";
 
 import { KingBoo } from "./modeljs/KingBoo";
 import { Luisi } from "./modeljs/Luisi";
-import { Boo } from "./modeljs/Boo";
 import { Plant } from "./modeljs/Plant";
 import { Castle } from "./modeljs/Castle";
 
-import { All } from "./modeljs/All";
 import { OldWorld } from "./modeljs/OldWorld";
 
 import makeStage2 from "./MakeStage2";
@@ -204,31 +199,16 @@ fontLoader.load(fontUrl, function (font) {
 
 const gltfLoader = new GLTFLoader();
 
-const box = new Box({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/box.glb",
-  x: 5,
-  y: -1.3,
-  z: 2,
+const box = new Basic({
+	gltfLoader, scene, modelSrc: "./models/box.glb",
+	x: 5, y: -1.3, z: 2,
+	scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
-const rocket = new Rocket({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/rocket.glb",
-  x: 22,
-  y: 0,
-  z: -3,
-});
-
-const enemyAll = new All({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/All.glb",
-  x: 10,
-  y: -3,
-  z: -6,
+const rocket = new Basic({
+  gltfLoader, scene, modelSrc: "./models/rocket.glb",
+  x: 22, y: 0, z: -3,
+  scale: { x: 0.5, y: 0.5, z: 0.5 }
 });
 
 const rocketMesh = new THREE.Mesh(
@@ -244,34 +224,29 @@ rocketMesh.rotation.x = -Math.PI / 2;
 rocketMesh.receiveShadow = true;
 scene.add(rocketMesh);
 
-const mainHole = new Hole({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/hole.glb",
-  x: -4.3,
-  y: 0.5,
-  z: 6.5,
+const stage2model = new Basic({
+  gltfLoader, scene, modelSrc: "./models/All.glb",
+  x: 9.3, y: -3, z: -6,
+  scale: { x: 0.2, y: 0.2, z: 0.2 },
+  rotation: {x: 0, y: 2, z: 0 }
+});
+
+const mainHole = new Basic({
+  gltfLoader, scene, modelSrc: "./models/hole.glb",
+  x: -4.3, y: 0.5, z: 6.5,
+  scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const worldHole = new OldWorld({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/world.glb",
-  x: -5,
-  y: -4,
-  z: 4,
+  gltfLoader, scene, modelSrc: "./models/world.glb",
+  x: -5, y: -4, z: 4,
 });
 
 const castle = new Castle({
-  gltfLoader,
-  scene,
+  gltfLoader, scene,
   modelSrc: "./models/castle.glb",
-  x: 0,
-  y: 4,
-  z: -21,
+  x: 0, y: 4, z: -21,
 });
-
-castle.visible = true
 
 const castleMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(8.5, 8.5),
@@ -286,13 +261,10 @@ castleMesh.rotation.x = -Math.PI / 2;
 castleMesh.receiveShadow = true;
 scene.add(castleMesh);
 
-const greenHole = new Hole({
-  gltfLoader,
-  scene,
-  modelSrc: "./models/hole.glb",
-  x: -15,
-  y: -1.8,
-  z: 12,
+const greenHole = new Basic({
+  gltfLoader, scene, modelSrc: "./models/hole.glb",
+  x: -15, y: -1.8, z: 12,
+  scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const player = new Player({
@@ -310,60 +282,37 @@ const luisi = new Luisi({
 });
 
 const plant = new Plant({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/plant.glb",
-  x: 15,
-  y: 0,
-  z: 0,
+  scene, meshes, gltfLoader, modelSrc: "./models/plant.glb",
+  x: 15, y: 0, z: 0,
 })
 
 const plant1 = new Plant({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/plant.glb",
-  x: -15,
-  y: 0,
-  z: 4,
+  scene, meshes, gltfLoader,modelSrc: "./models/plant.glb",
+  x: -15,y: 0,z: 4,
 })
 
-const boo = new Boo({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/ghost.glb",
-  x: -9,
-  y: -1.3,
-  z: -3,
+const boo = new Basic({
+  scene,meshes,gltfLoader,modelSrc: "./models/ghost.glb",
+  x: -9,y: -1.3,z: -3,
+  scale: { x: 0.6, y: 0.6, z: 0.6 },
+  rotation: {x: 0, y: 2, z: 0 }
 });
 
-const boo1 = new Boo({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/ghost.glb",
-  x: -3,
-  y: -1.3,
-  z: -5,
+const boo1 = new Basic({
+  scene,meshes,gltfLoader,modelSrc: "./models/ghost.glb",
+  x: -3,y: -1.3,z: -5,
+  scale: { x: 0.6, y: 0.6, z: 0.6 },
+  rotation: {x: 0, y: 2, z: 0 }
 });
 
-const boo2 = new Boo({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/ghost.glb",
-  x: -1,
-  y: -1.3,
-  z: -5,
+const boo2 = new Basic({
+  scene,meshes,gltfLoader,modelSrc: "./models/ghost.glb",
+  x: -1, y: -1.3, z: -5,
+  rotation: {x: 0, y: 2, z: 0 }
 });
 
 const kingBoo = new KingBoo({
-  gltfLoader,
-  scene,
-  meshes,
-  modelSrc: "./models/king-boo.glb",
+  gltfLoader, scene, meshes, modelSrc: "./models/king-boo.glb",
 });
 
 const kingBooMesh = new THREE.Mesh(
@@ -382,14 +331,10 @@ fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['킹 부우'], {x: -5, y: 1.2, z:-2})
 });
 
-const enemy = new Enemy({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/turttle.glb",
-  x: 0,
-  y: 0.6,
-  z: 5.4,
+const enemy = new Basic({
+  scene, meshes, gltfLoader, modelSrc: "./models/turttle.glb",
+  x: 0, y: 0.6, z: 5.4,
+  scale: { x: 0.6, y: 0.6, z: 0.6 },
 });
 
 //mushroom
@@ -555,7 +500,7 @@ function draw() {
           //   duration: 1,
           //   y: 5,
           // });
-          gsap.to(enemyAll.modelMesh.position, {
+          gsap.to(stage2model.modelMesh.position, {
             duration: 1,
             y: -3,
             ease: "easeOut",
@@ -564,8 +509,8 @@ function draw() {
           scene.remove(rocket.modelMesh);
           rocketMesh.geometry.dispose();
         })
-        if(!enemyAll.visible){
-          gsap.to(enemyAll.modelMesh.position, {
+        if(!stage2model.visible){
+          gsap.to(stage2model.modelMesh.position, {
             duration: 2,
             y: 0,
             ease: "easeOut",
