@@ -131,6 +131,13 @@ floorMesh.receiveShadow = true;
 scene.add(floorMesh);
 meshes.push(floorMesh);
 
+const gltfLoader = new GLTFLoader();
+
+
+//player
+const player = new Player({
+  scene,meshes, gltfLoader,modelSrc: "./models/mario_really.glb",
+});
 
 //this is mouse
 const pointerMesh = new THREE.Mesh(
@@ -146,6 +153,20 @@ pointerMesh.position.y = 0.01;
 pointerMesh.receiveShadow = true;
 scene.add(pointerMesh);
 
+//메인 홀
+const mainHole = new Basic({
+  gltfLoader, scene, modelSrc: "./models/hole.glb",
+  x: -4.3, y: 0.5, z: 6.5,
+  scale: { x: 0.6, y: 0.6, z: 0.6 }
+});
+
+//box
+const box = new Basic({
+	gltfLoader, scene, modelSrc: "./models/box.glb",
+	x: 5, y: -1.3, z: 2,
+	scale: { x: 0.6, y: 0.6, z: 0.6 }
+});
+
 //box spot
 const spotMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
@@ -160,9 +181,22 @@ spotMesh.rotation.x = -Math.PI / 2;
 spotMesh.receiveShadow = true;
 scene.add(spotMesh);
 
+const luisi = new Luisi({
+  scene, meshes, gltfLoader,
+  modelSrc: "./models/luisi.glb",
+});
 
+// luisi
 fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['루이지'], {x: 5.5, y: 1.2, z:10})
+});
+
+//stage2
+const stage2model = new Basic({
+  gltfLoader, scene, modelSrc: "./models/All.glb",
+  x: 9.3, y: -3, z: -6,
+  scale: { x: 0.2, y: 0.2, z: 0.2 },
+  rotation: {x: 0, y: 2, z: 0 }
 });
 
 //stage2
@@ -180,29 +214,21 @@ stageTwoMesh.receiveShadow = true;
 scene.add(stageTwoMesh);
 
 
-//turttle
-const enemyMesh = new THREE.Mesh(
+//turtle
+const turtleMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
   new THREE.MeshStandardMaterial({
     transparent: true,
     opacity: 0.1,
   })
 );
-enemyMesh.position.set(0, 0.005, 5);
-enemyMesh.rotation.x = -Math.PI / 2;
-enemyMesh.receiveShadow = true;
-scene.add(enemyMesh);
+turtleMesh.position.set(0, 0.005, 5);
+turtleMesh.rotation.x = -Math.PI / 2;
+turtleMesh.receiveShadow = true;
+scene.add(turtleMesh);
 
 fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['거북이?'], {x: 0.4, y: 1.2, z:8})
-});
-
-const gltfLoader = new GLTFLoader();
-
-const box = new Basic({
-	gltfLoader, scene, modelSrc: "./models/box.glb",
-	x: 5, y: -1.3, z: 2,
-	scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const rocket = new Basic({
@@ -224,22 +250,15 @@ rocketMesh.rotation.x = -Math.PI / 2;
 rocketMesh.receiveShadow = true;
 scene.add(rocketMesh);
 
-const stage2model = new Basic({
-  gltfLoader, scene, modelSrc: "./models/All.glb",
-  x: 9.3, y: -3, z: -6,
-  scale: { x: 0.2, y: 0.2, z: 0.2 },
-  rotation: {x: 0, y: 2, z: 0 }
-});
-
-const mainHole = new Basic({
-  gltfLoader, scene, modelSrc: "./models/hole.glb",
-  x: -4.3, y: 0.5, z: 6.5,
-  scale: { x: 0.6, y: 0.6, z: 0.6 }
-});
-
 const worldHole = new OldWorld({
   gltfLoader, scene, modelSrc: "./models/world.glb",
   x: -5, y: -4, z: 4,
+});
+
+const greenHole = new Basic({
+  gltfLoader, scene, modelSrc: "./models/hole.glb",
+  x: -15, y: -1.8, z: 12,
+  scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const castle = new Castle({
@@ -261,26 +280,6 @@ castleMesh.rotation.x = -Math.PI / 2;
 castleMesh.receiveShadow = true;
 scene.add(castleMesh);
 
-const greenHole = new Basic({
-  gltfLoader, scene, modelSrc: "./models/hole.glb",
-  x: -15, y: -1.8, z: 12,
-  scale: { x: 0.6, y: 0.6, z: 0.6 }
-});
-
-const player = new Player({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/mario_really.glb",
-});
-
-const luisi = new Luisi({
-  scene,
-  meshes,
-  gltfLoader,
-  modelSrc: "./models/luisi.glb",
-});
-
 const plant = new Plant({
   scene, meshes, gltfLoader, modelSrc: "./models/plant.glb",
   x: 15, y: 0, z: 0,
@@ -290,6 +289,11 @@ const plant1 = new Plant({
   scene, meshes, gltfLoader,modelSrc: "./models/plant.glb",
   x: -15,y: 0,z: 4,
 })
+
+// luisi
+fontLoader.load(fontUrl, function (font) {
+  createText(scene, font, ['아이템'], {x: 15.1, y: 0.2, z: 1.5})
+});
 
 const boo = new Basic({
   scene,meshes,gltfLoader,modelSrc: "./models/ghost.glb",
@@ -331,8 +335,8 @@ fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['킹 부우'], {x: -5, y: 1.2, z:-2})
 });
 
-const enemy = new Basic({
-  scene, meshes, gltfLoader, modelSrc: "./models/turttle.glb",
+const turtle = new Basic({
+  scene, meshes, gltfLoader, modelSrc: "./models/turtle.glb",
   x: 0, y: 0.6, z: 5.4,
   scale: { x: 0.6, y: 0.6, z: 0.6 },
 });
@@ -460,19 +464,19 @@ function draw() {
       }
       //터틀백
       if (
-        Math.abs(enemyMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(enemyMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(turtleMesh.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(turtleMesh.position.z - player.modelMesh.position.z) < 1.5
       ){
-        if (!enemy.visible) {
-          enemy.visible = true;
-          gsap.to(enemy.modelMesh.position, {
+        if (!turtle.visible) {
+          turtle.visible = true;
+          gsap.to(turtle.modelMesh.position, {
             //나타 날때
             duration: 2,
             z: 15,
             ease: "easeOut",
             // ease: "Bounce.easeOut",
           });
-          gsap.to(enemy.modelMesh.rotation, {
+          gsap.to(turtle.modelMesh.rotation, {
             //나타 날때
             duration: 2,
             y: 15,
@@ -480,9 +484,9 @@ function draw() {
             // ease: "Bounce.easeOut",
           });
           setTimeout(()=>{
-            if(enemy){
-              scene.remove(enemy.modelMesh);
-              enemyMesh.geometry.dispose();
+            if(turtle){
+              scene.remove(turtle.modelMesh);
+              turtleMesh.geometry.dispose();
             }
           },1500)
         } 
@@ -496,10 +500,6 @@ function draw() {
         ROCKET_FEILD = true;
         makeStage1(ROCKET_FEILD,player,()=>{
           updateLifes()
-          // gsap.to(camera.position, {
-          //   duration: 1,
-          //   y: 5,
-          // });
           gsap.to(stage2model.modelMesh.position, {
             duration: 1,
             y: -3,
@@ -599,11 +599,6 @@ function draw() {
             duration: 1,
             y: 1,
             ease: "Bounce.easeOut",
-          });
-
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 3,
           });
         }
       } else if (box.visible) {
