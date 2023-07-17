@@ -341,16 +341,6 @@ const turtle = new Basic({
   scale: { x: 0.6, y: 0.6, z: 0.6 },
 });
 
-//mushroom
-// const mushroom = new Mushroom({
-//   scene,
-//   meshes,
-//   gltfLoader,
-//   modelSrc: "./models/mushroom.glb",
-//   x: 10,
-//   y: 1.2,
-//   z: 8,
-// });
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
@@ -368,20 +358,13 @@ function draw() {
   if (kingBoo.mixer) kingBoo.mixer.update(delta);
   if (plant.mixer) plant.mixer.update(delta);
   if (plant1.mixer) plant1.mixer.update(delta);
-  // if (mushroom.mixer) mushroom.mixer.update(delta);
 
+  if (player.modelMesh) camera.lookAt(player.modelMesh.position);
   if (player.modelMesh) {
-    camera.lookAt(player.modelMesh.position);
-  }
-
-  if (player.modelMesh) {
-    if (isPressed) {
-      raycasting();
-    }
+    if (isPressed) raycasting();
 
     if (player.moving) {
       // 걸어가는 상태
-      
       angle = Math.atan2(
         destinationPoint.z - player.modelMesh.position.z,
         destinationPoint.x - player.modelMesh.position.x,
@@ -395,22 +378,21 @@ function draw() {
       player.actions[0].stop();
       player.actions[1].play();
 
+      //Player 무브
       if (
         Math.abs(destinationPoint.x - player.modelMesh.position.x) < 0.03 &&
         Math.abs(destinationPoint.z - player.modelMesh.position.z) < 0.03
-      ) {
-        player.moving = false;
-      }
+      ) { player.moving = false; }
 
       // endPoint
       if (
         Math.abs(castleMesh.position.x - player.modelMesh.position.x) < 4 &&
         Math.abs(castleMesh.position.z - player.modelMesh.position.z) < 4
       ){
-        makeEnd(END_NOT, END_FEILD, ()=>{
-          END_NOT = false;
-        })
-      }
+          makeEnd(END_NOT, END_FEILD, ()=>{
+            END_NOT = false;
+          })
+        }
 
       // stage2
       if (
@@ -419,48 +401,44 @@ function draw() {
       ){
         OLD_FEILD = true;
         makeStage2(OLD_FEILD,player,()=>{
-          greenHole.visible = false;
-          worldHole.visible = false;
-          stageTwoMesh.material.color.set("blue");
-          gsap.to(greenHole.modelMesh.position, {
-            duration: 1,
-            y: -1.8,
-          });
-          gsap.to(worldHole.modelMesh.position, {
-            duration: 1,
-            y: -4,
-          });
-          // 카메라 포지션 변경
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 5,
-          });
-          updateLifes()
-          scene.remove(stageTwoMesh);
-          stageTwoMesh.geometry.dispose();
+            greenHole.visible = false;
+            worldHole.visible = false;
+            stageTwoMesh.material.color.set("blue");
+            gsap.to(greenHole.modelMesh.position, {
+              duration: 1,
+              y: -1.8,
+            });
+            gsap.to(worldHole.modelMesh.position, {
+              duration: 1,
+              y: -4,
+            });
+            gsap.to(camera.position, {
+              duration: 1,
+              y: 5,
+            });
+            updateLifes()
+            scene.remove(stageTwoMesh);
+            stageTwoMesh.geometry.dispose();
         })
         if (!greenHole.visible && !worldHole.visible) {
-          worldHole.visible = true
-          greenHole.visible = true;
-          stageTwoMesh.material.color.set("blue");
-          gsap.to(greenHole.modelMesh.position, {
-            duration: 1,
-            y: 0,
-            ease: "easeOut",
-          });
-          gsap.to(worldHole.modelMesh.position, {
-            duration: 1,
-            y: 0,
-            ease: "easeOut",
-          });
-          // 카메라 포지션 변경
-          gsap.to(camera.position, {
-            duration: 1,
-            y: 3,
-          });
+            worldHole.visible = true
+            greenHole.visible = true;
+            stageTwoMesh.material.color.set("blue");
+            gsap.to(greenHole.modelMesh.position, {
+              duration: 1,
+              y: 0,
+              ease: "easeOut",
+            });
+            gsap.to(worldHole.modelMesh.position, {
+              duration: 1,
+              y: 0,
+              ease: "easeOut",
+            });
+            gsap.to(camera.position, {
+              duration: 1,
+              y: 3,
+            });
         }
-      } else if (greenHole.visible || worldHole.visible) {
-        
       }
       //터틀백
       if (
@@ -527,7 +505,6 @@ function draw() {
             z: -3,
 
             ease: "easeOut",
-            // ease: "Bounce.easeOut",
           });
           
         }else if (rocket.visible) {
@@ -644,9 +621,6 @@ function checkIntersects() {
       destinationPoint.y = 0.3;
       destinationPoint.z = item.point.z;
       player.modelMesh.lookAt(destinationPoint);
-
-      // console.log(item.point)
-
       player.moving = true;
 
       pointerMesh.position.x = destinationPoint.x;
