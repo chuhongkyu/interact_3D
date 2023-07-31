@@ -18,6 +18,7 @@ import makeEnd from "./MakeEndPoint";
 import { makeInventory } from "./UI";
 import { getMushroom, Mushroom } from "./GetMushroom";
 import { createText } from "./Text";
+import { makeHelper } from "./helper";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -701,5 +702,6 @@ canvas.addEventListener("touchmove", (e) => {
 });
 
 draw();
-makeInventory()
-getMushroom()
+makeInventory();
+makeHelper(scene);
+getMushroom();
