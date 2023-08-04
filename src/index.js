@@ -175,7 +175,7 @@ function init() {
 	  updateDiceNumber();
 	  setTimeout(()=>{
 		scene.remove(dice.modelMesh);
-		dice.geometry.dispose();
+		dice.geometrt.dispose();
 	  },1500)
 	  ui.classList.remove('active')
 
@@ -190,8 +190,16 @@ function init() {
 	function goGame(){
 		textBox.classList.add("end")
 		setTimeout(()=>{
-			location.href = `/game.html?data=${diceNumber}`
+			setHost();
 		}, 1000)
+	}
+
+	function setHost(){
+		if(location.hostname === 'chuhongkyu.github.io'){
+			location.href = `/interact_3D/game.html?data=${diceNumber}`
+		}else if(location.hostname === 'localhost'){
+			location.href = `/game.html?data=${diceNumber}`
+		}
 	}
 
 	function handleUpClick() {
