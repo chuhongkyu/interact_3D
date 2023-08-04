@@ -96,7 +96,7 @@ camera.updateProjectionMatrix();
 scene.add(camera);
 
 // Light
-const ambientLight = new THREE.AmbientLight("white", 0.7);
+const ambientLight = new THREE.AmbientLight("white", 0.8);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight("white", 0.5);

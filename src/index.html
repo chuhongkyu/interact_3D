@@ -13,57 +13,16 @@
 	
 </head>
 <body>
-	<canvas id="three-canvas"></canvas>
-	<div class="modal show">
-		<p>안녕하세요.😀<br>
-			여기는 FE 추홍규가 제작한 마리오 월드입니다.<br>
-			가볍게 즐겨주세요.<br><br>
-			맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!</p>
-	</div>
-	<div id="container_ui_bottom">
-		<span class="__info">
-			<img src="./images/info.png" alt="icon"/>
-			<div class="__info-container">
-				<!-- <span class="__inner"><img src="./images/info.png" alt="icon"/></span> -->
-				<p>
-					<b>조작 법 :</b> 터치 또는 마우스 클릭으로 마리오를 움직이세요.<br><br>
-					<b>버섯 획득 :</b> 이벤트 칸을 클리어 하면 버섯을 획득 할 수 있어요.<br><br>
-					<b>이벤트 칸 :</b> 이벤트 칸이라고 해서 전부 버섯을 주지는 않아요~😝<br>
-				</p>
-			</div>
-		</span>
+	<div id="three-js"></div>
+	<div class="__intro"></div>
+	<div class="ui-btns">
+		<div class="dice-display"></div>
+		<div class="arrow">
+			<span class="btn up"><img src="./images/up.png" alt="up"/></span>
+			<span class="btn down"><img src="./images/up.png" alt="down"/></span>
+		</div>
+		<div class="jump">선택</div>
 		
 	</div>
-	<div id="container_ui_top">
-		<div class="__icon __lifes">
-			<span class="active"></span>
-			<span class="active"></span>
-			<span class="active"></span>
-		</div>
-	</div>
-	<div id="container_ui_right">
-		<div class="btn-container"><img src="./images/x-btn.png" alt="x"/></div>
-		<div class="__grid">
-			<span id="item1" class="item" draggable="true"><div class="mushroom"></div></span>
-			<span id="item2" class="item" draggable="true"></span>
-			<span id="item3" class="item" draggable="true"></span>
-			<span id="item4" class="item" draggable="true"></span>
-			<span id="item5" class="item" draggable="true"></span>
-			<span id="item6" class="item" draggable="true"></span>
-			<span id="item7" class="item" draggable="true"></span>
-			<span id="item8" class="item" draggable="true"></span>
-			<span id="item9" class="item" draggable="true"></span>
-		</div>
-	</div>
-	
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			const modal = document.querySelector(".modal");
-
-			setTimeout(function() {
-				modal.classList.remove("show");
-			}, 3000);
-		});
-	</script>
 </body>
 </html>

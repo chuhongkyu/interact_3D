@@ -10,7 +10,8 @@ const webpackMode = process.env.NODE_ENV || 'development';
 module.exports = {
 	mode: webpackMode,
 	entry: {
-		main: './src/main.js',
+		index: './src/index.js', // index.html에 사용될 entry point
+		main: './src/main.js',   // game.html에 사용될 entry point
 	},
 	output: {
 		path: path.resolve('./dist'),
@@ -49,12 +50,27 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
+			filename: 'index.html',
 			template: './src/index.html',
+			chunks: ['index'], 
 			minify: process.env.NODE_ENV === 'production' ? {
 				collapseWhitespace: true,
 				removeComments: true,
 			} : false,
-			favicon: './src/favicon.ico', // Favicon 경로 추가
+
+			favicon: './src/favicon.ico',
+		}),
+		new HtmlWebpackPlugin({
+			filename: 'game.html',
+			template: './src/game.html',
+			chunks: ['main'], 
+			minify: process.env.NODE_ENV === 'production'
+			  ? {
+				  collapseWhitespace: true,
+				  removeComments: true,
+				}
+			  : false,
+			favicon: './src/favicon.ico', // Favicon 경로 추가 (필요한 경우)
 		}),
 		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin({

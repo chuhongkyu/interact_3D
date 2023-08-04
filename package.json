@@ -30,7 +30,9 @@
   "dependencies": {
     "gh-pages": "^5.0.0",
     "gsap": "^3.11.0",
-    "three": "^0.143.0"
+    "three": "^0.143.0",
+    "three-orbitcontrols": "^2.110.3",
+    "typed.js": "^2.0.16"
   },
   "homepage": "http://chuhongkyu.github.io/interact_3D"
 }
