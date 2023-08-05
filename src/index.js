@@ -19,14 +19,23 @@ function init() {
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.getElementById('three-js').appendChild( renderer.domElement );
+
 	// scene
 	scene = new THREE.Scene();
 	// camera
 	camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 100 );
-	camera.position.set( 0, 10, 30 );
 
 	const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 256 );
 	cubeCamera = new THREE.CubeCamera( 1, 1000, cubeRenderTarget );
+
+	camera.position.set( 0, 10, 30 );
+
+	// controls.addEventListener( 'change', render );
+	// controls.minDistance = 10;
+	// controls.maxDistance = 50;
+	// controls.minZoom = 1;
+	// controls.maxZoom = 1;
+	// controls.enableRotate = false;
 
 	const genCubeUrls = function ( prefix, postfix ) {
 		return [
@@ -70,6 +79,26 @@ function init() {
 
 	let numberTime = false;
 	let diceNumber = 1;
+
+	function setCameraPosition(zValue) {
+		gsap.to(camera.position, {
+			duration: 2,
+			y: 1,
+			z: zValue,
+		});
+	}
+
+	function handleMouseWheel(event) {
+		const currentZ = camera.position.z;
+		const delta = event.deltaY;
+
+		let newZ = currentZ + delta * 0.01;
+	
+		newZ = Math.min(3, Math.max(2, newZ));
+		setCameraPosition(newZ);
+	}
+
+	window.addEventListener('wheel', handleMouseWheel);
 
 	function draw() {
 		const delta = clock.getDelta();
