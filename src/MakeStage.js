@@ -7,7 +7,8 @@ export default function makeStage1($data, $player, $cb){
                         <p>개발을 하다보면 기확자, 디자이너등 다양한 직군들과 소통해야 하죠.<br>
                            그들의 요구는 떄로는 우리를 너무 괴롭힙니다.😂<br>
                            또한 그것을 해결하는 것은 온전히 개발자 혼자의 일 일것입니다.<br>
-                           하지만 힘내세요.😃 개발자 여러분 혼자가 아닙니다.
+                           하지만! 힘내세요~ <br>
+                           😃 개발자 여러분 혼자가 아닙니다.
                         </p>
                       `
     modal.classList.add('show')
