@@ -28,6 +28,8 @@
     "webpack-dev-server": "^4.10.0"
   },
   "dependencies": {
+    "@lottiefiles/lottie-interactivity": "^1.6.2",
+    "@lottiefiles/lottie-player": "^2.0.2",
     "gh-pages": "^5.0.0",
     "gsap": "^3.11.0",
     "three": "^0.143.0",

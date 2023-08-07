@@ -78,6 +78,7 @@ module.exports = {
 				{ from: "./src/main.css", to: "./main.css" },
 				{ from: "./src/images", to: "./images" },
 				{ from: "./src/models", to: "./models" },
+				{ from: "./src/lottie", to: "./lottie" },
 				{ from: "./src/fonts", to: "./fonts" },
 			],
 		})

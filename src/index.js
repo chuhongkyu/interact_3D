@@ -5,12 +5,18 @@ import gsap from 'gsap/gsap-core';
 import { Intro } from './modeljs/Intro';
 import Typed from 'typed.js';
 import { Metallic } from './modeljs/Metallic';
+import LottieInteractivity from '@lottiefiles/lottie-interactivity'
+import "@lottiefiles/lottie-player";
+import { create } from "@lottiefiles/lottie-interactivity";
 
 let renderer, scene, camera, cubeCamera;
+let loading = true;
 
 init();
 
+
 function init() {
+
 	const gltfLoader = new GLTFLoader();
 	const meshes = [];
 
@@ -29,13 +35,6 @@ function init() {
 	cubeCamera = new THREE.CubeCamera( 1, 1000, cubeRenderTarget );
 
 	camera.position.set( 0, 10, 30 );
-
-	// controls.addEventListener( 'change', render );
-	// controls.minDistance = 10;
-	// controls.maxDistance = 50;
-	// controls.minZoom = 1;
-	// controls.maxZoom = 1;
-	// controls.enableRotate = false;
 
 	const genCubeUrls = function ( prefix, postfix ) {
 		return [
@@ -100,6 +99,9 @@ function init() {
 
 	window.addEventListener('wheel', handleMouseWheel);
 
+	loadingLottie();
+	draw()
+
 	function draw() {
 		const delta = clock.getDelta();
 		if (player.mixer) player.mixer.update(delta);
@@ -108,11 +110,14 @@ function init() {
 		renderer.render(scene, camera);
   		renderer.setAnimationLoop(draw);
 
-		gsap.to(camera.position, {
-			duration: 2,
-			y: 1,
-			z: 3,
-		});
+		if(!loading){
+			gsap.to(camera.position, {
+				duration: 2,
+				y: 1,
+				z: 3,
+			});
+		}
+		
 		  
 		if(numberTime){
 			gsap.to(dice.modelMesh.position, {
@@ -180,8 +185,6 @@ function init() {
 			}
 		}
 	}
-	
-	draw()
 
 	const textBox = document.querySelector('.__intro')
 	const content1 = "어서와 나는 개발자 mr.chu의 마리오라고 해."
@@ -275,31 +278,22 @@ function init() {
 	// Call updateDiceNumber to display the initial value
 	updateDiceNumber();
 
-	const time1 = setTimeout(()=> {
+	setTimeout(()=> {
 		textBox.style.display = "block";
 		const typed = new Typed('.__intro', {
 			strings: [content1, content2, content3],
 			typeSpeed: 50,
 			onComplete: changeNumber
 		});
-	}, 2000)
+	}, 4000)
+
 
 	function changeNumber(){
 		ui.classList.add('active')
 		return	numberTime = true;
 	}
-
-	
-
-	// const axes = new THREE.AxesHelper(10);
-	// scene.add(axes);
-
-	// const gridHelper = new THREE.GridHelper(10, 10);
-	// scene.add(gridHelper);
-
 	window.addEventListener( 'resize', onWindowResize );
 }
-
 
 function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -310,4 +304,17 @@ function onWindowResize() {
 
 function render() {
 	renderer.render( scene, camera );
+}
+
+function loadingLottie(){
+	let loadingDiv = document.querySelector('.loading')
+	const t1 = setTimeout(()=>{
+		loadingDiv.classList.add('hide');
+		return loading = false
+	},2000)
+
+	setTimeout(()=>{
+		loadingDiv.remove()
+		clearTimeout(t1)
+	},3100)
 }
