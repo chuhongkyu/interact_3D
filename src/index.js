@@ -257,10 +257,20 @@ function init() {
 			duration: 0.5,
 			y: 0.7,
 			onComplete: ()=>{
-				dice.actions[1].play();
+				gsap.to(dice.modelMesh.scale, {
+					duration: 0.3,
+					x: 0.03, y: 0.03, z: 0.03,
+					ease: "spring",
+					onComplete: ()=>{
+						gsap.to(dice.modelMesh.scale, {
+							duration: 0.3,
+							x: 0.02, y: 0.02, z: 0.02,
+							ease: "spring"
+						})
+					}
+				})
 				gsap.to(player.modelMesh.position, {
-				y: 0,duration: 0.4,onComplete:()=>{
-					dice.actions[1].stop();
+				y: 0, duration: 0.4, onComplete:()=>{
 				}
 
 			})}
@@ -274,6 +284,8 @@ function init() {
 		},1610)
 		rollDice()
 	});
+
+
 
 	// Call updateDiceNumber to display the initial value
 	updateDiceNumber();
@@ -295,6 +307,8 @@ function init() {
 	window.addEventListener( 'resize', onWindowResize );
 }
 
+
+
 function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -307,14 +321,14 @@ function render() {
 }
 
 function loadingLottie(){
-	let loadingDiv = document.querySelector('.loading')
+	let loadingDiv = document.querySelector('#three-js')
 	const t1 = setTimeout(()=>{
 		loadingDiv.classList.add('hide');
 		return loading = false
 	},2000)
 
 	setTimeout(()=>{
-		loadingDiv.remove()
+		// loadingDiv.remove()
 		clearTimeout(t1)
 	},3100)
 }
