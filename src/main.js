@@ -61,6 +61,7 @@ floorTexture.repeat.y = 6;
 
 // Scene
 const scene = new THREE.Scene();
+scene.fog = new THREE.Fog( 0xcccccc, 10, 15 );
 
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
