@@ -50,6 +50,10 @@ mushroom.addEventListener("dblclick", ()=>{
 function updateLifes() {
   let LIFES = lifes.querySelectorAll('span.active');
   LIFES[0].classList.remove('active')
+
+  if(lifes.querySelectorAll('span.active').length == 0){
+    return  END_FEILD = true;
+  }
 }
 
 // info 클릭
@@ -398,8 +402,22 @@ function draw() {
         Math.abs(castleMesh.position.x - player.modelMesh.position.x) < 4 &&
         Math.abs(castleMesh.position.z - player.modelMesh.position.z) < 4
       ){
-          makeEnd(END_NOT, END_FEILD, ()=>{
-            END_NOT = false;
+          makeEnd(END_NOT, END_FEILD, 
+          ()=> END_NOT = false,
+          ()=> {
+            gsap.to(castle.modelMesh.position, {
+              duration: 1,
+              y: -3,
+              ease: "easeOut",
+              onComplete: ()=> {
+                scene.remove(castle);
+                scene.remove(castleMesh)
+              }
+            })
+            gsap.to(camera.position, {
+              duration: 1,
+              y: 3,
+            });
           })
         }
 
@@ -593,10 +611,6 @@ function draw() {
         gsap.to(box.modelMesh.position, {
           duration: 0.5,
           y: -1.3,
-        });
-        gsap.to(camera.position, {
-          duration: 1,
-          y: 5,
         });
       }
     } else {

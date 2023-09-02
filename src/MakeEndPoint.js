@@ -1,7 +1,15 @@
-export default function makeEnd($one, $data, $cb){
+export default function makeEnd($one, $data, $cb, $cb2){
     let point = $one;
     if($data){
-        console.log("clear")
+        document.body.classList.add('type1')
+        let modal = document.querySelector('.modal')
+        modal.innerHTML = `
+                            <p>축하해! 👊<br><br>
+                            너는 이제 진정한 개발자야!<br>
+                            </p>
+                        `
+        modal.classList.add('show')
+        $cb2()
     }else{
         point ? make(): null
 
