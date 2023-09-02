@@ -36,6 +36,5 @@ export function makeInventory() {
         item.addEventListener("dragover", handleDragOver);
         item.addEventListener("drop", handleDrop);
     });
-
 }
   

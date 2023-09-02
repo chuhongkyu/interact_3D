@@ -39,6 +39,13 @@ let END_NOT = true;
 let isProcessingClick = false;
 let inventory = document.getElementById('container_ui_right')
 
+
+const mushroom = document.querySelector(".item .mushroom")
+mushroom.addEventListener("dblclick", ()=>{
+  mushroom.remove();
+  updateLifes();
+})
+
 // 라이프 업데이트
 function updateLifes() {
   let LIFES = lifes.querySelectorAll('span.active');

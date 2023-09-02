@@ -293,7 +293,6 @@ table {
 	height: 50px;
 	border-radius: 50%;
 	background: url("./images/life.png") 100% 100%/cover no-repeat;
-	pointer-events: none;
 }
   
 
