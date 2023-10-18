@@ -119,8 +119,8 @@ directionalLight.position.z = directionalLightOriginPosition.z;
 directionalLight.castShadow = true;
 
 // mapSize 세팅으로 그림자 퀄리티 설정
-directionalLight.shadow.mapSize.width = 2048;
-directionalLight.shadow.mapSize.height = 2048;
+directionalLight.shadow.mapSize.width = 1024;
+directionalLight.shadow.mapSize.height = 1024;
 // 그림자 범위
 directionalLight.shadow.camera.left = -100;
 directionalLight.shadow.camera.right = 100;
@@ -133,7 +133,7 @@ scene.add(directionalLight);
 // Mesh
 const meshes = [];
 const floorMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(40, 40),
+  new THREE.PlaneGeometry(50, 50),
   new THREE.MeshStandardMaterial({
     map: floorTexture,
   })
