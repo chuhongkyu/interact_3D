@@ -1,16 +1,28 @@
 import * as THREE from 'three';
+import gsap from 'gsap/gsap-core';
 import { PlayerStop } from './modeljs/PlayerStop';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import gsap from 'gsap/gsap-core';
-import { Intro } from './modeljs/Intro';
+import { World } from './modeljs/World';
+import { Dice } from './modeljs/Dice';
 import Typed from 'typed.js';
-import { Metallic } from './modeljs/Metallic';
-import LottieInteractivity from '@lottiefiles/lottie-interactivity'
 import "@lottiefiles/lottie-player";
-import { create } from "@lottiefiles/lottie-interactivity";
 
 let renderer, scene, camera, cubeCamera;
 let loading = true;
+
+// HTML
+const textBox = document.querySelector('.__intro')
+const up = document.querySelector('.arrow .up');
+const down = document.querySelector('.arrow .down');
+const jump = document.querySelector('.jump');
+const diceDisplay = document.querySelector('.dice-display');
+const ui = document.querySelector('.ui-btns')
+
+const texts = [
+	"어서와 나는 개발자 mr.chu의 마리오라고 해.",
+	"방문 해줘서 고마워. 나와 함께 개발자의 인생을 알아보자.",
+	"시작하기에 앞서 너는 몇 년차 개발자의 인생을 보고싶어?",
+]
 
 init();
 
@@ -48,13 +60,17 @@ function init() {
 		scene, meshes, gltfLoader, modelSrc: "./models/mario_really.glb",
 	});
 
-	const world = new Intro({
-		gltfLoader, scene, modelSrc: "./models/world-intro.glb",
+	const world = new World({
+		gltfLoader, meshes, scene, modelSrc: "./models/world-intro.glb",
 		x: 0, y: 0, z: 0,
 		scale: { x: 0.2, y: 0.2, z: 0.2 }
 	});
 
-	scene.add(world)
+	const dice = new Dice({
+		gltfLoader, scene, modelSrc: "./models/dice.glb",
+		x: 3, y: 1, z: -1,
+		scale: { x: 0.02, y: 0.02, z: 0.02 }
+	});
 
 	const urls = genCubeUrls( './images/sky/', '.png' );
 
@@ -64,40 +80,13 @@ function init() {
 		render();
 	} );
 
-	const dice = new Metallic({
-		gltfLoader, scene, modelSrc: "./models/dice.glb",
-		x: 3, y: 1, z: -1,
-		scale: { x: 0.02, y: 0.02, z: 0.02 }
-	});
-
 	const ambientLight = new THREE.AmbientLight("white", 1.5);
 	scene.add(ambientLight);
-
 
 	const clock = new THREE.Clock();
 
 	let numberTime = false;
 	let diceNumber = 1;
-
-	function setCameraPosition(zValue) {
-		gsap.to(camera.position, {
-			duration: 2,
-			y: 1,
-			z: zValue,
-		});
-	}
-
-	function handleMouseWheel(event) {
-		const currentZ = camera.position.z;
-		const delta = event.deltaY;
-
-		let newZ = currentZ + delta * 0.01;
-	
-		newZ = Math.min(3, Math.max(2, newZ));
-		setCameraPosition(newZ);
-	}
-
-	window.addEventListener('wheel', handleMouseWheel);
 
 	loadingLottie();
 	draw()
@@ -118,86 +107,10 @@ function init() {
 			});
 		}
 		
-		  
 		if(numberTime){
-			gsap.to(dice.modelMesh.position, {
-				duration: 0.3,
-				x: -0.05,
-				y: 2,
-				z: 1,
-				ease: 'easeInOut'
-			});
-			switch(diceNumber){
-				case 1:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: 0.4,
-						y: 0,
-						z: 0,
-						ease: 'easeInOut'
-					});
-					break;
-				case 2:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: 2,
-						y: 3.15,
-						z: 0,
-						ease: 'easeInOut'
-					});
-					break;
-				case 3:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: 2,
-						y: 3.15,
-						z: 1.5,
-						ease: 'easeInOut'
-					});
-					break;
-				case 4:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: -1.1,
-						y: 0,
-						z: 1.5,
-						ease: 'easeInOut'
-					});
-					break;
-				case 5:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: -1.1,
-						y: 0,
-						z: 0,
-						ease: 'easeInOut'
-					});
-					break;
-				case 6:
-					gsap.to(dice.modelMesh.rotation, {
-						duration: 0.3,
-						x: -2.7,
-						y: 0,
-						z: 0,
-						ease: 'easeInOut'
-					});
-					break;
-			}
+			handleDiceAnimation(dice, diceNumber)
 		}
 	}
-
-	const textBox = document.querySelector('.__intro')
-	const content1 = "어서와 나는 개발자 mr.chu의 마리오라고 해."
-	const content2 = "방문 해줘서 고마워. 나와 함께 개발자의 인생을 알아보자."
-	const content3 = "시작하기에 앞서 너는 몇 년차 개발자의 인생을 보고싶어?"
-
-
-	const up = document.querySelector('.arrow .up');
-	const down = document.querySelector('.arrow .down');
-	const jump = document.querySelector('.jump');
-	const diceDisplay = document.querySelector('.dice-display');
-
-	const ui = document.querySelector('.ui-btns')
 
 	function updateDiceNumber() {
 	  diceDisplay.textContent = diceNumber;
@@ -222,16 +135,8 @@ function init() {
 	function goGame(){
 		textBox.classList.add("end")
 		setTimeout(()=>{
-			setHost();
+			setHost(diceNumber);
 		}, 1000)
-	}
-
-	function setHost(){
-		if(location.hostname === 'chuhongkyu.github.io'){
-			location.href = `/interact_3D/game.html?data=${diceNumber}`
-		}else if(location.hostname === 'localhost'){
-			location.href = `/game.html?data=${diceNumber}`
-		}
 	}
 
 	function handleUpClick() {
@@ -248,13 +153,32 @@ function init() {
 	  updateDiceNumber();
 	}
 
+	updateDiceNumber();
+
+	setTimeout(()=> {
+		textBox.style.display = "block";
+		const typed = new Typed('.__intro', {
+			strings: texts,
+			typeSpeed: 50,
+			onComplete: changeNumber
+		});
+	},4000)
+	
+
+	function changeNumber(){
+		ui.classList.add('active')
+		return	numberTime = true;
+	}
+
+	window.addEventListener('wheel', handleMouseWheel);
 	up.addEventListener('click', handleUpClick);
 	down.addEventListener('click', handleDownClick);
+	window.addEventListener( 'resize', onWindowResize );
 	jump.addEventListener('click', ()=>{
 		player.actions[2].play();
 		gsap.to(player.modelMesh.position, {
 			delay:0.4,
-			duration: 0.5,
+			duration: 0.48,
 			y: 0.7,
 			onComplete: ()=>{
 				gsap.to(dice.modelMesh.scale, {
@@ -284,30 +208,21 @@ function init() {
 		},1610)
 		rollDice()
 	});
-
-
-
-	// Call updateDiceNumber to display the initial value
-	updateDiceNumber();
-
-	setTimeout(()=> {
-		textBox.style.display = "block";
-		const typed = new Typed('.__intro', {
-			strings: [content1, content2, content3],
-			typeSpeed: 50,
-			onComplete: changeNumber
-		});
-	}, 4000)
-
-
-	function changeNumber(){
-		ui.classList.add('active')
-		return	numberTime = true;
-	}
-	window.addEventListener( 'resize', onWindowResize );
 }
 
+function handleMouseWheel(event) {
+	const currentZ = camera.position.z;
+	const delta = event.deltaY;
 
+	let newZ = currentZ + delta * 0.01;
+
+	newZ = Math.min(3, Math.max(2, newZ));
+	gsap.to(camera.position, {
+		duration: 2,
+		y: 1,
+		z: newZ,
+	});
+}
 
 function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -328,7 +243,80 @@ function loadingLottie(){
 	},2000)
 
 	setTimeout(()=>{
-		// loadingDiv.remove()
 		clearTimeout(t1)
 	},3100)
+}
+
+function setHost(dice){
+	if(location.hostname === 'chuhongkyu.github.io'){
+		location.href = `/interact_3D/game.html?data=${dice}`
+	}else if(location.hostname === 'localhost'){
+		location.href = `/game.html?data=${dice}`
+	}
+}
+
+function handleDiceAnimation(dice, number){
+	gsap.to(dice.modelMesh.position, {
+		duration: 0.3,
+		x: -0.05,
+		y: 2,
+		z: 1,
+		ease: 'easeInOut'
+	});
+	switch(number){
+		case 1:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: 0.4,
+				y: 0,
+				z: 0,
+				ease: 'easeInOut'
+			});
+			break;
+		case 2:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: 2,
+				y: 3.15,
+				z: 0,
+				ease: 'easeInOut'
+			});
+			break;
+		case 3:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: 2,
+				y: 3.15,
+				z: 1.5,
+				ease: 'easeInOut'
+			});
+			break;
+		case 4:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: -1.1,
+				y: 0,
+				z: 1.5,
+				ease: 'easeInOut'
+			});
+			break;
+		case 5:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: -1.1,
+				y: 0,
+				z: 0,
+				ease: 'easeInOut'
+			});
+			break;
+		case 6:
+			gsap.to(dice.modelMesh.rotation, {
+				duration: 0.3,
+				x: -2.7,
+				y: 0,
+				z: 0,
+				ease: 'easeInOut'
+			});
+			break;
+	}
 }

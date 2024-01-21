@@ -11,6 +11,7 @@ export class PlayerStop {
       });
 
       this.modelMesh = glb.scene.children[0];
+      this.modelMesh.castShadow = true
       this.modelMesh.position.y = 0;
       this.modelMesh.rotation.x = 0;
       this.modelMesh.name = "mario";

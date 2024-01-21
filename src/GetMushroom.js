@@ -17,7 +17,6 @@ export class Mushroom {
 
       this.modelMesh = glb.scene.children[0];
       this.modelMesh.position.set(this.x, this.y, this.z);
-    //   this.modelMesh.scale.set(0.3,0.3,0.3)
 
       info.scene.add(this.modelMesh);
       info.meshes.push(this.modelMesh);
