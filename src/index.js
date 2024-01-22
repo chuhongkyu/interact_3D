@@ -80,7 +80,7 @@ function init() {
 		render();
 	} );
 
-	const ambientLight = new THREE.AmbientLight("white", 1.5);
+	const ambientLight = new THREE.AmbientLight("white", 3);
 	scene.add(ambientLight);
 
 	const clock = new THREE.Clock();

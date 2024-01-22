@@ -108,11 +108,11 @@ camera.updateProjectionMatrix();
 scene.add(camera);
 
 // Light
-const ambientLight = new THREE.AmbientLight("white", 0.8);
+const ambientLight = new THREE.AmbientLight("white", 1.1);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight("white", 0.5);
-const directionalLightOriginPosition = new THREE.Vector3(1, 1, 1);
+const directionalLight = new THREE.DirectionalLight("white", 1.9);
+const directionalLightOriginPosition = new THREE.Vector3(1, 2, 2);
 directionalLight.position.x = directionalLightOriginPosition.x;
 directionalLight.position.y = directionalLightOriginPosition.y;
 directionalLight.position.z = directionalLightOriginPosition.z;
