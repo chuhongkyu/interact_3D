@@ -5,10 +5,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { World } from './modeljs/World';
 import { Dice } from './modeljs/Dice';
 import Typed from 'typed.js';
-import "@lottiefiles/lottie-player";
-
-let renderer, scene, camera, cubeCamera;
-let loading = true;
+import { createScene, handleMouseWheel } from './intro/indexScene';
+import { isLoading, loadingLottie } from './intro/loadingLottie';
+import { goGame } from './intro/indexEndFunc';
 
 // HTML
 const textBox = document.querySelector('.__intro')
@@ -31,30 +30,8 @@ function init() {
 
 	const gltfLoader = new GLTFLoader();
 	const meshes = [];
-
-	// renderer
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
-	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.getElementById('three-js').appendChild( renderer.domElement );
-
-	// scene
-	scene = new THREE.Scene();
-	// camera
-	camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 100 );
-
-	const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 256 );
-	cubeCamera = new THREE.CubeCamera( 1, 1000, cubeRenderTarget );
-
-	camera.position.set( 0, 10, 30 );
-
-	const genCubeUrls = function ( prefix, postfix ) {
-		return [
-			prefix + 'px' + postfix, prefix + 'nx' + postfix,
-			prefix + 'py' + postfix, prefix + 'ny' + postfix,
-			prefix + 'pz' + postfix, prefix + 'nz' + postfix
-		];
-	};
+	
+	const { renderer, scene, camera } = createScene();
 
 	const player = new PlayerStop({
 		scene, meshes, gltfLoader, modelSrc: "./models/mario_really.glb",
@@ -72,24 +49,15 @@ function init() {
 		scale: { x: 0.02, y: 0.02, z: 0.02 }
 	});
 
-	const urls = genCubeUrls( './images/sky/', '.png' );
-
-	new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
-		scene.background = cubeTexture;
-		cubeCamera.update( renderer, scene );
-		render();
-	} );
-
-	const ambientLight = new THREE.AmbientLight("white", 3);
-	scene.add(ambientLight);
-
+	
 	const clock = new THREE.Clock();
 
-	let numberTime = false;
+	let selectDiceStage = false;
 	let diceNumber = 1;
 
 	loadingLottie();
 	draw()
+	startTextBox(startDiceStage);
 
 	function draw() {
 		const delta = clock.getDelta();
@@ -99,7 +67,7 @@ function init() {
 		renderer.render(scene, camera);
   		renderer.setAnimationLoop(draw);
 
-		if(!loading){
+		if(!isLoading()){
 			gsap.to(camera.position, {
 				duration: 2,
 				y: 1,
@@ -107,7 +75,7 @@ function init() {
 			});
 		}
 		
-		if(numberTime){
+		if(selectDiceStage){
 			handleDiceAnimation(dice, diceNumber)
 		}
 	}
@@ -118,25 +86,14 @@ function init() {
 
 	function rollDice() {
 	  updateDiceNumber();
-	  setTimeout(()=>{
-		scene.remove(dice.modelMesh);
-		dice.geometrt.dispose();
-	  },1500)
 	  ui.classList.remove('active')
 
 	  const typed = new Typed('.__intro', {
 		strings: [`${diceNumber}년 차 개발자의 인생이 궁금하구나?`, `자 ${diceNumber}년차 개발자의 인생으로 우리 어디 한번 떠나보자!`],
 		typeSpeed: 50,
 		startDelay: 1,
-		onComplete: goGame
+		onComplete: ()=> goGame(textBox, diceNumber)
       });
-	}
-
-	function goGame(){
-		textBox.classList.add("end")
-		setTimeout(()=>{
-			setHost(diceNumber);
-		}, 1000)
 	}
 
 	function handleUpClick() {
@@ -153,27 +110,17 @@ function init() {
 	  updateDiceNumber();
 	}
 
-	updateDiceNumber();
-
-	setTimeout(()=> {
-		textBox.style.display = "block";
-		const typed = new Typed('.__intro', {
-			strings: texts,
-			typeSpeed: 50,
-			onComplete: changeNumber
-		});
-	},4000)
-	
-
-	function changeNumber(){
+	function startDiceStage(){
 		ui.classList.add('active')
-		return	numberTime = true;
+		return selectDiceStage = true
 	}
 
-	window.addEventListener('wheel', handleMouseWheel);
+	updateDiceNumber();
+	
+	window.addEventListener('wheel', (e) => handleMouseWheel(e, camera));
 	up.addEventListener('click', handleUpClick);
 	down.addEventListener('click', handleDownClick);
-	window.addEventListener( 'resize', onWindowResize );
+	
 	jump.addEventListener('click', ()=>{
 		player.actions[2].play();
 		gsap.to(player.modelMesh.position, {
@@ -210,49 +157,15 @@ function init() {
 	});
 }
 
-function handleMouseWheel(event) {
-	const currentZ = camera.position.z;
-	const delta = event.deltaY;
-
-	let newZ = currentZ + delta * 0.01;
-
-	newZ = Math.min(3, Math.max(2, newZ));
-	gsap.to(camera.position, {
-		duration: 2,
-		y: 1,
-		z: newZ,
-	});
-}
-
-function onWindowResize() {
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	render();
-}
-
-function render() {
-	renderer.render( scene, camera );
-}
-
-function loadingLottie(){
-	let loadingDiv = document.querySelector('#three-js')
-	const t1 = setTimeout(()=>{
-		loadingDiv.classList.add('hide');
-		return loading = false
-	},2000)
-
-	setTimeout(()=>{
-		clearTimeout(t1)
-	},3100)
-}
-
-function setHost(dice){
-	if(location.hostname === 'chuhongkyu.github.io'){
-		location.href = `/interact_3D/game.html?data=${dice}`
-	}else if(location.hostname === 'localhost'){
-		location.href = `/game.html?data=${dice}`
-	}
+function startTextBox(func){
+	setTimeout(()=> {
+		textBox.style.display = "block";
+		const typed = new Typed('.__intro', {
+			strings: texts,
+			typeSpeed: 50,
+			onComplete: func
+		});
+	}, 4000)
 }
 
 function handleDiceAnimation(dice, number){
