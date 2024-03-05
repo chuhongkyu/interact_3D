@@ -64,7 +64,7 @@ info.addEventListener('click',()=>{
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
-const floorTexture = textureLoader.load("assets/images/bg.png");
+const floorTexture = textureLoader.load("./assets/images/bg.png");
 floorTexture.wrapS = THREE.RepeatWrapping;
 floorTexture.wrapT = THREE.RepeatWrapping;
 floorTexture.repeat.x = 6;
@@ -76,7 +76,7 @@ scene.fog = new THREE.Fog( 0xcccccc, 10, 15 );
 
 // FontLoader를 사용하여 폰트 로드
 const fontLoader = new FontLoader();
-const fontUrl = "assets/fonts/Pretendard.json"
+const fontUrl = "./assets/fonts/Pretendard.json"
 
 
 // Renderer
@@ -149,7 +149,7 @@ const gltfLoader = new GLTFLoader();
 
 //player
 const player = new Player({
-  scene,meshes, gltfLoader,modelSrc: "assets/models/mario_really.glb",
+  scene,meshes, gltfLoader,modelSrc: "./assets/models/mario_really.glb",
 });
 
 //this is mouse
@@ -168,14 +168,14 @@ scene.add(pointerMesh);
 
 //메인 홀
 const mainHole = new Basic({
-  gltfLoader, scene, modelSrc: "assets/models/hole.glb",
+  gltfLoader, scene, modelSrc: "./assets/models/hole.glb",
   x: -4.3, y: 0.5, z: 6.5,
   scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 //box
 const box = new Basic({
-	gltfLoader, scene, modelSrc: "assets/models/box.glb",
+	gltfLoader, scene, modelSrc: "./assets/models/box.glb",
 	x: 5, y: -1.3, z: 2,
 	scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
@@ -196,7 +196,7 @@ scene.add(spotMesh);
 
 const luisi = new Luisi({
   scene, meshes, gltfLoader,
-  modelSrc: "assets/models/luisi.glb",
+  modelSrc: "./assets/models/luisi.glb",
 });
 
 // luisi
@@ -206,7 +206,7 @@ fontLoader.load(fontUrl, function (font) {
 
 //stage2
 const stage2model = new Basic({
-  gltfLoader, scene, modelSrc: "assets/models/All.glb",
+  gltfLoader, scene, modelSrc: "./assets/models/All.glb",
   x: 9.3, y: -3, z: -6,
   scale: { x: 0.2, y: 0.2, z: 0.2 },
   rotation: {x: 0, y: 2, z: 0 }
@@ -245,7 +245,7 @@ fontLoader.load(fontUrl, function (font) {
 });
 
 const rocket = new Basic({
-  gltfLoader, scene, modelSrc: "assets/models/rocket.glb",
+  gltfLoader, scene, modelSrc: "./assets/models/rocket.glb",
   x: 22, y: 0, z: -3,
   scale: { x: 0.5, y: 0.5, z: 0.5 }
 });
@@ -264,19 +264,19 @@ rocketMesh.receiveShadow = true;
 scene.add(rocketMesh);
 
 const worldHole = new OldWorld({
-  gltfLoader, scene, modelSrc: "assets/models/world.glb",
+  gltfLoader, scene, modelSrc: "./assets/models/world.glb",
   x: -5, y: -4, z: 4,
 });
 
 const greenHole = new Basic({
-  gltfLoader, scene, modelSrc: "assets/models/hole.glb",
+  gltfLoader, scene, modelSrc: "./assets/models/hole.glb",
   x: -15, y: -1.8, z: 12,
   scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const castle = new Castle({
   gltfLoader, scene,
-  modelSrc: "assets/models/castle.glb",
+  modelSrc: "./assets/models/castle.glb",
   x: 0, y: 4, z: -26.5,
 });
 
@@ -294,12 +294,12 @@ castleMesh.receiveShadow = true;
 scene.add(castleMesh);
 
 const plant = new Plant({
-  scene, meshes, gltfLoader, modelSrc: "assets/models/plant.glb",
+  scene, meshes, gltfLoader, modelSrc: "./assets/models/plant.glb",
   x: 15, y: 0, z: 0,
 })
 
 const plant1 = new Plant({
-  scene, meshes, gltfLoader,modelSrc: "assets/models/plant.glb",
+  scene, meshes, gltfLoader,modelSrc: "./assets/models/plant.glb",
   x: -15,y: 0,z: 4,
 })
 
@@ -309,27 +309,27 @@ fontLoader.load(fontUrl, function (font) {
 });
 
 const boo = new Basic({
-  scene,meshes,gltfLoader,modelSrc: "assets/models/ghost.glb",
+  scene,meshes,gltfLoader,modelSrc: "./assets/models/ghost.glb",
   x: -9,y: -1.3,z: -3,
   scale: { x: 0.6, y: 0.6, z: 0.6 },
   rotation: {x: 0, y: 2, z: 0 }
 });
 
 const boo1 = new Basic({
-  scene,meshes,gltfLoader,modelSrc: "assets/models/ghost.glb",
+  scene,meshes,gltfLoader,modelSrc: "./assets/models/ghost.glb",
   x: -3,y: -1.3,z: -5,
   scale: { x: 0.6, y: 0.6, z: 0.6 },
   rotation: {x: 0, y: 2, z: 0 }
 });
 
 const boo2 = new Basic({
-  scene,meshes,gltfLoader,modelSrc: "assets/models/ghost.glb",
+  scene,meshes,gltfLoader,modelSrc: "./assets/models/ghost.glb",
   x: -1, y: -1.3, z: -5,
   rotation: {x: 0, y: 2, z: 0 }
 });
 
 const kingBoo = new KingBoo({
-  gltfLoader, scene, meshes, modelSrc: "assets/models/king-boo.glb",
+  gltfLoader, scene, meshes, modelSrc: "./assets/models/king-boo.glb",
 });
 
 const kingBooMesh = new THREE.Mesh(
@@ -349,7 +349,7 @@ fontLoader.load(fontUrl, function (font) {
 });
 
 const turtle = new Basic({
-  scene, meshes, gltfLoader, modelSrc: "assets/models/turtle.glb",
+  scene, meshes, gltfLoader, modelSrc: "./assets/models/turtle.glb",
   x: 0, y: 0.6, z: 5.4,
   scale: { x: 0.6, y: 0.6, z: 0.6 },
 });

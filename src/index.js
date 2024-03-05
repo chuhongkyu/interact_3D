@@ -35,17 +35,17 @@ function init() {
 	const { renderer, scene, camera } = createScene();
 
 	const player = new PlayerStop({
-		scene, meshes, gltfLoader, modelSrc: "assets/models/mario_really.glb",
+		scene, meshes, gltfLoader, modelSrc: "./assets/models/mario_really.glb",
 	});
 
 	const world = new World({
-		gltfLoader, meshes, scene, modelSrc: "assets/models/world-intro.glb",
+		gltfLoader, meshes, scene, modelSrc: "./assets/models/world-intro.glb",
 		x: 0, y: 0, z: 0,
 		scale: { x: 0.2, y: 0.2, z: 0.2 }
 	});
 
 	const dice = new Dice({
-		gltfLoader, scene, modelSrc: "assets/models/dice.glb",
+		gltfLoader, scene, modelSrc: "./assets/models/dice.glb",
 		x: 3, y: 1, z: -1,
 		scale: { x: 0.02, y: 0.02, z: 0.02 }
 	});

@@ -26,7 +26,7 @@ export function createScene() {
 			prefix + 'pz' + postfix, prefix + 'nz' + postfix
 		];
 	};
-    const urls = genCubeUrls( 'assets/images/sky/', '.png' );
+    const urls = genCubeUrls( './assets/images/sky/', '.png' );
 	new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
 		scene.background = cubeTexture;
 		cubeCamera.update( renderer, scene );
