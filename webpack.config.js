@@ -1,50 +1,37 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
 const webpackMode = process.env.NODE_ENV || 'development';
 
 module.exports = {
 	mode: webpackMode,
 	entry: {
-		index: './src/index.js', // index.html에 사용될 entry point
-		main: './src/main.js',   // game.html에 사용될 entry point
+		index: './src/index.js',
+		game: './src/game.js',
 	},
 	output: {
-		path: path.resolve('./dist'),
-		filename: '[name].min.js'
+		path: path.resolve('dist'),
+		filename: '[name].min.js',
+		clean: true,
 	},
 	devServer: {
-		liveReload: true
-	},
-	optimization: {
-		minimizer: webpackMode === 'production' ? [
-			new TerserPlugin({
-				terserOptions: {
-					compress: {
-						drop_console: true
-					}
-				}
-			})
-		] : [],
-		splitChunks: {
-			chunks: 'all'
-		}
+		port: 8080,
 	},
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
-				loader: 'babel-loader',
-				exclude: /node_modules/
+				exclude: /node_modules/,
+				use: {
+				  loader: 'babel-loader',
+				  options: {
+					presets: ['@babel/preset-env']
+				  }
+				}
 			},
 			{
-				test: /\.js$/,
-				enforce: 'pre',
-				use: ['source-map-loader'],
+				test: /\.css$/,
+				use: [ 'style-loader', 'css-loader' ]                
 			}
 		]
 	},
@@ -53,33 +40,17 @@ module.exports = {
 			filename: 'index.html',
 			template: './src/index.html',
 			chunks: ['index'], 
-			minify: process.env.NODE_ENV === 'production' ? {
-				collapseWhitespace: true,
-				removeComments: true,
-			} : false,
-
-			favicon: './src/favicon.ico',
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'game.html',
 			template: './src/game.html',
-			chunks: ['main'], 
-			minify: process.env.NODE_ENV === 'production'
-			  ? {
-				  collapseWhitespace: true,
-				  removeComments: true,
-				}
-			  : false,
-			favicon: './src/favicon.ico', // Favicon 경로 추가 (필요한 경우)
+			chunks: ['game'], 
 		}),
-		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin({
 			patterns: [
-				{ from: "./src/main.css", to: "./main.css" },
-				{ from: "./src/images", to: "./images" },
-				{ from: "./src/models", to: "./models" },
-				{ from: "./src/lottie", to: "./lottie" },
-				{ from: "./src/fonts", to: "./fonts" },
+				{ from: "./src/assets", to: "./assets" },
+				{ from: "./src/css", to: "./css" },
+				{ from: "./src/favicon.ico", to: "./favicon.ico" },
 			],
 		})
 	]

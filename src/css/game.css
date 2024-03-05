@@ -1,49 +1,4 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-	overflow: hidden;
-	margin: 0;
-	font-family: 'Noto Sans KR', sans-serif;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+@import url('./reset.css');
 
 .type1{
 	overflow: hidden;
@@ -104,30 +59,6 @@ table {
 	line-height: 150%;
 }
 
-#three-js{
-	clip-path: circle(0%);
-}
-
-#three-js.hide{
-	clip-path: circle(100%);
-	transition: 1s ease-in-out;
-}
-
-.loading{
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: -1;
-	background: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .__info-container::before{
 	width: 2px;
 	height: 10px;
@@ -153,6 +84,7 @@ table {
 	height: 30px;
 	margin-bottom: 10px;
 }
+
 .__info-container .__inner img{
 	display: block;
 	width: 100%;
@@ -178,13 +110,24 @@ table {
 	gap: 5px;
 }
 
+@keyframes mushroomAni {
+	0%{
+		scale: 0.9;
+	}
+	50%{
+		scale: 1.2;
+	}
+	100%{
+		scale: 1;
+	}
+}
+
 .__lifes span{
 	display: block;
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background: url("./images/life.png") 100% 100%/cover no-repeat;
-	transition: 300ms ease-in-out;
+	background: url("../assets/images/life.png") 100% 100%/cover no-repeat;
 }
 
 .__lifes span.active{
@@ -192,7 +135,7 @@ table {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background: url("./images/life.png") 100% 100%/cover no-repeat;
+	background: url("../assets/images/life.png") 100% 100%/cover no-repeat;
 	-webkit-filter: drop-shadow(1px 1px 0 black)
                   drop-shadow(-1px -1px 0 black);
   	filter: brightness(0%) drop-shadow(1px 1px 0 black) 
@@ -293,7 +236,7 @@ table {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background: url("./images/life.png") 100% 100%/cover no-repeat;
+	background: url("../assets/images/life.png") 100% 100%/cover no-repeat;
 }
   
 
@@ -333,78 +276,6 @@ table {
 	100%{
 		scale: 0;
 	}
-}
-
-.ui-btns{
-	position: fixed;
-	right: 30%;
-	bottom: 20px;
-	z-index: 2;
-	display: none;
-	opacity: 0;
-}
-
-.ui-btns.active{
-	display: flex;
-	opacity: 1;
-	transition: 0.3s opacity;
-}
-
-.ui-btns .arrow .btn{
-	display: block;
-	width: 42px;
-	height: 42px;
-	padding: 10px;
-	font-size: 16px;
-	font-weight: 500;
-	margin-bottom: 10px;
-	background-color: crimson;
-	color: white;
-	cursor: pointer;
-	border-radius: 15px;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.ui-btns .arrow .btn:hover{
-	transform: translateY(-5px);
-	transition: 0.4s ease-in-out;
-}
-
-.ui-btns .arrow .btn.up img{
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.ui-btns .arrow .btn.down img{
-	transform: rotateX(180deg);
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.ui-btns .jump{
-	width: 90px;
-	height: 40px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 10px 12px;
-	border-radius: 15px;
-	background: crimson;
-	color: white;
-	margin-left: 20px;
-	font-size: 20px;
-	font-weight: 500;
-	cursor: pointer;
-}
-
-.dice-display{
-	display: none;
-	/* width: 100px;
-	height: 100px; */
-	background: #fff;
-	color: #000;
 }
 
 @media screen and (max-width: 1024px) {

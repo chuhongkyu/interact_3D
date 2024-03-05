@@ -16,14 +16,6 @@ export class OldWorld {
 				this.modelMesh.position.set(this.x, this.y, this.z);
 				this.modelMesh.scale.set(0.06, 0.06, 0.06);
 
-                this.modelMesh.traverse(child => {
-					if (child.isMesh) {
-						 // 흰색으로 설정
-						child.material.emissive.set(0xffffff); // 발광 색상을 흰색으로 설정
-						child.material.emissiveIntensity = 0.3; // 발광 강도를 1로 설정
-					}
-				});
-
 				info.scene.add(this.modelMesh);
 			}
 		);

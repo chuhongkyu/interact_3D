@@ -6,7 +6,7 @@ export class Basic {
 		this.scale = info.scale || { x: 1, y: 1, z: 1 };
 		this.rotation = info.rotation || { x: 0, y: 0, z: 0 };
 		this.visible = false;
-
+		
 		info.gltfLoader.load(
 			info.modelSrc,
 			glb => {

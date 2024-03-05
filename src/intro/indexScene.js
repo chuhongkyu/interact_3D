@@ -26,7 +26,7 @@ export function createScene() {
 			prefix + 'pz' + postfix, prefix + 'nz' + postfix
 		];
 	};
-    const urls = genCubeUrls( './images/sky/', '.png' );
+    const urls = genCubeUrls( 'assets/images/sky/', '.png' );
 	new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
 		scene.background = cubeTexture;
 		cubeCamera.update( renderer, scene );
@@ -38,7 +38,7 @@ export function createScene() {
 	scene.add(ambientLight);
 
     // resize
-    window.addEventListener('reszie', ()=> onWindowResize(renderer, scene, camera))
+    window.addEventListener('resize', ()=> onWindowResize(renderer, scene, camera))
    
     return { renderer, scene, camera};
 }
