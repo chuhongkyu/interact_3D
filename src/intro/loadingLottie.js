@@ -4,7 +4,7 @@ import "@lottiefiles/lottie-player";
 let loading = true;
 
 export function loadingLottie() {
-    let loadingDiv = document.querySelector('#three-js')
+    let loadingDiv = document.querySelector('#three-canvas')
     const t1 = setTimeout(() => {
         loadingDiv.classList.add('hide');
         loading = false;

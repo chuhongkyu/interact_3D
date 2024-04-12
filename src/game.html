@@ -13,6 +13,9 @@
 	<link rel="icon" href="/favicon.ico" />
 </head>
 <body>
+	<div class="loading">
+		<span class="loader"></span>
+	</div>
 	<canvas id="three-canvas"></canvas>
 	<div class="modal show">
 		<p>안녕하세요.😀<br>
@@ -71,9 +74,18 @@
 				가볍게 즐겨주세요.<br><br>
 				맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!`;
 
-			setTimeout(function() {
-				modal.classList.remove("show");
-			}, 3000);
+			function loadingLottie() {
+				let loadingDiv = document.querySelector('.loading')
+				const t1 = setTimeout(() => {
+					loadingDiv.classList.add('hide');
+					setTimeout(function() {
+						modal.classList.remove("show");
+					}, 2500);
+				}, 2000);
+			}
+
+			loadingLottie()
+
 		});
 	</script>
 </body>

@@ -6,11 +6,11 @@
 	pointer-events: none;
 }
 
-#three-js{
+#three-canvas{
 	clip-path: circle(0%);
 }
 
-#three-js.hide{
+#three-canvas.hide{
 	clip-path: circle(100%);
 	transition: 1s ease-in-out;
 }

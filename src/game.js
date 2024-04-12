@@ -112,7 +112,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-const directionalLightOriginPosition = new THREE.Vector3(1, 1, 1);
+const directionalLightOriginPosition = new THREE.Vector3(1, 2, 2);
 directionalLight.position.x = directionalLightOriginPosition.x;
 directionalLight.position.y = directionalLightOriginPosition.y;
 directionalLight.position.z = directionalLightOriginPosition.z;
@@ -122,10 +122,10 @@ directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = 1024;
 directionalLight.shadow.mapSize.height = 1024;
 // 그림자 범위
-directionalLight.shadow.camera.left = -100;
-directionalLight.shadow.camera.right = 100;
-directionalLight.shadow.camera.top = 100;
-directionalLight.shadow.camera.bottom = -100;
+directionalLight.shadow.camera.left = -30;
+directionalLight.shadow.camera.right = 30;
+directionalLight.shadow.camera.top = 30;
+directionalLight.shadow.camera.bottom = -30;
 directionalLight.shadow.camera.near = -100;
 directionalLight.shadow.camera.far = 100;
 scene.add(directionalLight);

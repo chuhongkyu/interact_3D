@@ -8,7 +8,7 @@ export function createScene() {
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.getElementById('three-js').appendChild( renderer.domElement );
+	document.getElementById('three-canvas').appendChild( renderer.domElement );
 
 	// scene
 	scene = new THREE.Scene();
