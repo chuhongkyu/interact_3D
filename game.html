@@ -2,14 +2,13 @@
 			const modal = document.querySelector(".modal");
 
 			const urlParams = new URLSearchParams(window.location.search);
-			const dataParam = urlParams.get('data');
+			const dataParam = urlParams.get('data') ? urlParams.get('data') : 1;
 			if(!dataParam) return
 			const modalContent = document.querySelector('.modal.show p');
 
 			modalContent.innerHTML = `안녕하세요.😀<br>
 				여기는 FE 추홍규가 제작한 <b>${dataParam + '년'}</b>차 개발자 마리오 월드입니다.<br>
-				가볍게 즐겨주세요.<br><br>
-				맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!`;
+				마우스로 캐릭터를 이동하면서 맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!`;
 
 			function loadingLottie() {
 				let loadingDiv = document.querySelector('.loading')
