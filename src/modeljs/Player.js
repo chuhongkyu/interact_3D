@@ -1,4 +1,6 @@
-import { AnimationMixer } from "three";
+import { AnimationMixer, SkeletonHelper } from "three";
+import { getParams } from "../utils/helper";
+
 
 export class Player {
   constructor(info) {
@@ -19,8 +21,20 @@ export class Player {
       info.scene.add(this.modelMesh);
       info.meshes.push(this.modelMesh);
 
-      this.actions = [];
+      if(getParams("test")){
+        const skeletonHelper = new SkeletonHelper(this.modelMesh);
+        info.scene.add(skeletonHelper);
 
+        this.modelMesh.traverse((child) => {
+          if (child.type === "Bone") {
+            console.log(`Bone found: ${child.name}`, child);
+          }
+        });
+      }
+
+      this.handBone = this.modelMesh.getObjectByName('mixamorigLeftHand_010');
+
+      this.actions = [];
       this.mixer = new AnimationMixer(this.modelMesh);
 
       const idle = glb.animations[1];
@@ -35,6 +49,21 @@ export class Player {
       this.actions[3] = this.mixer.clipAction(run);
       this.actions[4] = this.mixer.clipAction(happy);
       this.actions[0].play();
+    });
+  }
+
+  addMushroom(gltfLoader, mushroomModelSrc) {
+    gltfLoader.load(mushroomModelSrc, (mushroomGlb) => {
+      const mushroom = mushroomGlb.scene;
+      mushroom.scale.set(0.5, 0.5, 0.5);
+      mushroom.position.set(0, 0, 0);
+
+      if (this.handBone) {
+        this.handBone.add(mushroom);
+        // console.log('Mushroom added to hand');
+      } else {
+        // console.error('Hand bone not found!');
+      }
     });
   }
 }
