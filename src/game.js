@@ -16,7 +16,6 @@ import makeStage2 from "./components/MakeStage2";
 import makeStage1 from "./components/MakeStage"
 import makeEnd from "./components/MakeEndPoint";
 import { makeInventory } from "./components/UI";
-import { getMushroom, Mushroom } from "./components/GetMushroom";
 import { createText } from "./components/Text";
 import { makeHelper } from "./utils/helper";
 
@@ -44,6 +43,7 @@ const mushroom = document.querySelector(".item .mushroom")
 mushroom.addEventListener("dblclick", ()=>{
   mushroom.remove();
   updateLifes();
+  player.addMushroom(gltfLoader, './assets/models/mushroom.glb');
 })
 
 // 라이프 업데이트
@@ -726,4 +726,3 @@ canvas.addEventListener("touchmove", (e) => {
 draw();
 makeInventory();
 makeHelper(scene);
-getMushroom();
