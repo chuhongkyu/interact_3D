@@ -1,16 +1,16 @@
 {
   "name": "interact_3D",
   "version": "1.0.0",
-  "description": "",
+  "description": "project for mr_chu",
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress",
     "start": "webpack serve --progress",
     "deploy": "gh-pages -d dist"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["3D","three.js", "mario", "game"],
+  "author": "mr_chu",
+  "license": "mr_chu",
   "dependencies": {
     "@lottiefiles/lottie-player": "^2.0.2",
     "gh-pages": "^5.0.0",

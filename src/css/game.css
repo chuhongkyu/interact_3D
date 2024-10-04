@@ -141,6 +141,7 @@
                   drop-shadow(-1px -1px 0 black);
   	filter: brightness(0%) drop-shadow(1px 1px 0 black) 
           drop-shadow(-1px -1px 0 black);
+	animation: mushroomAni 1s ease-in-out;
 }
 
 .modal {
