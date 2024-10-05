@@ -2,13 +2,14 @@ export default function makeEnd($one, $data, $cb, $cb2){
     let point = $one;
     if($data){
         document.body.classList.add('type1')
+        let particle = document.getElementById('particle');
         let modal = document.querySelector('.modal')
         modal.innerHTML = `
-                            <p>축하해! 👊<br><br>
-                            너는 이제 진정한 개발자야!<br>
-                            </p>
+                            <p>축하해! 👊</p>
+                            <p>너는 이제 진정한 개발자야!</p>
                         `
         modal.classList.add('show')
+        particle.classList.add('active')
         $cb2()
     }else{
         point ? make(): null
