@@ -41,7 +41,7 @@ function init() {
 	const world = new World({
 		gltfLoader, meshes, scene, modelSrc: "./assets/models/world-intro.glb",
 		x: 0, y: 0, z: 0,
-		scale: { x: 0.2, y: 0.2, z: 0.2 }
+		scale: { x: 1.5, y: 1.5, z: 1.5 }
 	});
 
 	const dice = new Dice({

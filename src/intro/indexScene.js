@@ -8,13 +8,15 @@ export function createScene() {
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.getElementById('three-canvas').appendChild( renderer.domElement );
 
 	// scene
 	scene = new THREE.Scene();
 	// camera
 	camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.1, 100 );
-	camera.position.set( 0, 10, 30 );
+	camera.position.set( 0, 5, 10 );
 
     // cubeCamera
     const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 256 );
@@ -34,8 +36,29 @@ export function createScene() {
 	} );
 
     //빛
-	const ambientLight = new THREE.AmbientLight("white", 3);
+	const directionaLight = new THREE.DirectionalLight(0xffffff, 2.5);
+	directionaLight.castShadow = true;
+
+	directionaLight.shadow.mapSize.width = 1048;
+	directionaLight.shadow.mapSize.height = 1048;
+
+	directionaLight.shadow.camera.near = 1;
+	directionaLight.shadow.camera.far = 100;
+	directionaLight.shadow.camera.left = -10;
+	directionaLight.shadow.camera.right = 10;
+	directionaLight.shadow.camera.top = 10;
+	directionaLight.shadow.camera.bottom = -10;
+
+	directionaLight.shadow.bias = -0.005;
+
+	directionaLight.position.set(1,3,3)
+
+	scene.add(directionaLight);
+	const ambientLight = new THREE.AmbientLight("white", 2);
 	scene.add(ambientLight);
+
+	const lightHelper = new THREE.DirectionalLightHelper(directionaLight, 5, 0x000000); 
+	scene.add(lightHelper);
 
     // resize
     window.addEventListener('resize', ()=> onWindowResize(renderer, scene, camera))

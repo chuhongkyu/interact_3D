@@ -5,13 +5,15 @@ export class PlayerStop {
 
     info.gltfLoader.load(info.modelSrc, (glb) => {
       glb.scene.traverse((child) => {
-        if (child.isMesh) {
+        if (child.isMesh || child.isSkinnedMesh) {
+          child.receiveShadow = true;
           child.castShadow = true;
         }
       });
 
       this.modelMesh = glb.scene.children[0];
       this.modelMesh.castShadow = true
+      this.modelMesh.receiveShadow = true
       this.modelMesh.position.y = 0;
       this.modelMesh.rotation.x = 0;
       this.modelMesh.name = "mario";
