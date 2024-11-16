@@ -108,7 +108,7 @@ camera.updateProjectionMatrix();
 scene.add(camera);
 
 // Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -126,7 +126,7 @@ directionalLight.shadow.camera.left = -30;
 directionalLight.shadow.camera.right = 30;
 directionalLight.shadow.camera.top = 30;
 directionalLight.shadow.camera.bottom = -30;
-directionalLight.shadow.camera.near = -100;
+directionalLight.shadow.camera.near = -60;
 directionalLight.shadow.camera.far = 100;
 scene.add(directionalLight);
 
