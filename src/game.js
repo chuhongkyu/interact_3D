@@ -38,6 +38,7 @@ let END_NOT = true;
 let isProcessingClick = false;
 let inventory = document.getElementById('container_ui_right')
 
+let isGameStart = false;
 
 const mushroom = document.querySelector(".item .mushroom")
 mushroom.addEventListener("dblclick", ()=>{
@@ -61,6 +62,21 @@ const info = document.querySelector('#container_ui_bottom .__info')
 info.addEventListener('click',()=>{
   info.querySelector('.__info-container').classList.toggle('active')
 })
+
+const modal = document.querySelector(".modal");
+
+function loadingLottie() {
+  let loadingDiv = document.querySelector('.loading')
+  const t1 = setTimeout(() => {
+    loadingDiv.classList.add('hide');
+    isGameStart = true;
+    setTimeout(function() {
+      modal.classList.remove("show");
+    }, 2500);
+  }, 2000);
+}
+
+loadingLottie()
 
 // Texture
 const textureLoader = new THREE.TextureLoader();
@@ -620,7 +636,7 @@ function draw() {
     }
 
 
-    if(mainHole.modelMesh){
+    if(mainHole.modelMesh && isGameStart){
       gsap.to(mainHole.modelMesh.position, {
         duration: 1,
         y: -5.5,

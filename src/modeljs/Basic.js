@@ -15,8 +15,16 @@ export class Basic {
 				this.modelMesh.position.set(this.x, this.y, this.z);
 				this.modelMesh.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z)
 				this.modelMesh.scale.set(this.scale.x, this.scale.y, this.scale.z);
+
+				this.modelMesh.traverse((child) => {
+					if (child.isMesh) {
+					  child.castShadow = true;
+					//   child.receiveShadow = true;
+					}
+				});
 				info.scene.add(this.modelMesh);
 			}
 		);
+
 	}
 }
