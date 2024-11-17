@@ -57,8 +57,8 @@ export function createScene() {
 	const ambientLight = new THREE.AmbientLight("white", 2);
 	scene.add(ambientLight);
 
-	const lightHelper = new THREE.DirectionalLightHelper(directionaLight, 5, 0x000000); 
-	scene.add(lightHelper);
+	// const lightHelper = new THREE.DirectionalLightHelper(directionaLight, 5, 0x000000); 
+	// scene.add(lightHelper);
 
     // resize
     window.addEventListener('resize', ()=> onWindowResize(renderer, scene, camera))
