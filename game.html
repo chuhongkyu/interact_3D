@@ -1,5 +1,4 @@
 <!doctype html><html lang="ko"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>마리오 개발자 월드</title><meta name="description" content="마리오 월드에서 개발자의 인생을 엿보세요."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/game.css"><link rel="icon" href="/favicon.ico"/><script defer="defer" src="game.min.js"></script></head><body><div class="loading"><span class="loader"></span></div><canvas id="three-canvas"></canvas><div class="modal show"><p>안녕하세요.😀<br>여기는 FE 추홍규가 제작한 마리오 월드입니다.<br>가볍게 즐겨주세요.<br><br>맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!</p></div><div id="container_ui_bottom"><span class="__info"><img src="assets/images/info.png" alt="icon"/><div class="__info-container"><span><p><b>조작 법 :</b> 터치 또는 마우스 클릭으로 마리오를 움직이세요.</p><p><b>버섯 획득 :</b> 이벤트 칸을 클리어 하면 버섯을 획득 할 수 있어요.</p><p><b>이벤트 칸 :</b> 이벤트 칸이라고 해서 전부 버섯을 주지는 않아요~😝</p></span></div></span></div><div id="container_ui_top"><div class="__icon __lifes"><span class="active"></span> <span class="active"></span> <span class="active"></span></div></div><div id="container_ui_right"><div class="btn-container"><img src="assets/images/x-btn.png" alt="x"/></div><div class="__grid"><span id="item1" class="item" draggable="true"><div class="mushroom"></div></span><span id="item2" class="item" draggable="true"></span> <span id="item3" class="item" draggable="true"></span> <span id="item4" class="item" draggable="true"></span> <span id="item5" class="item" draggable="true"></span> <span id="item6" class="item" draggable="true"></span> <span id="item7" class="item" draggable="true"></span> <span id="item8" class="item" draggable="true"></span> <span id="item9" class="item" draggable="true"></span></div></div><div id="particle"><div class="pyro"><div class="before"></div><div class="after"></div></div></div><script>document.addEventListener("DOMContentLoaded", function() {
-			const modal = document.querySelector(".modal");
 
 			const urlParams = new URLSearchParams(window.location.search);
 			const dataParam = urlParams.get('data') ? urlParams.get('data') : 1;
@@ -9,17 +8,5 @@
 			modalContent.innerHTML = `안녕하세요.😀<br>
 				여기는 FE 추홍규가 제작한 <b>${dataParam + '년'}</b>차 개발자 마리오 월드입니다.<br>
 				마우스로 캐릭터를 이동하면서 맵에 보이는 각종 스팟들을 밟고 버섯을 획득 하세요!`;
-
-			function loadingLottie() {
-				let loadingDiv = document.querySelector('.loading')
-				const t1 = setTimeout(() => {
-					loadingDiv.classList.add('hide');
-					setTimeout(function() {
-						modal.classList.remove("show");
-					}, 2500);
-				}, 2000);
-			}
-
-			loadingLottie()
 
 		});</script></body></html>
