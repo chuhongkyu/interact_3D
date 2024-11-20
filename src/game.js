@@ -18,6 +18,7 @@ import makeEnd from "./components/MakeEndPoint";
 import { makeInventory } from "./components/UI";
 import { createText } from "./components/Text";
 import { makeHelper } from "./utils/helper";
+import GrassField from "./game/GrassField";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -83,8 +84,18 @@ const textureLoader = new THREE.TextureLoader();
 const floorTexture = textureLoader.load("./assets/images/bg.png");
 floorTexture.wrapS = THREE.RepeatWrapping;
 floorTexture.wrapT = THREE.RepeatWrapping;
-floorTexture.repeat.x = 6;
-floorTexture.repeat.y = 6;
+floorTexture.repeat.x = 4;
+floorTexture.repeat.y = 4;
+
+const rockFloorTexture = textureLoader.load("./assets/images/bg2.jpg");
+rockFloorTexture.wrapS = THREE.RepeatWrapping;
+rockFloorTexture.wrapT = THREE.RepeatWrapping;
+rockFloorTexture.repeat.x = 1;
+rockFloorTexture.repeat.y = 8;
+
+const rockFloorTextureStart = textureLoader.load("./assets/images/bg3.jpg");
+const rockFloorTextureEnd = textureLoader.load("./assets/images/bg3.jpg");
+
 
 // Scene
 const scene = new THREE.Scene();
@@ -160,6 +171,46 @@ floorMesh.receiveShadow = true;
 scene.add(floorMesh);
 meshes.push(floorMesh);
 
+const rockFloorMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(4, 36),
+  new THREE.MeshStandardMaterial({
+    map: rockFloorTexture,
+  })
+);
+rockFloorMesh.name = "rockfloor";
+rockFloorMesh.position.y = 0.01
+rockFloorMesh.rotation.x = -Math.PI / 2;
+rockFloorMesh.receiveShadow = true;
+scene.add(rockFloorMesh);
+
+const rockFloorMeshStart = new THREE.Mesh(
+  new THREE.PlaneGeometry(4, 4),
+  new THREE.MeshStandardMaterial({
+    map: rockFloorTextureStart,
+  })
+);
+
+rockFloorMeshStart.rotation.x = -Math.PI / 2;
+rockFloorMeshStart.position.y = 0.01
+rockFloorMeshStart.position.z = 20
+rockFloorMeshStart.receiveShadow = true;
+
+const rockFloorMeshEnd = new THREE.Mesh(
+  new THREE.PlaneGeometry(4, 4),
+  new THREE.MeshStandardMaterial({
+    map: rockFloorTextureEnd,
+  })
+);
+
+rockFloorMeshEnd.position.y = 0.01
+rockFloorMeshEnd.position.z = -20
+rockFloorMeshEnd.rotation.x = -Math.PI / 2;
+rockFloorMeshEnd.rotation.z = Math.PI
+rockFloorMeshEnd.receiveShadow = true;
+
+scene.add(rockFloorMeshEnd);
+scene.add(rockFloorMeshStart)
+
 const gltfLoader = new GLTFLoader();
 
 
@@ -167,6 +218,17 @@ const gltfLoader = new GLTFLoader();
 const player = new Player({
   scene,meshes, gltfLoader,modelSrc: "./assets/models/mario_really.glb",
 });
+
+//grass
+const grassField = new GrassField({ 
+  count: 60, 
+  width: 5.5, 
+  height: 5,
+  x: -5.5,
+  y: 0.7,
+  z: 6.1,
+});
+grassField.addToScene(scene);
 
 //this is mouse
 const pointerMesh = new THREE.Mesh(
@@ -178,7 +240,7 @@ const pointerMesh = new THREE.Mesh(
   })
 );
 pointerMesh.rotation.x = -Math.PI / 2;
-pointerMesh.position.y = 0.01;
+pointerMesh.position.y = 0.02;
 pointerMesh.receiveShadow = true;
 scene.add(pointerMesh);
 
@@ -230,11 +292,11 @@ const stage2model = new Basic({
 
 //stage2
 const stageTwoMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(6, 6),
+  new THREE.PlaneGeometry(6, 5),
   new THREE.MeshStandardMaterial({
-    color: "blue",
+    color: "green",
     transparent: true,
-    opacity: 0.2,
+    opacity: 0.1,
   })
 );
 stageTwoMesh.position.set(-6, 0.005, 6);
@@ -381,7 +443,9 @@ const clock = new THREE.Clock();
 // 그리기
 function draw() {
   const delta = clock.getDelta();
-  
+  if(grassField){
+    grassField.update(delta);
+  }
   if (player.mixer) player.mixer.update(delta);
   if (luisi.mixer) luisi.mixer.update(delta);
   if (kingBoo.mixer) kingBoo.mixer.update(delta);
