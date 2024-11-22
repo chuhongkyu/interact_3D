@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export class OldWorld {
+export class Stage1 {
 	constructor(info) {
 		this.x = info.x;
 		this.y = info.y;

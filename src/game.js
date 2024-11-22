@@ -10,7 +10,7 @@ import { Luisi } from "./modeljs/Luisi";
 import { Plant } from "./modeljs/Plant";
 import { Castle } from "./modeljs/Castle";
 
-import { OldWorld } from "./modeljs/OldWorld";
+import { OldWorld } from "./modeljs/Stage1";
 
 import makeStage2 from "./components/MakeStage2";
 import makeStage1 from "./components/MakeStage"
@@ -19,6 +19,10 @@ import { makeInventory } from "./components/UI";
 import { createText } from "./components/Text";
 import { makeHelper } from "./utils/helper";
 import GrassField from "./game/GrassField";
+import { Ground } from "./game/Ground";
+import { TurtleSpot } from "./game/TurtleSpot";
+import { Stage2Spot } from "./game/Stage2Spot";
+import { Stage1Spot } from "./game/Stage1Spot";
 
 //목숨
 const lifes = document.querySelector('#container_ui_top .__lifes')
@@ -78,23 +82,6 @@ function loadingLottie() {
 }
 
 loadingLottie()
-
-// Texture
-const textureLoader = new THREE.TextureLoader();
-const floorTexture = textureLoader.load("./assets/images/bg.png");
-floorTexture.wrapS = THREE.RepeatWrapping;
-floorTexture.wrapT = THREE.RepeatWrapping;
-floorTexture.repeat.x = 4;
-floorTexture.repeat.y = 4;
-
-const rockFloorTexture = textureLoader.load("./assets/images/bg2.jpg");
-rockFloorTexture.wrapS = THREE.RepeatWrapping;
-rockFloorTexture.wrapT = THREE.RepeatWrapping;
-rockFloorTexture.repeat.x = 1;
-rockFloorTexture.repeat.y = 8;
-
-const rockFloorTextureStart = textureLoader.load("./assets/images/bg3.jpg");
-const rockFloorTextureEnd = textureLoader.load("./assets/images/bg3.jpg");
 
 
 // Scene
@@ -159,76 +146,13 @@ scene.add(directionalLight);
 
 // Mesh
 const meshes = [];
-const floorMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(50, 50),
-  new THREE.MeshStandardMaterial({
-    map: floorTexture,
-  })
-);
-floorMesh.name = "floor";
-floorMesh.rotation.x = -Math.PI / 2;
-floorMesh.receiveShadow = true;
-scene.add(floorMesh);
-meshes.push(floorMesh);
-
-const rockFloorMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(4, 36),
-  new THREE.MeshStandardMaterial({
-    map: rockFloorTexture,
-  })
-);
-rockFloorMesh.name = "rockfloor";
-rockFloorMesh.position.y = 0.01
-rockFloorMesh.rotation.x = -Math.PI / 2;
-rockFloorMesh.receiveShadow = true;
-scene.add(rockFloorMesh);
-
-const rockFloorMeshStart = new THREE.Mesh(
-  new THREE.PlaneGeometry(4, 4),
-  new THREE.MeshStandardMaterial({
-    map: rockFloorTextureStart,
-  })
-);
-
-rockFloorMeshStart.rotation.x = -Math.PI / 2;
-rockFloorMeshStart.position.y = 0.01
-rockFloorMeshStart.position.z = 20
-rockFloorMeshStart.receiveShadow = true;
-
-const rockFloorMeshEnd = new THREE.Mesh(
-  new THREE.PlaneGeometry(4, 4),
-  new THREE.MeshStandardMaterial({
-    map: rockFloorTextureEnd,
-  })
-);
-
-rockFloorMeshEnd.position.y = 0.01
-rockFloorMeshEnd.position.z = -20
-rockFloorMeshEnd.rotation.x = -Math.PI / 2;
-rockFloorMeshEnd.rotation.z = Math.PI
-rockFloorMeshEnd.receiveShadow = true;
-
-scene.add(rockFloorMeshEnd);
-scene.add(rockFloorMeshStart)
 
 const gltfLoader = new GLTFLoader();
 
-
 //player
 const player = new Player({
-  scene,meshes, gltfLoader,modelSrc: "./assets/models/mario_really.glb",
+  scene, meshes, gltfLoader,modelSrc: "./assets/models/mario_really.glb",
 });
-
-//grass
-const grassField = new GrassField({ 
-  count: 60, 
-  width: 5.5, 
-  height: 5,
-  x: -5.5,
-  y: 0.7,
-  z: 6.1,
-});
-grassField.addToScene(scene);
 
 //this is mouse
 const pointerMesh = new THREE.Mesh(
@@ -282,74 +206,10 @@ fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['루이지'], {x: 5.5, y: 1.2, z:10})
 });
 
-//stage2
-const stage2model = new Basic({
-  gltfLoader, scene, modelSrc: "./assets/models/All.glb",
-  x: 9.3, y: -3, z: -6,
-  scale: { x: 0.2, y: 0.2, z: 0.2 },
-  rotation: {x: 0, y: 2, z: 0 }
-});
-
-//stage2
-const stageTwoMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(6, 5),
-  new THREE.MeshStandardMaterial({
-    color: "green",
-    transparent: true,
-    opacity: 0.1,
-  })
-);
-stageTwoMesh.position.set(-6, 0.005, 6);
-stageTwoMesh.rotation.x = -Math.PI / 2;
-stageTwoMesh.receiveShadow = true;
-scene.add(stageTwoMesh);
-
-
-//turtle
-const turtleMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
-  new THREE.MeshStandardMaterial({
-    transparent: true,
-    opacity: 0.1,
-  })
-);
-turtleMesh.position.set(0, 0.005, 5);
-turtleMesh.rotation.x = -Math.PI / 2;
-turtleMesh.receiveShadow = true;
-scene.add(turtleMesh);
-
-fontLoader.load(fontUrl, function (font) {
-  createText(scene, font, ['거북이?'], {x: 0.4, y: 1.2, z:8})
-});
-
 const rocket = new Basic({
   gltfLoader, scene, modelSrc: "./assets/models/rocket.glb",
   x: 22, y: 0, z: -3,
   scale: { x: 0.5, y: 0.5, z: 0.5 }
-});
-
-const rocketMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
-  new THREE.MeshStandardMaterial({
-    color: "blue",
-    transparent: true,
-    opacity: 0.3,
-  })
-);
-rocketMesh.position.set(10, 0.005, -4);
-rocketMesh.rotation.x = -Math.PI / 2;
-rocketMesh.receiveShadow = true;
-scene.add(rocketMesh);
-
-const worldHole = new OldWorld({
-  gltfLoader, scene, modelSrc: "./assets/models/world.glb",
-  x: -5, y: -4, z: 4,
-});
-
-const greenHole = new Basic({
-  gltfLoader, scene, modelSrc: "./assets/models/hole.glb",
-  x: -15, y: -1.8, z: 12,
-  scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
 const castle = new Castle({
@@ -426,20 +286,20 @@ fontLoader.load(fontUrl, function (font) {
   createText(scene, font, ['킹 부우'], {x: -5, y: 1.2, z:-2})
 });
 
-const turtle = new Basic({
-  scene, meshes, gltfLoader, modelSrc: "./assets/models/turtle.glb",
-  x: 0, y: 0.6, z: 5.4,
-  scale: { x: 0.6, y: 0.6, z: 0.6 },
-});
 
+Ground(scene, meshes);
+const { turtle, turtlePosition } = TurtleSpot(gltfLoader, fontLoader, fontUrl, scene, meshes);
+const { stage2model, stage2Position } = Stage2Spot(gltfLoader, fontLoader, fontUrl, scene, meshes);
+const { stage1model, stage1Position, grassField } = Stage1Spot(gltfLoader, fontLoader, fontUrl, scene, meshes);
 
 const raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 let destinationPoint = new THREE.Vector3();
 let angle = 0;
-let isPressed = false; // 마우스를 누르고 있는 상태
+let isPressed = false;
 
 const clock = new THREE.Clock();
+
 // 그리기
 function draw() {
   const delta = clock.getDelta();
@@ -501,21 +361,16 @@ function draw() {
           })
         }
 
-      // stage2
+      // stage1
       if (
-        Math.abs(stageTwoMesh.position.x - player.modelMesh.position.x) < 3 &&
-        Math.abs(stageTwoMesh.position.z - player.modelMesh.position.z) < 3 && !OLD_FEILD
+        Math.abs(stage1Position.position.x - player.modelMesh.position.x) < 3 &&
+        Math.abs(stage1Position.position.z - player.modelMesh.position.z) < 3 && !OLD_FEILD
       ){
         OLD_FEILD = true;
-        makeStage2(OLD_FEILD,player,()=>{
-            greenHole.visible = false;
-            worldHole.visible = false;
-            stageTwoMesh.material.color.set("blue");
-            gsap.to(greenHole.modelMesh.position, {
-              duration: 1,
-              y: -1.8,
-            });
-            gsap.to(worldHole.modelMesh.position, {
+        makeStage1(OLD_FEILD,player,()=>{
+            stage1model.visible = false;
+            stage1Position.material.color.set("blue");
+            gsap.to(stage1model.modelMesh.position, {
               duration: 1,
               y: -4,
             });
@@ -524,19 +379,13 @@ function draw() {
               y: 5,
             });
             updateLifes()
-            scene.remove(stageTwoMesh);
-            stageTwoMesh.geometry.dispose();
+            scene.remove(stage1Position);
+            stage1Position.geometry.dispose();
         })
-        if (!greenHole.visible && !worldHole.visible) {
-            worldHole.visible = true
-            greenHole.visible = true;
-            stageTwoMesh.material.color.set("blue");
-            gsap.to(greenHole.modelMesh.position, {
-              duration: 1,
-              y: 0,
-              ease: "easeOut",
-            });
-            gsap.to(worldHole.modelMesh.position, {
+        if (!stage1model.visible) {
+            stage1model.visible = true
+            stage1Position.material.color.set("blue");
+            gsap.to(stage1model.modelMesh.position, {
               duration: 1,
               y: 0,
               ease: "easeOut",
@@ -549,8 +398,8 @@ function draw() {
       }
       //터틀백
       if (
-        Math.abs(turtleMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(turtleMesh.position.z - player.modelMesh.position.z) < 1.5
+        Math.abs(turtlePosition.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(turtlePosition.position.z - player.modelMesh.position.z) < 1.5
       ){
         if (!turtle.visible) {
           turtle.visible = true;
@@ -571,30 +420,36 @@ function draw() {
           setTimeout(()=>{
             if(turtle){
               scene.remove(turtle.modelMesh);
-              turtleMesh.geometry.dispose();
+              turtlePosition.geometry.dispose();
             }
           },1500)
         } 
       }
 
-      //로켓
+      //stage2
       if(
-        Math.abs(rocketMesh.position.x - player.modelMesh.position.x) < 1.5 &&
-        Math.abs(rocketMesh.position.z - player.modelMesh.position.z) < 1.5 && !ROCKET_FEILD
+        Math.abs(stage2Position.position.x - player.modelMesh.position.x) < 1.5 &&
+        Math.abs(stage2Position.position.z - player.modelMesh.position.z) < 1.5 && !ROCKET_FEILD
       ){
         ROCKET_FEILD = true;
-        makeStage1(ROCKET_FEILD,player,()=>{
+        makeStage2(ROCKET_FEILD,player,()=>{
           updateLifes()
-          gsap.to(stage2model.modelMesh.position, {
+          stage2model.visible = false;
+          gsap.to(rocket.modelMesh.position, {
             duration: 1,
             y: -3,
             ease: "easeOut",
           })
-          scene.remove(rocketMesh);
+          gsap.to(stage2model.modelMesh.position, {
+            duration: 1,
+            y: -3,
+          });
+          scene.remove(stage2Position);
           scene.remove(rocket.modelMesh);
-          rocketMesh.geometry.dispose();
+          stage2Position.geometry.dispose();
         })
         if(!stage2model.visible){
+          stage2model.visible = true;
           gsap.to(stage2model.modelMesh.position, {
             duration: 2,
             y: 0,
@@ -616,7 +471,7 @@ function draw() {
           
         }else if (rocket.visible) {
           rocket.visible = false;
-          rocketMesh.material.color.set("black");
+          stage2Position.material.color.set("black");
         }
       }
 
