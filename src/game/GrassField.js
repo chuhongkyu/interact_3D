@@ -63,8 +63,8 @@ class GrassField {
         }
       `,
       uniforms: {
-        grassMaskTex: { value: new THREE.TextureLoader().load('/assets/textures/grass.png') },
-        grassDiffTex: { value: new THREE.TextureLoader().load('/assets/textures/grass_diffuse.jpg') },
+        grassMaskTex: { value: new THREE.TextureLoader().load('./assets/textures/grass.png') },
+        grassDiffTex: { value: new THREE.TextureLoader().load('./assets/textures/grass_diffuse.jpg') },
         time: { value: 0.0 },
       },
       transparent: true,
