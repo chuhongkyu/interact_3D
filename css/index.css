@@ -33,9 +33,9 @@
 .__intro{
 	display: none;
 	color: #000;
-	font-size: 22px;
+	font-size: 20px;
 	font-weight: 500;
-	line-height: 135%;
+	line-height: 130%;
 	position: absolute;
 	z-index: 1;
 	top: 30%;
@@ -86,17 +86,21 @@
 	padding: 10px;
 	font-size: 16px;
 	font-weight: 500;
+	line-height: 130%;
 	margin-bottom: 10px;
 	background-color: crimson;
 	color: white;
 	cursor: pointer;
 	border-radius: 15px;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	/* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+	transition: 300ms ease-in-out;
+	opacity: 0.8;
 }
 
 .ui-btns .arrow .btn:hover{
-	transform: translateY(-5px);
-	transition: 0.4s ease-in-out;
+	transform: scale(1.05);
+	transition: 300ms ease-in-out;
+	opacity: 1;
 }
 
 .ui-btns .arrow .btn.up img{
@@ -125,7 +129,16 @@
 	margin-left: 20px;
 	font-size: 20px;
 	font-weight: 500;
+	line-height: 130%;
 	cursor: pointer;
+	opacity: 0.8;
+	transition: 300ms ease-in-out;
+}
+
+.ui-btns .jump:hover{
+	opacity: 1;
+	transform: scale(1.05);
+	transition: 300ms ease-in-out;
 }
 
 .dice-display{
