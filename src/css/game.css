@@ -181,6 +181,7 @@
 #container_ui_right{
 	display: none;
 	position: fixed;
+  z-index: 3;
 	right: 2px;
 	top: 50%;
 	transform: translateY(-50%);

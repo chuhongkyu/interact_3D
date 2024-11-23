@@ -49,6 +49,7 @@ const mushroom = document.querySelector(".item .mushroom")
 mushroom.addEventListener("dblclick", ()=>{
   mushroom.remove();
   updateLifes();
+  inventory.classList.remove('active');
   player.addMushroom(gltfLoader, './assets/models/mushroom.glb');
 })
 
