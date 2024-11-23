@@ -13,18 +13,19 @@ export function TurtleSpot( gltfLoader, fontLoader, fontUrl, scene, meshes){
     });
 
     const turtlePosition = new THREE.Mesh(
-        new THREE.PlaneGeometry(2, 2),
+        new THREE.CircleGeometry(1, 32),
         new THREE.MeshStandardMaterial({
             transparent: true,
-            opacity: 0.8,
+            color: "blue",
+            opacity: 0.2,
         })
     );
-    turtlePosition.position.set(x, 0.015, z);
+    turtlePosition.position.set(x, 0.01, z);
     turtlePosition.rotation.x = -Math.PI / 2;
     turtlePosition.receiveShadow = true;
 
     scene.add(turtlePosition);
-    meshes.push(turtlePosition);
+    // meshes.push(turtlePosition);
 
     fontLoader.load(fontUrl, function (font) {
         createText(scene, font, ['거북이?'], {x: x + 0.4, y: 1.2, z: z + 3})

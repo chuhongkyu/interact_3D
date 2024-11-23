@@ -77,7 +77,7 @@ function loadingLottie() {
     isGameStart = true;
     setTimeout(function() {
       modal.classList.remove("show");
-    }, 2500);
+    }, 4000);
   }, 2000);
 }
 
@@ -117,7 +117,7 @@ const camera = new THREE.OrthographicCamera(
 
 const cameraPosition = new THREE.Vector3(1, 5, 5);
 camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-camera.zoom = 0.2;
+camera.zoom = 0.3;
 camera.updateProjectionMatrix();
 scene.add(camera);
 
@@ -171,7 +171,7 @@ scene.add(pointerMesh);
 //메인 홀
 const mainHole = new Basic({
   gltfLoader, scene, modelSrc: "./assets/models/hole.glb",
-  x: -4.3, y: 0.5, z: 6.5,
+  x: -4.3, y: 0.5, z: 6.2,
   scale: { x: 0.6, y: 0.6, z: 0.6 }
 });
 
@@ -561,12 +561,19 @@ function draw() {
         y: -5.5,
         ease: "Bounce.easeOut",
       });
+      gsap.to(camera, {
+        duration: 0.3,
+        zoom: 0.2,
+        ease: "Sine.easeInOut",
+        onUpdate: () => {
+          camera.updateProjectionMatrix();
+        },
+      });
     }
   }
 
   renderer.render(scene, camera);
   renderer.setAnimationLoop(draw);
-
 }
 
 function checkIntersects() {
