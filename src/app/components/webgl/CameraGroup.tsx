@@ -35,6 +35,7 @@ function CameraGroup() {
       <OrbitControls
         makeDefault
         autoRotateSpeed={0.5}
+        target={[0,0.5,0]}
         zoomSpeed={0.5}
         minDistance={5}
         maxDistance={20}

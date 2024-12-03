@@ -8,10 +8,11 @@ import CameraGroup from "./CameraGroup"
 import { World } from "./World"
 import { useRef, useEffect } from "react"
 import { useIntroStore } from "@/app/store/useIntroStore"
+import { Dice } from "./Dice"
 
 function Scene() {
   const sectionRef = useRef<HTMLTableSectionElement>(null);
-  const { isLoading, setLoading } = useIntroStore()
+  const { setLoading } = useIntroStore()
 
   useEffect(()=>{
     const timeout = setTimeout(()=> {
@@ -32,6 +33,7 @@ function Scene() {
         <Lights/>
         <Player/>
         <World/>
+        <Dice/>
       </Canvas>
     </section>
   )

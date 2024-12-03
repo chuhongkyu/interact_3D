@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { motion } from "framer-motion-3d";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -50,11 +51,12 @@ export function World(props: JSX.IntrinsicElements['group']) {
     <group rotation-y={Math.PI} {...props} dispose={null}>
       <group scale={0.3}>
         <group receiveShadow castShadow position={[-19.733, 0, 44.928]} rotation={[0, 1.571, 0]}>
-          <mesh receiveShadow castShadow geometry={nodes.pCube11_phong1_0001.geometry} material={materials.phong1} position={[29.252, 19.02, -5.83]} rotation={[0.077, -0.022, -0.1]} scale={0.379} />
-          <mesh receiveShadow castShadow geometry={nodes.pCube25_phong1_0001.geometry} material={materials.phong1} position={[28.516, 7.546, -0.536]} rotation={[-0.03, -0.019, 0.102]} scale={0.379} />
-          <mesh receiveShadow castShadow geometry={nodes.pCube26_phong1_0001.geometry} material={materials.phong1} position={[28.581, 13.78, 1.779]} rotation={[-0.099, -0.017, -0.092]} scale={0.379} />
-          <mesh receiveShadow castShadow geometry={nodes.pCube27_phong1_0001.geometry} material={materials.phong1} position={[28.375, 7.92, 4.16]} rotation={[-0.03, 0.001, 0.012]} scale={0.379} />
-          <mesh receiveShadow castShadow geometry={nodes.pCube28_phong1_0001.geometry} material={materials.phong1} position={[29.239, 7.189, 10.549]} rotation={[0.1, 0.161, 0.076]} scale={0.379} />
+          <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube11_phong1_0001.geometry} material={materials.phong1} position={[29.252, 19.02, -5.83]} rotation={[0.077, -0.022, -0.1]} scale={0.379} />
+          <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube25_phong1_0001.geometry} material={materials.phong1} position={[28.516, 7.546, -0.536]} rotation={[-0.03, -0.019, 0.102]} scale={0.379} />
+          <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube26_phong1_0001.geometry} material={materials.phong1} position={[28.581, 13.78, 1.779]} rotation={[-0.099, -0.017, -0.092]} scale={0.379} />
+          <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube27_phong1_0001.geometry} material={materials.phong1} position={[28.375, 7.92, 4.16]} rotation={[-0.03, 0.001, 0.012]} scale={0.379} />
+          <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube28_phong1_0001.geometry} material={materials.phong1} position={[29.239, 7.189, 10.549]} rotation={[0.1, 0.161, 0.076]} scale={0.379} />
+          
           <mesh receiveShadow castShadow geometry={nodes.pCube45_phong1_0.geometry} material={materials.phong1} position={[28.632, 8.007, 1.885]} rotation={[-0.072, 0.001, 0.012]} scale={0.379} />
           <mesh receiveShadow castShadow geometry={nodes.pCube46_phong1_0.geometry} material={materials.phong1} position={[28.34, 7.487, -3.076]} rotation={[0.031, 0.002, 0.012]} scale={0.379} />
           <mesh receiveShadow castShadow geometry={nodes.pCube47_phong1_0.geometry} material={materials.phong1} position={[28.326, 14.212, -10.028]} rotation={[0.031, 0.002, 0.012]} scale={0.379} />
@@ -81,8 +83,10 @@ export function World(props: JSX.IntrinsicElements['group']) {
         <mesh receiveShadow castShadow geometry={nodes.pCube27_phong1_0.geometry} material={materials.phong1} position={[28.371, 7.812, 0.562]} rotation={[-0.03, 0.001, 0.012]} scale={0.379} />
         <mesh receiveShadow castShadow geometry={nodes.pCube28_phong1_0.geometry} material={materials.phong1} position={[27.894, 13.455, -4.493]} rotation={[0.113, -0.009, -0.19]} scale={0.379} />
         <mesh receiveShadow castShadow geometry={nodes.pCylinder2_phong1_0.geometry} material={materials.phong1} position={[27.948, 7.262, 6.128]} rotation={[-0.244, 1.446, 0.132]} scale={1.57} />
+        
         <mesh receiveShadow castShadow geometry={nodes.pCube40_phong1_0.geometry} material={materials.phong1} position={[23.549, -6.195, 25.513]} rotation={[0.426, 0.552, -0.388]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCylinder1_phong1_0.geometry} material={materials.phong1} position={[19.227, 2.172, 26.689]} rotation={[0, 1.571, 0]} scale={2.53} />
+        
+        <motion.mesh whileHover={{scale:2.3}} receiveShadow castShadow geometry={nodes.pCylinder1_phong1_0.geometry} material={materials.phong1} position={[19.227, 2.172, 26.689]} rotation={[0, 1.571, 0]} scale={2.53} />
       </group>
     </group>
   )

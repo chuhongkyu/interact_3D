@@ -17,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-lottie-player": "^2.1.0",
+    "react-typed": "^2.0.12",
     "three": "^0.171.0",
     "zustand": "^5.0.1"
   },
