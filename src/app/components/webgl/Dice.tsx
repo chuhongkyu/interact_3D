@@ -1,9 +1,10 @@
 import * as THREE from 'three'
-import React from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
+import React, { useEffect } from 'react'
+import { useGLTF, Center } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { motion } from "framer-motion-3d"
 import { useIntroStore } from '@/app/store/useIntroStore'
+import { diceAnimation } from '@/app/utils/diceRotate'
 
 type ActionName = 'idle' | 'rotate'
 
@@ -21,22 +22,26 @@ type GLTFResult = GLTF & {
   animations: GLTFAction[]
 }
 
-export function Dice(props: JSX.IntrinsicElements['group']) {
-  const { textOrder } = useIntroStore();
-  const group = React.useRef<THREE.Group>(null)
-  const { nodes, materials, animations } = useGLTF("/assets/models/dice.glb") as GLTFResult
-  const { actions } = useAnimations(animations, group)
+export function Dice() {
+  const { textOrder, diceNumber } = useIntroStore();
+  const { nodes, materials } = useGLTF("/assets/models/dice.glb") as GLTFResult
 
   return (
     <motion.group 
       initial={{ x: 4.5, y: 1.5, z: -1}}
       animate={textOrder === 1 ? { x: 0, y: 2, z: 0, transition: { duration: 0.5}}: {}}
       >
-      <group 
-        ref={group}
+      <motion.group 
+        initial={{ rotateX: 0, rotateY: 0, rotateZ: 0 }}
+        animate={diceAnimation[diceNumber-1]}
         >
-        <mesh castShadow receiveShadow name="DIce" geometry={nodes.DIce.geometry} material={materials.MP_Dice_aiSS} position={[0, 0, 0]} rotation={[-3.141, -0.001, -Math.PI]} scale={0.04} />
-      </group>
+          <Center>
+            <motion.mesh 
+              castShadow 
+              receiveShadow name="Dice" 
+              geometry={nodes.DIce.geometry} material={materials.MP_Dice_aiSS} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={0.04} />
+          </Center>
+      </motion.group>
     </motion.group>
   )
 }

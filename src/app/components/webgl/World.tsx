@@ -49,7 +49,7 @@ export function World(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF("/assets/models/w.glb") as GLTFResult
   return (
     <group rotation-y={Math.PI} {...props} dispose={null}>
-      <group scale={0.3}>
+      <group scale={0.2}>
         <group receiveShadow castShadow position={[-19.733, 0, 44.928]} rotation={[0, 1.571, 0]}>
           <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube11_phong1_0001.geometry} material={materials.phong1} position={[29.252, 19.02, -5.83]} rotation={[0.077, -0.022, -0.1]} scale={0.379} />
           <motion.mesh whileTap={{scale: 0.4}} receiveShadow castShadow geometry={nodes.pCube25_phong1_0001.geometry} material={materials.phong1} position={[28.516, 7.546, -0.536]} rotation={[-0.03, -0.019, 0.102]} scale={0.379} />

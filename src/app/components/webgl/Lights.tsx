@@ -8,7 +8,7 @@ function Lights() {
 
     useFrame(() => {
         if (scene.background) {
-            scene.rotation.y += 0.001;
+            scene.rotation.y += 0.002;
         }
     });
     
@@ -29,7 +29,7 @@ function Lights() {
                 ground={{
                     radius: 60,
                     scale: 20,
-                    height: 1,
+                    height: 0.1,
                 }}
             />
             <directionalLight
