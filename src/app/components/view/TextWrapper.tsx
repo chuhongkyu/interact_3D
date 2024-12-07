@@ -8,17 +8,17 @@ import { useIntroStore } from "@/app/store/useIntroStore";
 type CustomHandleType = "Y" | "N"
 
 function TextWrapper() {
-    const { introStart, diceNumber, setDiceStart, isDiceStart, textOrder, setTextOrder } = useIntroStore()
+    const { mode, setMode, diceNumber, setDiceStart, textOrder, setTextOrder } = useIntroStore()
     const [typed, setTyped] = useState<Typed| undefined>();
     const [typed2, setTyped2] = useState<Typed| undefined>();
     const [typed3, setTyped3] = useState<Typed| undefined>();
     const [openCustomButton, setOpenCustomButton] = useState(false);
 
     useEffect(() => {
-        if (introStart && typed && textOrder === 1) {
+        if (mode === "INTRO" && typed && textOrder === 1) {
             typed.start();
         }
-    }, [introStart, typed, textOrder]);
+    }, [mode, typed, textOrder]);
 
     useEffect(() => {
         if(textOrder === 3){
@@ -35,7 +35,8 @@ function TextWrapper() {
 
     const handleCustom = (type: CustomHandleType) => {
         if(type === "Y"){
-
+            setMode("CUSTOM");
+            setTextOrder(4);
         }else{
             setTextOrder(3);
         }
@@ -45,7 +46,7 @@ function TextWrapper() {
         <>
             {
                 textOrder === 1 &&
-                <div className="text-container one" style={introStart ? { opacity: 1 } : { opacity: 0 }}>
+                <div className="text-container one" style={mode === "INTRO" ? { opacity: 1 } : { opacity: 0 }}>
                     <ReactTyped
                         stopped
                         typedRef={setTyped}

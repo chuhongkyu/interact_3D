@@ -6,6 +6,7 @@ import { motion } from "framer-motion-3d"
 import { useIntroStore } from '@/app/store/useIntroStore'
 import { diceAnimation } from '@/app/utils/diceRotate'
 import { useQueryDataStore } from '@/app/store/useQueryData'
+import { usePlayerStore } from '@/app/store/usePlayerStore'
 
 type ActionName = 'idle' | 'rotate'
 
@@ -35,8 +36,8 @@ export function Dice() {
   const { isDiceStart, diceNumber } = useIntroStore();
   const [ active, setActive ] = useState(false);
   const { nodes, materials } = useGLTF("/assets/models/dice.glb") as GLTFResult
-  const { userData } = useQueryDataStore();
-
+  const { userData } = usePlayerStore();
+  
   useEffect(()=>{
     if(userData.career){
       setActive(true);

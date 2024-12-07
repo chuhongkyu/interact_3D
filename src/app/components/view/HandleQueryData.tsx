@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useQueryDataStore } from "@/app/store/useQueryData";
 
 function HandleQueryData() {
-    const { career, setCareer } = useQueryDataStore();
+    const { career } = useQueryDataStore();
     const searchParams = useSearchParams();
 
     // useEffect(() => {

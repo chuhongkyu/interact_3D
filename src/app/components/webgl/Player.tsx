@@ -5,6 +5,7 @@ import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 import { useIntroStore } from '@/app/store/useIntroStore'
 import { motion } from "framer-motion-3d"
+import { usePlayerStore } from '@/app/store/usePlayerStore'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -31,10 +32,9 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, group)
-  const { setActions, actions: initialActions } = useIntroStore();
-  const [isJumping, setIsJumping] = useState(false);
+  const { setActions, actions: initialActions } = usePlayerStore();
 
-   useEffect(() => {
+  useEffect(() => {
     if (actions) {
       setActions(actions)
     }
@@ -42,25 +42,10 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
   useEffect(()=>{
     if(initialActions){
-      const jumpAction = actions["Jump"];
       const defaultAction = actions["Idle"];
 
-      if (jumpAction && defaultAction) {
+      if (defaultAction) {
         defaultAction.play();
-
-        const mixer = jumpAction.getMixer();
-        const checkJumpState = () => {
-          console.log(jumpAction.isRunning())
-          setIsJumping(jumpAction.isRunning());
-        };
-
-        mixer.addEventListener("loop", checkJumpState);
-        mixer.addEventListener("finished", checkJumpState);
-
-        return () => {
-          mixer.removeEventListener("loop", checkJumpState);
-          mixer.removeEventListener("finished", checkJumpState);
-        };
       }
     }
   },[initialActions])

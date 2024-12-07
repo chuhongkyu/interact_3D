@@ -1,13 +1,15 @@
 "use client"
 
 import { useIntroStore } from "@/app/store/useIntroStore"
+import { usePlayerStore } from "@/app/store/usePlayerStore";
 import { useQueryDataStore } from "@/app/store/useQueryData";
 import { useEffect } from "react";
 import { LoopOnce } from "three";
 
 function DiceController() {
-    const { actions, diceNumber, isDiceStart, setTextOrder, textOrder, increaseDiceNumber, decreaseDiceNumber } = useIntroStore()
-    const { setCareer, setUserData } = useQueryDataStore();
+    const { diceNumber, isDiceStart, setTextOrder, textOrder, increaseDiceNumber, decreaseDiceNumber } = useIntroStore()
+    const { setCareer } = useQueryDataStore();
+    const { actions, setUserData } = usePlayerStore();
     
     useEffect(() => {
         if (actions) {

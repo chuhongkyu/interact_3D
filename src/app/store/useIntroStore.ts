@@ -1,11 +1,12 @@
-import { AnimationAction } from "three";
 import { create } from "zustand";
+
+type IntroModeType = "DEFAULT" | "INTRO" | "CUSTOM";
 
 interface IntroStore {
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
-  introStart: boolean;
-  setIntroStart: (start: boolean) => void;
+  mode: IntroModeType;
+  setMode: (mode: IntroModeType) => void;
   textOrder: number;
   setTextOrder: (value: number) => void;
   isDiceStart: boolean;
@@ -13,17 +14,13 @@ interface IntroStore {
   diceNumber: number;
   increaseDiceNumber: () => void;
   decreaseDiceNumber: () => void;
-  actions: {
-    [x: string]: AnimationAction | null;
-  } 
-  setActions: (actions: {[x: string]: AnimationAction | null;})=> void;
 }
 
 export const useIntroStore = create<IntroStore>((set) => ({
   isLoading: true,
   setLoading: (loading) => set({ isLoading: loading }),
-  introStart: false,
-  setIntroStart: (start) => set({ introStart: start }),
+  mode: "DEFAULT",
+  setMode: (mode) => set({ mode: mode }),
   textOrder: 1,
   setTextOrder: (value) => set({ textOrder: value }),
   isDiceStart: false,
@@ -37,6 +34,4 @@ export const useIntroStore = create<IntroStore>((set) => ({
     set((state) => ({
       diceNumber: state.diceNumber === 1 ? 6 : state.diceNumber - 1,
   })),
-  actions: {},
-  setActions: (actions)=> set({ actions: actions }),
 }));

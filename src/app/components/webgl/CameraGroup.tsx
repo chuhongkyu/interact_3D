@@ -1,27 +1,31 @@
 import React, { useRef, useEffect, useState } from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useIntroStore } from "@/app/store/useIntroStore";
-import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
 
 function CameraGroup() {
-  const { isLoading } = useIntroStore();
-  const cameraRef = useRef<any>(null);
-  const [targetPosition, setTargetPosition] = useState([0, 4, 8]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      setTargetPosition([0, 2, 6]);
-    } else {
-      setTargetPosition([0, 10, 15]);
-    }
-  }, [isLoading]);
+  const { isLoading, mode } = useIntroStore();
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
+  const [ targetPosition, setTargetPosition] = useState<THREE.Vector3>(new THREE.Vector3(0,0.5,0))
 
   useFrame(() => {
-    if (cameraRef.current && !isLoading) {
-        cameraRef.current.position.lerp(new THREE.Vector3(...targetPosition), 0.05);
+    if (cameraRef.current) {
+      if(isLoading) return;
+
+      if(mode === "CUSTOM"){
+        cameraRef.current.position.lerp(new THREE.Vector3(0, 1, 4), 0.05);
+      }else{
+        cameraRef.current.position.lerp(new THREE.Vector3(0, 2, 6), 0.05);
+      }
     }
   });
+
+  useEffect(()=>{
+    if(mode === "CUSTOM"){
+      setTargetPosition(new THREE.Vector3(-1,0.5,0))
+    }
+  },[mode])
 
   return (
     <>
@@ -31,11 +35,10 @@ function CameraGroup() {
         position={[0, 10, 15]}
         fov={45}
       />
-
       <OrbitControls
         makeDefault
         autoRotateSpeed={0.5}
-        target={[0,0.5,0]}
+        target={targetPosition}
         zoomSpeed={0.5}
         minDistance={5}
         maxDistance={20}

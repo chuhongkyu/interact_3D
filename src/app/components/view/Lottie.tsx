@@ -6,14 +6,14 @@ import { useIntroStore } from "@/app/store/useIntroStore";
 import { useEffect } from "react";
 
 function LottieLoading() {
-  const { isLoading, setIntroStart } = useIntroStore()
+  const { isLoading, setMode } = useIntroStore()
 
   useEffect(()=> {
     let timeout: number | null = null;
 
     if(!isLoading){
       // 로티 애니메이션 css 끝이 1초임
-      timeout =  window.setTimeout(()=> setIntroStart(true),  1000)
+      timeout =  window.setTimeout(()=> setMode("INTRO"),  1000)
     }
 
     return () => {
