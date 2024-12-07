@@ -4,5 +4,4 @@ const introTexts = [
 	"시작하기에 앞서 너는 몇 년차 개발자의 인생을 보고싶어?",
 ]
 
-
 export { introTexts }

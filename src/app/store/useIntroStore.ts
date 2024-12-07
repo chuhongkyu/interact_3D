@@ -1,3 +1,4 @@
+import { AnimationAction } from "three";
 import { create } from "zustand";
 
 interface IntroStore {
@@ -10,6 +11,10 @@ interface IntroStore {
   diceNumber: number;
   increaseDiceNumber: () => void;
   decreaseDiceNumber: () => void;
+  actions: {
+    [x: string]: AnimationAction | null;
+  } 
+  setActions: (actions: {[x: string]: AnimationAction | null;})=> void;
 }
 
 export const useIntroStore = create<IntroStore>((set) => ({
@@ -27,5 +32,7 @@ export const useIntroStore = create<IntroStore>((set) => ({
   decreaseDiceNumber: () =>
     set((state) => ({
       diceNumber: state.diceNumber === 1 ? 6 : state.diceNumber - 1,
-    })),
+  })),
+  actions: {},
+  setActions: (actions)=> set({ actions: actions }),
 }));
