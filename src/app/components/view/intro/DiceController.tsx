@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { LoopOnce } from "three";
 
 function DiceController() {
-    const { actions, diceNumber, textOrder, increaseDiceNumber, decreaseDiceNumber } = useIntroStore()
-    const { setCareer } = useQueryDataStore();
+    const { actions, diceNumber, isDiceStart, setTextOrder, textOrder, increaseDiceNumber, decreaseDiceNumber } = useIntroStore()
+    const { setCareer, setUserData } = useQueryDataStore();
     
     useEffect(() => {
         if (actions) {
@@ -33,13 +33,16 @@ function DiceController() {
             jumpAction.clampWhenFinished = true;
             jumpAction.play();
         }
-
+        setTextOrder(2)
         setCareer(diceNumber + "");
+        setUserData({
+            career: diceNumber
+        });
     };
 
     
     return (
-        <div className={`${textOrder === 1 ? "active":""} ui-btns`}>
+        <div className={`${isDiceStart && textOrder === 1 ? "active":""} ui-btns`}>
             {/* <div className="dice-display"></div> */}
             <div className="arrow">
                 <button onClick={increaseDiceNumber} className="btn up"><img src="assets/images/up.png" alt="up"/></button>

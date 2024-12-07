@@ -17,6 +17,27 @@
 	transform-origin: center;
 }
 
+.text-container__buttons{
+	display: flex;
+	margin-top: 1.8rem;
+	button{
+		font-size: 16px;
+		font-weight: 700;
+		flex: 1;
+		background: rgb(167, 167, 167);
+		padding: 12px 12px;
+		border-radius: 4px;
+		cursor: pointer;
+		&:not(:last-of-type){
+			margin-right: 0.5rem;
+		}
+		&:hover{
+			transition: 300ms ease-in-out;
+			background: rgb(149, 149, 149);
+		}
+	}
+}
+
 .ui-btns{
 	position: fixed;
 	right: 30%;

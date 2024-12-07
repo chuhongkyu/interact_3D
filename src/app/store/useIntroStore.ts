@@ -8,6 +8,8 @@ interface IntroStore {
   setIntroStart: (start: boolean) => void;
   textOrder: number;
   setTextOrder: (value: number) => void;
+  isDiceStart: boolean;
+  setDiceStart: (start: boolean) => void;
   diceNumber: number;
   increaseDiceNumber: () => void;
   decreaseDiceNumber: () => void;
@@ -22,8 +24,10 @@ export const useIntroStore = create<IntroStore>((set) => ({
   setLoading: (loading) => set({ isLoading: loading }),
   introStart: false,
   setIntroStart: (start) => set({ introStart: start }),
-  textOrder: 0,
+  textOrder: 1,
   setTextOrder: (value) => set({ textOrder: value }),
+  isDiceStart: false,
+  setDiceStart: (start) => set({ isDiceStart: start }),
   diceNumber: 1,
   increaseDiceNumber: () =>
     set((state) => ({
