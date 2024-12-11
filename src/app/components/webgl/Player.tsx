@@ -3,9 +3,9 @@ import React ,{ useEffect, useState } from 'react'
 import { useFrame, useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
-import { useIntroStore } from '@/app/store/useIntroStore'
 import { motion } from "framer-motion-3d"
 import { usePlayerStore } from '@/app/store/usePlayerStore'
+import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -32,7 +32,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, group)
-  const { setActions, actions: initialActions } = usePlayerStore();
+  const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
 
   useEffect(() => {
     if (actions) {
@@ -50,6 +50,12 @@ export function Player(props: JSX.IntrinsicElements['group']) {
     }
   },[initialActions])
 
+  useEffect(()=>{
+    if(nodes?._rootJoint){
+      setModelBone(nodes._rootJoint)
+    }
+  },[nodes])
+
   return (
     <motion.group>
       <group ref={group} {...props} dispose={null}>
@@ -60,8 +66,16 @@ export function Player(props: JSX.IntrinsicElements['group']) {
                 <group name="RootNode">
                   <group name="Object_4">
                     <primitive object={nodes._rootJoint} />
-                    <skinnedMesh receiveShadow castShadow name="Object_7" geometry={nodes.Object_7.geometry} material={materials['mario_eye_tx.001']} skeleton={nodes.Object_7.skeleton} />
-                    <skinnedMesh receiveShadow castShadow name="Object_8" geometry={nodes.Object_8.geometry} material={materials['mario_all_tx.001']} skeleton={nodes.Object_8.skeleton} />
+                    <skinnedMesh receiveShadow castShadow 
+                      name="Object_7" 
+                      geometry={nodes.Object_7.geometry} 
+                      material={materials['mario_eye_tx.001']} 
+                      skeleton={nodes.Object_7.skeleton} />
+                    <skinnedMesh receiveShadow castShadow 
+                      name="Object_8" 
+                      geometry={nodes.Object_8.geometry} 
+                      material={materials['mario_all_tx.001']} 
+                      skeleton={nodes.Object_8.skeleton} />
                   </group>
                 </group>
               </group>

@@ -9,6 +9,7 @@ import { World } from "./World"
 import { useRef, useEffect } from "react"
 import { useIntroStore } from "@/app/store/useIntroStore"
 import { Dice } from "./Dice"
+import Weapon from "./Weapon"
 
 function Scene() {
   const sectionRef = useRef<HTMLTableSectionElement>(null);
@@ -34,6 +35,7 @@ function Scene() {
         <Player/>
         <World/>
         <Dice/>
+        <Weapon/>
       </Canvas>
     </section>
   )
