@@ -9,4 +9,4 @@ export interface Weapon {
     color?: string;
 }
 
-export type Category = "HAMMER" | "MUSHROOM" | "STAR" | null
+export type Category = "HAMMER" | "MUSHROOM" | "STAR" | "FLOWER" | null
