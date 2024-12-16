@@ -1,13 +1,21 @@
 import { usePlayerStore } from '@/app/store/usePlayerStore';
-import { Category } from '@/app/types/userData';
+import { BCategory, WCategory } from '@/app/types/userData';
 import React from 'react'
 
-function Item({category = "HAMMER", color = "0"}:{category?:Category, color?: string}) {
-    const { setWeapon } = usePlayerStore();
+function Item({category = "HAMMER", src, color = "0"}:{category?:WCategory | BCategory, src?:string, color?: string}) {
+    const { setWeapon, setBack } = usePlayerStore();
+
+    const onClick = () => {
+        if(category === "TURTLE"){
+            setBack(category, color)
+        }else if(category === "FLOWER" || category === "HAMMER"){
+            setWeapon(category, color)
+        }
+    }
     
     return (
-        <li onClick={()=> setWeapon(category, color)}>
-                            
+        <li onClick={onClick}>
+            <img src={src} alt="color"/>      
         </li>
     )
 }

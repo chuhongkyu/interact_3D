@@ -22,16 +22,32 @@ type GLTFResult = GLTF & {
   }
 }
 
-export function Flower() {
+export function Flower({color = "0"}:{color?:string}) {
   const { nodes, materials } = useGLTF("/assets/models/flower.glb") as GLTFResult
+
+  const blueMaterial = new THREE.MeshToonMaterial({ color: "#2E6CD7" })
+  const skyBlueMaterial = new THREE.MeshToonMaterial({ color: "skyblue" })
+
   return (
     <group rotation={[1,0,0.2]} dispose={null}>
       <group rotation={[0,Math.PI/2,0]} position={[-0.35, 0.5, -0.38]} scale={0.3}>
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial.geometry} material={materials['07___Default']} />
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_1.geometry} material={materials['08___Default']} />
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_2.geometry} material={materials['09___Default']} />
-        <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_3.geometry} material={materials['01___Default']} />
-        <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_4.geometry} material={materials['02___Default']} />
+        
+        {color == "0" && 
+        <>
+          <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_3.geometry} material={materials['01___Default']} />
+          <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_4.geometry} material={materials['02___Default']} />
+        </>
+        }
+        
+        {color == "1" && 
+        <>
+          <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_3.geometry} material={blueMaterial} />
+          <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_4.geometry} material={skyBlueMaterial} />
+        </>
+        }
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_5.geometry} material={materials['03___Default']} />
       </group>
     </group>

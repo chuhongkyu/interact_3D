@@ -41,7 +41,7 @@ function Weapon() {
                     
                 </group>
                 <group ref={rightWeapon}>
-                    {userData.weapon?.category === "FLOWER" && <Flower/>}
+                    {userData.weapon?.category === "FLOWER" && <Flower color={userData.weapon.color}/>}
                 </group>
             </>
         )
