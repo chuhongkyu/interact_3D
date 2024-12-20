@@ -24,6 +24,8 @@ function CameraGroup() {
   useEffect(()=>{
     if(mode === "CUSTOM"){
       setTargetPosition(new THREE.Vector3(-1,0.5,0))
+    }else{
+      setTargetPosition(new THREE.Vector3(0,0.5,0))
     }
   },[mode])
 

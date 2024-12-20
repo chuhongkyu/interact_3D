@@ -1,13 +1,20 @@
 import { usePlayerStore } from "@/app/store/usePlayerStore"
 import { backItem, handItem } from "@/app/utils/itemLIst";
 import Item from "./Item";
+import { useIntroStore } from "@/app/store/useIntroStore";
 
 function IntroCustomContainer() {
     const { userData, setWeapon, setBack } = usePlayerStore();
+    const { setTextOrder, setMode } = useIntroStore();
 
     const onReset = () => {
         setWeapon(null)
         setBack(null);
+    }
+
+    const onComplete = () => {
+        setMode("INTRO")
+        setTextOrder(3)
     }
     
     return (
@@ -35,7 +42,7 @@ function IntroCustomContainer() {
                 </div>        
                 <div className="custom-btn-group">
                     <button onClick={onReset}>초기화</button>
-                    <button>완료</button>
+                    <button onClick={onComplete}>완료</button>
                 </div>
             </div>
         </div>
