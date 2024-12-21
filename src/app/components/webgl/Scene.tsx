@@ -36,7 +36,6 @@ function Scene() {
         <Player/>
         <World/>
         <Dice/>
-        {/* item */}
         <Weapon/>
         <Back/>
       </Canvas>

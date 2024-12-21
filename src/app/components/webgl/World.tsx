@@ -3,6 +3,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { motion } from "framer-motion-3d";
+import { useIntroStore } from '@/app/store/useIntroStore';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -47,6 +48,8 @@ type GLTFResult = GLTF & {
 
 export function World(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF("/assets/models/w.glb") as GLTFResult
+  const { mode } = useIntroStore();
+
   return (
     <group rotation-y={Math.PI} {...props} dispose={null}>
       <group scale={0.2}>
@@ -64,12 +67,14 @@ export function World(props: JSX.IntrinsicElements['group']) {
           <mesh receiveShadow castShadow geometry={nodes.pCube49_phong1_0.geometry} material={materials.phong1} position={[28.066, 13.808, -7.895]} rotation={[-0.03, -0.019, 0.102]} scale={0.379} />
           <mesh receiveShadow castShadow geometry={nodes.pCylinder2_phong1_0001.geometry} material={materials.phong1} position={[37.817, 0.788, -15.479]} rotation={[-0.163, 1.018, -0.081]} scale={1.57} />
         </group>
-        <mesh receiveShadow castShadow geometry={nodes.pCube34_phong1_0.geometry} material={materials.phong1} position={[17.337, -4.717, -18.053]} rotation={[0.046, -0.295, -0.141]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCube42_phong1_0.geometry} material={materials.phong1} position={[12.688, -4.096, -17.458]} rotation={[0.134, -0.36, 0.199]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCube33_phong1_0.geometry} material={materials.phong1} position={[0.147, -4.984, 11.203]} rotation={[0.111, -0.02, 0.149]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCube37_phong1_0.geometry} material={materials.phong1} position={[-13.761, -4.13, 14.997]} rotation={[0.182, 0.282, -0.194]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCube41_phong1_0.geometry} material={materials.phong1} position={[-6.538, -4.192, 13.707]} rotation={[-0.092, 0.255, 0.023]} />
-        <mesh receiveShadow castShadow geometry={nodes.pCube43_phong1_0.geometry} material={materials.phong1} position={[-16.916, -4.973, -11.874]} rotation={[-0.264, 0.43, 0.417]} />
+        <motion.group animate={mode === "END" ? {y: -6} : {y: 0}} transition={{ duration: 1.5}}>
+          <mesh receiveShadow castShadow geometry={nodes.pCube34_phong1_0.geometry} material={materials.phong1} position={[17.337, -4.717, -18.053]} rotation={[0.046, -0.295, -0.141]} />
+          <mesh receiveShadow castShadow geometry={nodes.pCube42_phong1_0.geometry} material={materials.phong1} position={[12.688, -4.096, -17.458]} rotation={[0.134, -0.36, 0.199]} />
+          <mesh receiveShadow castShadow geometry={nodes.pCube33_phong1_0.geometry} material={materials.phong1} position={[0.147, -4.984, 11.203]} rotation={[0.111, -0.02, 0.149]} />
+          <mesh receiveShadow castShadow geometry={nodes.pCube37_phong1_0.geometry} material={materials.phong1} position={[-13.761, -4.13, 14.997]} rotation={[0.182, 0.282, -0.194]} />
+          <mesh receiveShadow castShadow geometry={nodes.pCube41_phong1_0.geometry} material={materials.phong1} position={[-6.538, -4.192, 13.707]} rotation={[-0.092, 0.255, 0.023]} />
+          <mesh receiveShadow castShadow geometry={nodes.pCube43_phong1_0.geometry} material={materials.phong1} position={[-16.916, -4.973, -11.874]} rotation={[-0.264, 0.43, 0.417]} />
+        </motion.group>
         <mesh receiveShadow castShadow geometry={nodes.pCube38_phong1_0.geometry} material={materials.phong1} position={[-13.946, -6.534, -34.609]} rotation={[0.207, 0.08, 0.123]} />
         <mesh receiveShadow castShadow geometry={nodes.pCube35_phong1_0.geometry} material={materials.phong1} position={[41.222, -12.32, -22.493]} rotation={[0.004, 0.28, 0.217]} />
         <mesh receiveShadow castShadow geometry={nodes.pCube36_phong1_0.geometry} material={materials.phong1} position={[-36.997, -7.739, -10.77]} rotation={[-0.023, 0.009, -0.247]} scale={0.623} />

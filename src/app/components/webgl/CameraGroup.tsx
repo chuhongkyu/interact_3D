@@ -8,13 +8,16 @@ function CameraGroup() {
   const { isLoading, mode } = useIntroStore();
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const [ targetPosition, setTargetPosition] = useState<THREE.Vector3>(new THREE.Vector3(0,0.5,0))
-
+  const [ enabled, setEnabled] = useState(true);
+  
   useFrame(() => {
     if (cameraRef.current) {
       if(isLoading) return;
 
       if(mode === "CUSTOM"){
         cameraRef.current.position.lerp(new THREE.Vector3(0, 1, 4), 0.05);
+      }else if(mode === "END"){
+        cameraRef.current.position.lerp(new THREE.Vector3(0, 1.5, 1.5), 0.01); 
       }else{
         cameraRef.current.position.lerp(new THREE.Vector3(0, 2, 6), 0.05);
       }
@@ -24,6 +27,9 @@ function CameraGroup() {
   useEffect(()=>{
     if(mode === "CUSTOM"){
       setTargetPosition(new THREE.Vector3(-1,0.5,0))
+    }else if(mode === "END"){
+      setEnabled(false)
+      setTargetPosition(new THREE.Vector3(0,0.5,0))
     }else{
       setTargetPosition(new THREE.Vector3(0,0.5,0))
     }
@@ -38,11 +44,12 @@ function CameraGroup() {
         fov={45}
       />
       <OrbitControls
+        enabled={enabled}
         makeDefault
         autoRotateSpeed={0.5}
         target={targetPosition}
         zoomSpeed={0.5}
-        minDistance={5}
+        minDistance={2}
         maxDistance={20}
         minAzimuthAngle={-Math.PI / 2}
         maxAzimuthAngle={Math.PI / 2}

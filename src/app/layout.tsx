@@ -16,6 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>마리오 개발자 월드</title>
+	      <meta name="description" content="마리오 월드에서 개발자의 인생을 엿보세요."/>
+        <link rel="icon" href="/assets/favicon.ico" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );

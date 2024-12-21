@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type IntroModeType = "DEFAULT" | "INTRO" | "CUSTOM";
+type IntroModeType = "DEFAULT" | "INTRO" | "CUSTOM" | "END";
 
 interface IntroStore {
   isLoading: boolean;

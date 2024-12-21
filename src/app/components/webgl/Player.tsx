@@ -6,6 +6,7 @@ import { GLTF, SkeletonUtils } from 'three-stdlib'
 import { motion } from "framer-motion-3d"
 import { usePlayerStore } from '@/app/store/usePlayerStore'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
+import { useIntroStore } from '@/app/store/useIntroStore'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -32,6 +33,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, group)
+  const { mode } = useIntroStore()
   const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
 
   useEffect(() => {
@@ -55,6 +57,22 @@ export function Player(props: JSX.IntrinsicElements['group']) {
       setModelBone(nodes._rootJoint)
     }
   },[nodes])
+
+  useFrame(() => {
+    if (mode === "END") {
+      if (group.current && actions) {
+        const targetRotation = Math.PI;
+        actions["Idle"]?.stop();
+        actions["Walk"]?.play();
+        group.current.rotation.y = THREE.MathUtils.lerp(
+          group.current.rotation.y,
+          targetRotation, 
+          0.02            
+        );
+        group.current.position.lerp(new THREE.Vector3(0, 0, -2), 0.02);
+      }
+    }
+  });
 
   return (
     <motion.group>

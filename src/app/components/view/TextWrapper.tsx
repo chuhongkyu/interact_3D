@@ -4,6 +4,7 @@ import { ReactTyped,Typed } from "react-typed";
 import { useState, useEffect, useCallback } from "react";
 import { introTexts, introTexts2 } from "@/app/utils/textData";
 import { useIntroStore } from "@/app/store/useIntroStore";
+import { useRouter } from "next/navigation";
 
 type CustomHandleType = "Y" | "N"
 
@@ -13,6 +14,7 @@ function TextWrapper() {
     const [typed2, setTyped2] = useState<Typed| undefined>();
     const [typed3, setTyped3] = useState<Typed| undefined>();
     const [openCustomButton, setOpenCustomButton] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         if (mode === "INTRO" && typed && textOrder === 1) {
@@ -41,6 +43,11 @@ function TextWrapper() {
             setTextOrder(3);
         }
     }
+
+    const handelIntroEnd = () => {
+        setMode("END")
+    }
+
 
     return (
         <>
@@ -84,7 +91,7 @@ function TextWrapper() {
                         startDelay={0.5}
                         typedRef={setTyped3}
                         strings={introTexts2}
-                        // onComplete={}
+                        onComplete={handelIntroEnd}
                         typeSpeed={60}
                     />
                 </div>
