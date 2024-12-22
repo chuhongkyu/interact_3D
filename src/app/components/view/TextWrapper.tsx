@@ -85,7 +85,7 @@ function TextWrapper() {
                 </div>
             }
             {
-                textOrder === 3 &&
+                textOrder === 3 && mode !== "END" &&
                 <div className="text-container three" style={textOrder === 3 ? { opacity: 1 } : { opacity: 0 }}>
                     <ReactTyped
                         startDelay={0.5}

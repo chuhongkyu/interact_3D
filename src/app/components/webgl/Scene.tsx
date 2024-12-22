@@ -14,7 +14,7 @@ import Back from "./Back"
 
 function Scene() {
   const sectionRef = useRef<HTMLTableSectionElement>(null);
-  const { setLoading } = useIntroStore()
+  const { setLoading, mode } = useIntroStore()
 
   useEffect(()=>{
     const timeout = setTimeout(()=> {
@@ -27,6 +27,18 @@ function Scene() {
     return () => clearTimeout(timeout)
 
   },[sectionRef])
+
+  useEffect(()=>{
+    if(mode === "END"){
+      const timeout = setTimeout(()=> {
+        if(sectionRef?.current){
+          sectionRef.current.classList.remove("hide")
+        }
+      }, 1000)
+  
+      return () => clearTimeout(timeout)
+    }
+  },[mode])
 
   return (
     <section className="view" ref={sectionRef}>

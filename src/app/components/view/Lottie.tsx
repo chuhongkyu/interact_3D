@@ -6,7 +6,7 @@ import { useIntroStore } from "@/app/store/useIntroStore";
 import { useEffect } from "react";
 
 function LottieLoading() {
-  const { isLoading, setMode } = useIntroStore()
+  const { isLoading, setMode, mode } = useIntroStore()
 
   useEffect(()=> {
     let timeout: number | null = null;
@@ -22,14 +22,17 @@ function LottieLoading() {
   },[isLoading])
 
   return (
-    <div className="loading">
-      <Lottie
-        loop
-        animationData={json}
-        play
-        style={{ width: 300, height: 300 }}
-      />
-	</div>
+    <div className={`loading ${mode === "END" && "black"}`}>
+      {mode === "DEFAULT" && (
+        <Lottie
+          loop
+          animationData={json}
+          play
+          style={{ width: 300, height: 300 }}
+        />
+      )}
+      
+	  </div>
   )
 }
 

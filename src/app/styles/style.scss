@@ -12,6 +12,7 @@
     height: 100dvh;
 	position: relative;
 	clip-path: circle(0%);
+	transition: 1s ease-in-out;
 }
 
 .view.hide{
