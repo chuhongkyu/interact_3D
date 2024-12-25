@@ -1,8 +1,10 @@
+import Scene from "@/app/components/webgl/game/Scene";
+
 export default function Page() {
-    return (
-      <div>
-        game
-      </div>
-    );
-  }
+  return (
+    <main>
+      <Scene/>
+    </main>
+  );
+}
   

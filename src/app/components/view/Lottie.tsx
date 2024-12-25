@@ -31,7 +31,6 @@ function LottieLoading() {
           style={{ width: 300, height: 300 }}
         />
       )}
-      
 	  </div>
   )
 }

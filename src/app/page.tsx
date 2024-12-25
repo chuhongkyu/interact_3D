@@ -1,4 +1,4 @@
-import Scene from "@/app/components/webgl/Scene";
+import Scene from "@/app/components/webgl/intro/Scene";
 import LottieLoading from "@/app/components/view/Lottie";
 import IntroViewContainer from "@/app/components/view/intro/IntroViewContainer";
 import DiceController from "@/app/components/view/intro/DiceController";

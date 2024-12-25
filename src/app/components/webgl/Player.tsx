@@ -7,6 +7,7 @@ import { motion } from "framer-motion-3d"
 import { usePlayerStore } from '@/app/store/usePlayerStore'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { useIntroStore } from '@/app/store/useIntroStore'
+import { usePathname } from 'next/navigation'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -33,8 +34,10 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, group)
+  
   const { mode } = useIntroStore()
   const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
+  const pathname = usePathname()
 
   useEffect(() => {
     if (actions) {
@@ -59,7 +62,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   },[nodes])
 
   useFrame(() => {
-    if (mode === "END") {
+    if (pathname === "/" && mode === "END") {
       if (group.current && actions) {
         const targetRotation = Math.PI;
         actions["Idle"]?.stop();
