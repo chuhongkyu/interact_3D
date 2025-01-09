@@ -1,8 +1,28 @@
+import { useGameStore } from "@/app/store/useGameStore";
+import { useTexture } from "@react-three/drei"
 import React from "react"
+import { RepeatWrapping } from "three";
+import * as THREE from "three";
 
 function Floor() {
+    const setPointerPosition = useGameStore((state) => state.setPointerPosition);
+    const texture = useTexture("/assets/images/bg.png");
+    texture.wrapS = RepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+    texture.repeat.set(18, 18);
+
+    const handlePointerDown = (event: THREE.Event) => {
+        const { point }:any = event;
+        setPointerPosition(new THREE.Vector3(point.x, 0.02, point.z));
+    };
+
     return (
-        <></>
+        <>
+            <mesh receiveShadow onClick={handlePointerDown} position={[0,-0.05,0]} rotation={[-Math.PI/2,0,0]}>
+                <planeGeometry args={[100, 100]}/>
+                <meshStandardMaterial map={texture}/>
+            </mesh>
+        </>
     )
 }
 
