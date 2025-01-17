@@ -3,7 +3,6 @@ import React ,{ useEffect, useRef, useState } from 'react'
 import { useFrame, useGraph, useThree } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
-import { motion } from "framer-motion-3d"
 import { usePlayerStore } from '@/app/store/usePlayerStore'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { useIntroStore } from '@/app/store/useIntroStore'
@@ -128,7 +127,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
             <group name="Object_2">
               <group name="RootNode">
                 <group name="Object_4">
-                  <primitive object={nodes._rootJoint} />
+                  <primitive receiveShadow castShadow  object={nodes._rootJoint} />
                   <skinnedMesh receiveShadow castShadow 
                     name="Object_7" 
                     geometry={nodes.Object_7.geometry} 
