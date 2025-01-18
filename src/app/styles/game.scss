@@ -1,0 +1,26 @@
+.matching-view-wrapper{
+    display: flex;
+    width: 100%;
+    height: 100dvh;
+    position: absolute;
+    z-index: 1;
+    padding: 2rem 1.4rem;
+    .matching-view{
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+    .view-scene-wario{
+        width: 300px;
+        height: 180px;
+        position: absolute;
+        z-index: 2;
+        bottom: 2rem;
+        right: 1.4rem;
+        border: 1px solid #000;
+    }
+    .view-scene{
+        width: 50%;
+        height: 100%;
+    }
+}
