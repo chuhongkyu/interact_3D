@@ -16,13 +16,13 @@ type GLTFResult = GLTF & {
 
 export function Hole(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/assets/models/hole.glb') as GLTFResult;
-  const setStageType = useGameStore((state)=> state.setStageType);
+  const setPlayerState = useGameStore((state)=> state.setPlayerState);
   return (
     <group {...props} dispose={null}>
       <motion.group 
         initial={{y: 0}}
         animate={{y: -2, transition: { duration: 0.5, delay: 2}}}
-        onAnimationComplete={()=> setStageType("DEFAULT")}
+        onAnimationComplete={()=> setPlayerState("DEFAULT")}
         scale={0.68}>
         <mesh receiveShadow castShadow geometry={nodes.Object_20.geometry} material={materials['Material.007']} position={[0, -0.069, 4]} />
       </motion.group>

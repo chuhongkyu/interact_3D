@@ -6,7 +6,7 @@ import * as THREE from "three";
 
 function Floor() {
     const setPointerPosition = useGameStore((state) => state.setPointerPosition);
-    const stageType = useGameStore((state)=> state.stageType);
+    const playerState = useGameStore((state)=> state.playerState);
 
     const texture = useTexture("/assets/images/bg.png");
     texture.wrapS = RepeatWrapping;
@@ -14,7 +14,7 @@ function Floor() {
     texture.repeat.set(8, 8);
 
     const handlePointerDown = (event: THREE.Event) => {
-        if(stageType !== "DEFAULT") return;
+        if(playerState !== "DEFAULT") return;
         const { point }:any = event;
         setPointerPosition(new THREE.Vector3(point.x, 0.02, point.z));
     };

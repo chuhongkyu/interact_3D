@@ -44,6 +44,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const pointerPosition = useGameStore((state) => state.pointerPosition);
   const checkPoint  = useGameStore((state) => state.checkPoint);
   const setCheckPoint  = useGameStore((state) => state.setCheckPoint);
+  const playerState  = useGameStore((state) => state.playerState);
 
   useEffect(() => {
     if (actions) {
@@ -117,12 +118,24 @@ export function Player(props: JSX.IntrinsicElements['group']) {
         actions["Walk"]?.stop();
         actions["Idle"]?.play();
       }
-      const cameraOffset = new THREE.Vector3(2, 5, 5);
+      
+      let cameraOffset = new THREE.Vector3(2, 5, 5);
+
+      switch (playerState) {
+        case "DEFAULT":
+          cameraOffset = new THREE.Vector3(2, 5, 5);
+          break;
+        case "STAGE1":
+          cameraOffset = new THREE.Vector3(2, 5, 5);
+          break;
+        default:
+          break;
+      }
+
       const cameraPosition = new THREE.Vector3();
       cameraPosition.copy(playerPosition).add(cameraOffset);  
       camera.position.lerp(cameraPosition, 0.9);
       camera.lookAt(new THREE.Vector3(playerPosition.x, playerPosition.y, playerPosition.z));
-      
     }
   });
 

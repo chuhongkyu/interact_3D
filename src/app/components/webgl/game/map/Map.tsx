@@ -2,8 +2,12 @@ import mapData from "@/app/utils/MapData"
 import { Oirow } from "../npc/Oirow"
 import Spot from "./Spot"
 import TextWrapper from "../TextWrapper"
+import { useGameStore } from "@/app/store/useGameStore";
+import { useEffect } from "react";
 
 function Map() {
+    const setPlayerState  = useGameStore((state) => state.setPlayerState);
+
     return (
         <>
             <Oirow position={mapData[0].position}/>
@@ -11,7 +15,9 @@ function Map() {
             <TextWrapper 
                 check="1"
                 textArray={mapData[0].text}
-                position={mapData[0].position}/>
+                position={mapData[0].position}
+                onComplete={()=> setPlayerState("STAGE1")}
+            />
         </>
     )
 }
