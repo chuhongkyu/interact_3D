@@ -4,10 +4,10 @@ import { useFrame, useGraph, useThree } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
 import { usePlayerStore } from '@/app/store/usePlayerStore'
-import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { useIntroStore } from '@/app/store/useIntroStore'
 import { usePathname } from 'next/navigation'
 import { useGameStore } from '@/app/store/useGameStore'
+import mapData from '@/app/utils/MapData'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -29,11 +29,11 @@ type GLTFResult = GLTF & {
 }
 
 export function Player(props: JSX.IntrinsicElements['group']) {
-  const group = React.useRef<THREE.Group>(null)
+  const playerRef = React.useRef<THREE.Group>(null)
   const { scene, animations } = useGLTF('/assets/models/m.glb')
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
-  const { actions } = useAnimations(animations, group)
+  const { actions } = useAnimations(animations, playerRef)
   const { camera } = useThree();
 
   const { mode } = useIntroStore()
@@ -42,7 +42,8 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
   const isMoving = useRef(false);
   const pointerPosition = useGameStore((state) => state.pointerPosition);
-  const setPointerPosition = useGameStore((state) => state.setPointerPosition);
+  const checkPoint  = useGameStore((state) => state.checkPoint);
+  const setCheckPoint  = useGameStore((state) => state.setCheckPoint);
 
   useEffect(() => {
     if (actions) {
@@ -68,59 +69,66 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
   useFrame(() => {
     if (pathname === "/" && mode === "END") {
-      if (group.current && actions) {
+      if (playerRef.current && actions) {
         const targetRotation = Math.PI;
         actions["Idle"]?.stop();
         actions["Walk"]?.play();
 
-        group.current.rotation.y = THREE.MathUtils.lerp(
-          group.current.rotation.y,
+        playerRef.current.rotation.y = THREE.MathUtils.lerp(
+          playerRef.current.rotation.y,
           targetRotation, 
           0.02            
         );
-        group.current.position.lerp(new THREE.Vector3(0, 0, -2), 0.02);
+        playerRef.current.position.lerp(new THREE.Vector3(0, 0, -2), 0.02);
       }
     }
 
-    if (pathname === "/game") {
-      if (group.current) {
-        const playerPosition = group.current.position;
-        const distance = playerPosition.distanceTo(pointerPosition);
+    if (pathname === "/game" && playerRef.current) {
+      const playerPosition = playerRef.current.position;
+      const [x, y, z] = mapData[0].position;
 
-        if (distance > 0.1) {
-          isMoving.current = true;
-          const angle = Math.atan2(
-              pointerPosition.z - playerPosition.z,
-              pointerPosition.x - playerPosition.x
-          );
-          playerPosition.x += Math.cos(angle) * 0.05;
-          playerPosition.z += Math.sin(angle) * 0.05;
-          
-          group.current.rotation.y = -angle + Math.PI / 2;
-          
-
-          actions["Idle"]?.stop();
-          actions["Walk"]?.play();
-        } else if (isMoving.current) {
-          isMoving.current = false;
-          actions["Walk"]?.stop();
-          actions["Idle"]?.play();
+      if (
+        Math.abs(playerPosition.x - x) < 2 &&
+        Math.abs(playerPosition.z - z) < 2
+      ) {
+        if(checkPoint !== "1"){
+          setCheckPoint("1")
         }
-
-        const cameraOffset = new THREE.Vector3(2, 5, 5);
-        const cameraPosition = new THREE.Vector3();
-        cameraPosition.copy(playerPosition).add(cameraOffset);  
-
-        camera.position.lerp(cameraPosition, 0.9);
-        camera.lookAt(new THREE.Vector3(playerPosition.x, playerPosition.y, playerPosition.z));
-
+      }else{
+        setCheckPoint("0")
       }
+      
+      const distance = playerPosition.distanceTo(pointerPosition);
+      if (distance > 0.1) {
+        isMoving.current = true;
+        const angle = Math.atan2(
+            pointerPosition.z - playerPosition.z,
+            pointerPosition.x - playerPosition.x
+        );
+        playerPosition.x += Math.cos(angle) * 0.05;
+        playerPosition.z += Math.sin(angle) * 0.05;
+        
+        playerRef.current.rotation.y = -angle + Math.PI / 2;
+        
+        actions["Idle"]?.stop();
+        actions["Walk"]?.play();
+      } else if (isMoving.current) {
+        isMoving.current = false;
+        actions["Walk"]?.stop();
+        actions["Idle"]?.play();
+      }
+      const cameraOffset = new THREE.Vector3(2, 5, 5);
+      const cameraPosition = new THREE.Vector3();
+      cameraPosition.copy(playerPosition).add(cameraOffset);  
+      camera.position.lerp(cameraPosition, 0.9);
+      camera.lookAt(new THREE.Vector3(playerPosition.x, playerPosition.y, playerPosition.z));
+      
     }
   });
 
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={playerRef} {...props} dispose={null}>
       <group name="Scene">
         <group name="Sketchfab_model">
           <group name="fbx_mergefbx" rotation={[Math.PI / 2, 0, 0]}>

@@ -1,6 +1,6 @@
 import { RoundedBox, useTexture } from "@react-three/drei";
 import { useMemo } from "react";
-import { RepeatWrapping, TextureLoader } from "three";
+import { TextureLoader } from "three";
 import { Box } from "./Box";
 
 function Spot(props: JSX.IntrinsicElements["group"]) {

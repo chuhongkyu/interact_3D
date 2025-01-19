@@ -1,12 +1,17 @@
 import mapData from "@/app/utils/MapData"
 import { Oirow } from "../npc/Oirow"
 import Spot from "./Spot"
+import TextWrapper from "../TextWrapper"
 
 function Map() {
     return (
         <>
-            <Oirow position={[mapData[0].position[0],mapData[0].position[1], mapData[0].position[2]]}/>
-            <Spot position={[mapData[0].position[0],mapData[0].position[1], mapData[0].position[2]]}/>
+            <Oirow position={mapData[0].position}/>
+            <Spot position={mapData[0].position}/>
+            <TextWrapper 
+                check="1"
+                textArray={mapData[0].text}
+                position={mapData[0].position}/>
         </>
     )
 }

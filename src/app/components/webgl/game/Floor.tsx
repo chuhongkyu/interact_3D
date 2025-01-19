@@ -6,12 +6,15 @@ import * as THREE from "three";
 
 function Floor() {
     const setPointerPosition = useGameStore((state) => state.setPointerPosition);
+    const stageType = useGameStore((state)=> state.stageType);
+
     const texture = useTexture("/assets/images/bg.png");
     texture.wrapS = RepeatWrapping;
     texture.wrapT = RepeatWrapping;
-    texture.repeat.set(18, 18);
+    texture.repeat.set(8, 8);
 
     const handlePointerDown = (event: THREE.Event) => {
+        if(stageType !== "DEFAULT") return;
         const { point }:any = event;
         setPointerPosition(new THREE.Vector3(point.x, 0.02, point.z));
     };
@@ -19,7 +22,7 @@ function Floor() {
     return (
         <>
             <mesh castShadow receiveShadow onClick={handlePointerDown} position={[0,-0.05,0]} rotation={[-Math.PI/2,0,0]}>
-                <planeGeometry args={[100, 100]}/>
+                <planeGeometry args={[50, 50]}/>
                 <meshStandardMaterial map={texture}/>
             </mesh>
         </>

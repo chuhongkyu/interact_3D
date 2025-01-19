@@ -6,7 +6,6 @@ import Lights from "./Lights";
 import PlayerController from "./PlayerController";
 import { Hole } from "./map/Hole";
 import Map from "./map/Map";
-import { OrbitControls } from "@react-three/drei";
 
 function Scene() {
     const sectionRef = useRef<HTMLTableSectionElement>(null);
