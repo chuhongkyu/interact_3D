@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { WCategory, IUserData, Weapon, BCategory } from "../types/userData";
+import { WCategory, IUserData, Weapon, BCategory } from "../types/userDataType";
 import { AnimationAction, Bone, Group, Object3D } from "three";
 
 interface PlayerStore {

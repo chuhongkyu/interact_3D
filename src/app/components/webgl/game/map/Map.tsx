@@ -1,6 +1,6 @@
 import mapData from "@/app/utils/MapData"
 import { Oirow } from "../npc/Oirow"
-import Spot from "./Spot"
+import Spot from "./stage1/Spot"
 import TextWrapper from "../TextWrapper"
 import { useGameStore } from "@/app/store/useGameStore";
 import { useEffect } from "react";

@@ -55,8 +55,8 @@ function Scene() {
                 camera={{
                     position: [2, 5, 5],
                     ...cameraSettings,
-                    near: -1000,
-                    far: 1000,
+                    near: 0.1,
+                    far: 2000,
                 }}
             >
                 <Lights />

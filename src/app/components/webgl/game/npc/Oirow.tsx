@@ -1,8 +1,10 @@
 import * as THREE from 'three'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
+import { useGameStore } from '@/app/store/useGameStore'
+import { motion } from "framer-motion-3d"
 
 type ActionName = 'mixamo.com'
 
@@ -48,12 +50,35 @@ export function Oirow(props: JSX.IntrinsicElements['group']) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, group)
-  
+  const [start, setStart] = useState(false);
+
   useEffect(()=>{ actions["mixamo.com"]?.play() },[actions])
+  const playerState  = useGameStore((state) => state.playerState);
+
+  useEffect(()=>{
+    if(!group.current) return;
+
+    switch (playerState) {
+      case "DEFAULT":
+        setStart(false);
+        break;
+      case "STAGE1":
+        setStart(true);
+        // group.current.visible = false;
+        break;
+      default:
+        break;
+    }
+  },[playerState])
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Sketchfab_Scene">
+      <motion.group 
+        name="oirow" 
+        initial={{ rotateY: 0}}
+        animate={start ? {rotateY: Math.PI, z: -1 }: {rotateY: 0}}
+        transition={{ duration: 1, ease: "easeInOut"}}
+        >
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]} scale={0.03}>
           <group name="3c519cd86b2949279f877c799d8ba3b6fbx" rotation={[Math.PI / 2, 0, 0]}>
             <group name="Object_2">
@@ -83,7 +108,7 @@ export function Oirow(props: JSX.IntrinsicElements['group']) {
             </group>
           </group>
         </group>
-      </group>
+      </motion.group>
     </group>
   )
 }

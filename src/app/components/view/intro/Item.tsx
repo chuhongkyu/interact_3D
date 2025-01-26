@@ -1,5 +1,5 @@
 import { usePlayerStore } from '@/app/store/usePlayerStore';
-import { BCategory, WCategory } from '@/app/types/userData';
+import { BCategory, WCategory } from '@/app/types/userDataType';
 import React from 'react'
 
 function Item({category = "HAMMER", src, color = "0"}:{category?:WCategory | BCategory, src?:string, color?: string}) {

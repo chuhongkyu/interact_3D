@@ -1,4 +1,4 @@
-import { Vector3Tuple } from 'three';
+import { Vector3Tuple } from "three";
 
 const mapData: {
   npc: string;

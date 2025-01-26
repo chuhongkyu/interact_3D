@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IUserData } from "../types/userData";
+import { IUserData } from "../types/userDataType";
 
 interface QueryDataStore {
     career: string;

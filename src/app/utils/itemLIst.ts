@@ -1,4 +1,4 @@
-import { Back, Weapon } from "../types/userData"
+import { Back, Weapon } from "../types/userDataType"
 
 const handItem:Weapon[] = [
     {

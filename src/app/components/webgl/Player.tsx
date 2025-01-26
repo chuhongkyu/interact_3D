@@ -8,6 +8,8 @@ import { useIntroStore } from '@/app/store/useIntroStore'
 import { usePathname } from 'next/navigation'
 import { useGameStore } from '@/app/store/useGameStore'
 import mapData from '@/app/utils/MapData'
+import { motion } from "framer-motion-3d";
+import { stage1 } from '@/app/utils/gameData'
 
 type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
 
@@ -35,15 +37,13 @@ export function Player(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGraph(clone) as GLTFResult
   const { actions } = useAnimations(animations, playerRef)
   const { camera } = useThree();
-
-  const { mode } = useIntroStore()
-  const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
-  const pathname = usePathname()
-
+  const pathname = usePathname();
   const isMoving = useRef(false);
-  const pointerPosition = useGameStore((state) => state.pointerPosition);
-  const checkPoint  = useGameStore((state) => state.checkPoint);
-  const setCheckPoint  = useGameStore((state) => state.setCheckPoint);
+
+  const { mode } = useIntroStore();
+  const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
+  
+  const { pointerPosition, checkPoint, setCheckPoint, stageType } = useGameStore();
   const playerState  = useGameStore((state) => state.playerState);
 
   useEffect(() => {
@@ -120,25 +120,24 @@ export function Player(props: JSX.IntrinsicElements['group']) {
       }
       
       let cameraOffset = new THREE.Vector3(2, 5, 5);
+      const cameraPosition = new THREE.Vector3();
 
       switch (playerState) {
         case "DEFAULT":
-          cameraOffset = new THREE.Vector3(2, 5, 5);
+          cameraPosition.copy(playerPosition).add(cameraOffset);  
+          camera.position.lerp(cameraPosition, 0.9);
+          camera.lookAt(new THREE.Vector3(playerPosition.x, playerPosition.y, playerPosition.z));
           break;
-        case "STAGE1":
-          cameraOffset = new THREE.Vector3(2, 5, 5);
-          break;
+        case "STAGE1" : 
+          cameraPosition.copy(new THREE.Vector3(...stage1.spotPosition)).add(cameraOffset);  
+          camera.position.lerp(cameraPosition, 0.1);
+          camera.lookAt(new THREE.Vector3(...stage1.spotPosition));
+          camera.updateProjectionMatrix();
         default:
           break;
       }
-
-      const cameraPosition = new THREE.Vector3();
-      cameraPosition.copy(playerPosition).add(cameraOffset);  
-      camera.position.lerp(cameraPosition, 0.9);
-      camera.lookAt(new THREE.Vector3(playerPosition.x, playerPosition.y, playerPosition.z));
     }
   });
-
 
   return (
     <group ref={playerRef} {...props} dispose={null}>
@@ -148,13 +147,17 @@ export function Player(props: JSX.IntrinsicElements['group']) {
             <group name="Object_2">
               <group name="RootNode">
                 <group name="Object_4">
-                  <primitive receiveShadow castShadow  object={nodes._rootJoint} />
-                  <skinnedMesh receiveShadow castShadow 
+                  <primitive receiveShadow castShadow object={nodes._rootJoint} />
+                  <skinnedMesh 
+                    receiveShadow 
+                    castShadow 
                     name="Object_7" 
                     geometry={nodes.Object_7.geometry} 
                     material={materials['mario_eye_tx.001']} 
                     skeleton={nodes.Object_7.skeleton} />
-                  <skinnedMesh receiveShadow castShadow 
+                  <skinnedMesh 
+                    receiveShadow 
+                    castShadow 
                     name="Object_8" 
                     geometry={nodes.Object_8.geometry} 
                     material={materials['mario_all_tx.001']} 

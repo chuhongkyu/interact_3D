@@ -14,6 +14,12 @@ interface ITextProps{
 function TextWrapper({check, position, onComplete, textArray}:ITextProps) {
     const [typed, setTyped] = useState<Typed| undefined>();
     const checkPoint  = useGameStore((state) => state.checkPoint);
+    const [complete, setComplete] = useState(true);
+
+    const onCompleteEnd = () => {
+        onComplete();
+        setComplete(false);
+    }
 
     useEffect(() => {
         if (checkPoint === check && typed) {
@@ -24,13 +30,13 @@ function TextWrapper({check, position, onComplete, textArray}:ITextProps) {
     return (
         <Html center position={[position[0] + 1, position[1] + 3, position[2]]}>
             {
-                checkPoint === check &&
+                checkPoint === check && complete &&
                 <div className="text-container-npc">
                     <ReactTyped
                         stopped
                         typedRef={setTyped}
                         strings={textArray}
-                        onComplete={onComplete}
+                        onComplete={onCompleteEnd}
                         typeSpeed={40}
                     />
                 </div>

@@ -7,6 +7,7 @@ type CheckPointType = "0" | "1" | "2" | "3" | "4"
 
 interface StageClear {
     stage: StageType;
+    active: boolean;
     clear: boolean;
 }
 
@@ -16,7 +17,8 @@ interface GameStore {
     playerState: PlayerState;
     setPlayerState: (state:PlayerState) => void;
     stageType: StageClear[];
-    setStageType: (stage:StageType) => void;
+    setStageTypeClear: (stage:StageType) => void;
+    setStageTypeActive: (stage:StageType) => void;
     checkPoint: CheckPointType;
     setCheckPoint: (point:CheckPointType) => void
 }
@@ -27,14 +29,21 @@ export const useGameStore = create<GameStore>((set, get) => ({
     playerState: "LOADING",
     setPlayerState: (state) => set({ playerState: state }),
     stageType: [
-        { stage: "STAGE1", clear: false },
-        { stage: "STAGE2", clear: false },
-        { stage: "STAGE3", clear: false },
+        { stage: "STAGE1", active: false, clear: false },
+        { stage: "STAGE2", active: false, clear: false },
+        { stage: "STAGE3", active: false, clear: false },
     ],
-    setStageType: (stage) =>
+    setStageTypeClear: (stage) =>
         set((state) => ({
             stageType: state.stageType.map((s) =>
                 s.stage === stage ? { ...s, clear: true } : s
+            ),
+        }
+    )),
+    setStageTypeActive: (stage) =>
+        set((state) => ({
+            stageType: state.stageType.map((s) =>
+                s.stage === stage ? { ...s, active: true } : s
             ),
         }
     )),
