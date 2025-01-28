@@ -32,10 +32,13 @@ function Spot(props: JSX.IntrinsicElements["group"]) {
     }
 
     useEffect(()=>{
-        const isActiveStage = stageType.some(stage => stage.active);
-        console.log(isActiveStage)
-        if(isActiveStage){
+        const isActiveStage = stageType.some(stage => stage.stage === "STAGE1" && stage.active);
+        const isClearStage = stageType.some(stage => stage.stage === "STAGE1" && stage.clear);
+        if (isActiveStage) {
             setStart(true);
+        }
+        if(isClearStage) {
+            setStart(false);
         }
     },[stageType])
 

@@ -1,4 +1,6 @@
 import { Vector3Tuple } from "three";
+// x: 6~10
+// y: -9~-13 
 
 const stage1 = {
     spot: [
@@ -87,7 +89,650 @@ const stage1 = {
             },
         },
     ],
-    spotPosition: [8, 0, -10] as Vector3Tuple
+    spotPosition: [8, 0, -10] as Vector3Tuple,
+    answer: [
+        [
+            [7,0.5,-13],
+            [7,0.5,-12],
+            [7,0.5,-11],
+            [7,0.5,-10],
+            [7,0.5,-9],
+        ],
+        [
+            [6,0.5,-11],
+            [7,0.5,-11],
+            [8,0.5,-11],
+            [8,0.5,-10],
+            [8,0.5,-9],
+        ],
+        [
+            [6,0.5,-10],
+            [7,0.5,-10],
+            [8,0.5,-10],
+            [9,0.5,-10],
+            [10,0.5,-10],
+        ]
+    ],
+    problem:[
+        [
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -2
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            // 2
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            // 3
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    0
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            // 4
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            // 5
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    2
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+        ],
+        [
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            // 2
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            // 3
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    0
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    0
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    0
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            // 4
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    1
+                ],
+                "active": false
+            },
+            // 5
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    2
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+        ],
+        [
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -2
+                ],
+                "active": false
+            },
+            // 2
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    -1
+                ],
+                "active": false
+            },
+            // 3
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    0
+                ],
+                "active": false
+            },
+            // 4
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    1
+                ],
+                "active": true
+            },
+            // 5
+            {
+                "position": [
+                    -2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    -1,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    0,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    1,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+            {
+                "position": [
+                    2,
+                    0.5,
+                    2
+                ],
+                "active": false
+            },
+        ],
+    ]
 }
 
 export { stage1 }

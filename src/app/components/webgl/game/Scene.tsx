@@ -2,40 +2,14 @@
 
 import { Canvas, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
-import Lights from "./Lights";
+import Lights from "./common/Lights";
 import PlayerController from "./PlayerController";
 import { Hole } from "./map/Hole";
 import Map from "./map/Map";
+import CameraResize from "./common/CameraResize";
 
 function Scene() {
     const sectionRef = useRef<HTMLTableSectionElement>(null);
-    const [cameraSettings, setCameraSettings] = useState({
-        left: -1,
-        right: 1,
-        top: 1,
-        bottom: -1,
-        zoom: 0.25,
-    });
-
-    useEffect(() => {
-        const updateCameraSettings = () => {
-            const aspectRatio = window.innerWidth / window.innerHeight;
-            setCameraSettings({
-                left: -aspectRatio,
-                right: aspectRatio,
-                top: 1,
-                bottom: -1,
-                zoom: 0.25,
-            });
-        };
-
-        updateCameraSettings();
-        window.addEventListener("resize", updateCameraSettings);
-
-        return () => {
-            window.removeEventListener("resize", updateCameraSettings);
-        };
-    }, []);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -54,7 +28,11 @@ function Scene() {
                 shadows
                 camera={{
                     position: [2, 5, 5],
-                    ...cameraSettings,
+                    left : -(window.innerWidth / window.innerHeight),
+                    right : (window.innerWidth / window.innerHeight),
+                    top: 1,
+                    bottom: -1,
+                    zoom: 0.25,
                     near: 0.1,
                     far: 2000,
                 }}
@@ -64,6 +42,7 @@ function Scene() {
                     <PlayerController />
                     <Hole/>
                     <Map/>
+                    <CameraResize/>
                 </Suspense>
             </Canvas>
         </section>
