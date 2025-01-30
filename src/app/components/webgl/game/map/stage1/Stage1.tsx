@@ -34,6 +34,8 @@ function Stage1() {
                 textArray={mapData[0].text}
                 textArray2={mapData[0].text2}
                 textArray3={mapData[0].text3}
+                textSize2={"big"}
+                textSize3={"big"}
                 secondStart={isSecondStart}
                 thirdStart={isThirdStart}
                 position={mapData[0].position}

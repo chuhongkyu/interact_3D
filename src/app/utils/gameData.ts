@@ -735,4 +735,10 @@ const stage1 = {
     ]
 }
 
-export { stage1 }
+const stage2 = {
+    spot: [],
+    spotPosition: [-7,0,-7] as Vector3Tuple,
+    problem: 20
+}
+
+export { stage1, stage2 }

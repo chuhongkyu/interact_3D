@@ -8,10 +8,11 @@ import { useIntroStore } from '@/app/store/useIntroStore'
 import { usePathname } from 'next/navigation'
 import { useGameStore } from '@/app/store/useGameStore'
 import mapData from '@/app/utils/MapData'
-import { motion } from "framer-motion-3d";
-import { stage1 } from '@/app/utils/gameData'
+import { stage1, stage2 } from '@/app/utils/gameData'
+import Badge from './game/common/Badge'
+import { useQueryDataStore } from '@/app/store/useQueryData'
 
-type ActionName = 'Idle' | 'Jump' | 'Run_2' | 'Run' | 'Walk'
+type ActionName = 'Idle' | 'Jump' | 'Run2' | 'Run_Object_4' | 'Walk'
 
 interface GLTFAction extends THREE.AnimationClip {
   name: ActionName
@@ -42,8 +43,8 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
   const { mode } = useIntroStore();
   const { setActions, actions: initialActions, setModelBone } = usePlayerStore();
-  
-  const { pointerPosition, checkPoint, setCheckPoint, stageType } = useGameStore();
+  const career = useQueryDataStore(state => state.career);
+  const { pointerPosition, checkPoint, setCheckPoint, setOriginalPlayerRef, stageType } = useGameStore();
   const playerState  = useGameStore((state) => state.playerState);
 
   useEffect(() => {
@@ -54,11 +55,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
   useEffect(()=>{
     if(initialActions){
-      const defaultAction = actions["Idle"];
-
-      if (defaultAction) {
-        defaultAction.play();
-      }
+      initialActions["Idle"]?.play();
     }
   },[initialActions])
 
@@ -86,18 +83,26 @@ export function Player(props: JSX.IntrinsicElements['group']) {
 
     if (pathname === "/game" && playerRef.current) {
       const playerPosition = playerRef.current.position;
-      const [x, y, z] = mapData[0].position;
+      const [x0, y0, z0] = mapData[0].position;
+      const [x1, y1, z1] = mapData[1].position;
+      const [x2, y2, z2] = mapData[2].position;
 
-      if (
-        Math.abs(playerPosition.x - x) < 2 &&
-        Math.abs(playerPosition.z - z) < 2
-      ) {
-        if(checkPoint !== "1"){
-          setCheckPoint("1")
+      if (Math.abs(playerPosition.x - x0) < 2 && Math.abs(playerPosition.z - z0) < 2) {
+        if (checkPoint !== "1") {
+          setCheckPoint("1");
         }
-      }else{
-        setCheckPoint("0")
+      } else if (Math.abs(playerPosition.x - x1) < 2 && Math.abs(playerPosition.z - z1) < 2) {
+        if (checkPoint !== "2") {
+          setCheckPoint("2");
+        }
+      } else if (Math.abs(playerPosition.x - x2) < 2 && Math.abs(playerPosition.z - z2) < 2) {
+        if (checkPoint !== "3") {
+          setCheckPoint("3");
+        }
+      }else {
+        setCheckPoint("0");
       }
+    
       
       const distance = playerPosition.distanceTo(pointerPosition);
       if (distance > 0.1) {
@@ -133,11 +138,35 @@ export function Player(props: JSX.IntrinsicElements['group']) {
           camera.position.lerp(cameraPosition, 0.1);
           camera.lookAt(new THREE.Vector3(...stage1.spotPosition));
           camera.updateProjectionMatrix();
+        case "STAGE2" : 
+          cameraPosition.copy(new THREE.Vector3(...stage2.spotPosition)).add(cameraOffset);  
+          camera.position.lerp(cameraPosition, 0.1);
+          camera.lookAt(new THREE.Vector3(...stage2.spotPosition));
+          camera.updateProjectionMatrix();
         default:
           break;
       }
     }
   });
+
+  useEffect(()=>{
+    if(playerRef.current){
+      setOriginalPlayerRef(playerRef.current)
+    }
+  },[playerRef])
+
+  useEffect(()=>{
+    const isActiveStage = stageType.some(stage => stage.stage === "STAGE2" && stage.active);
+    if(playerState === "STAGE2"){
+      if(isActiveStage && actions){
+        actions['Idle']?.stop();
+        actions['Run2']?.play();
+      }else{
+        actions['Run2']?.stop();
+        actions['Idle']?.play();
+      }
+    }
+  },[playerState, stageType, actions])
 
   return (
     <group ref={playerRef} {...props} dispose={null}>
@@ -168,6 +197,12 @@ export function Player(props: JSX.IntrinsicElements['group']) {
           </group>
         </group>
       </group>
+      {pathname === "/game" && <Badge 
+        position={[0,0,0]} 
+        text={`${career !== "0" ? career : 1}년차 개발자`}  
+        color="#fb4753"
+        delay={2}
+      />}
     </group>
   )
 }

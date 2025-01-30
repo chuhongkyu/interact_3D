@@ -18,8 +18,8 @@ function BoxController({active, number}: {active: boolean, number: number}) {
             <boxGeometry args={[1,1,1]}/>
             <motion.meshBasicMaterial 
               initial={{opacity: 0}}
-              animate={active ? {opacity: 0.4 }: {opacity: [0,0.4,0,0.4,0]}}
-              transition={active ? {duration: 1 } : {duration: 2, delay: 1}}
+              animate={active ? {opacity: 0.4 }: {opacity: [0,0.4,0,0.4,0,0.4,0,0.4,0]}}
+              transition={active ? {duration: 1 } : {duration: 4, delay: 1}}
               depthTest={false} 
               transparent 
               opacity={0.6} 

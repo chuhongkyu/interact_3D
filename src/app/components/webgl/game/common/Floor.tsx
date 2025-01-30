@@ -11,7 +11,7 @@ function Floor() {
     const texture = useTexture("/assets/images/bg.png");
     texture.wrapS = RepeatWrapping;
     texture.wrapT = RepeatWrapping;
-    texture.repeat.set(8, 8);
+    texture.repeat.set(4, 4);
 
     const handlePointerDown = (event: THREE.Event) => {
         if(playerState !== "DEFAULT") return;
@@ -22,7 +22,7 @@ function Floor() {
     return (
         <>
             <mesh castShadow receiveShadow onClick={handlePointerDown} position={[0,-0.05,0]} rotation={[-Math.PI/2,0,0]}>
-                <planeGeometry args={[50, 50]}/>
+                <planeGeometry args={[32, 32]}/>
                 <meshStandardMaterial map={texture}/>
             </mesh>
         </>

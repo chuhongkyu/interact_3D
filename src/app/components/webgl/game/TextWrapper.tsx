@@ -10,6 +10,9 @@ interface ITextProps{
     textArray: string[];
     textArray2?: string[];
     textArray3?: string[];
+    textSize?: string | null;
+    textSize2?: string | null;
+    textSize3?: string | null;
     secondStart?: boolean;
     thirdStart?:boolean;
     onComplete: ()=> void;
@@ -24,6 +27,9 @@ function TextWrapper(
         textArray, 
         textArray2,
         textArray3, 
+        textSize,
+        textSize2,
+        textSize3,
         secondStart,
         thirdStart,
         onComplete, 
@@ -53,12 +59,6 @@ function TextWrapper(
         setComplete3(true)
     }
 
-    useEffect(() => {
-        if (checkPoint === check && typed) {
-            typed.start();
-        }
-    }, [checkPoint, typed]);
-
     useEffect(()=>{
         if(complete && typed){
             typed.stop();
@@ -70,8 +70,9 @@ function TextWrapper(
         <Html center position={[position[0] + 1, position[1] + 3, position[2]]}>
         {
             checkPoint === check && !complete &&
-                <div className="text-container-npc">
+                <div className={"text-container-npc " + textSize}>
                     <ReactTyped
+                        startWhenVisible
                         stopped
                         typedRef={setTyped}
                         strings={textArray}
@@ -82,7 +83,7 @@ function TextWrapper(
         }
         {
             textArray2 && secondStart && !complete2 && 
-                <div className="text-container-npc big">
+                <div className={"text-container-npc " + textSize2}>
                     <ReactTyped
                         startWhenVisible
                         startDelay={0.5}
@@ -96,7 +97,7 @@ function TextWrapper(
         }
         {
             textArray3 && thirdStart && !complete3 && 
-                <div className="text-container-npc big">
+                <div className={"text-container-npc " + textSize3}>
                     <ReactTyped
                         startWhenVisible
                         startDelay={0.5}

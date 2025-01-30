@@ -6,9 +6,10 @@ import { motion } from "framer-motion-3d";
 import { stage1 } from "@/app/utils/gameData";
 import { useGameStore } from "@/app/store/useGameStore";
 import BoxGame from "./BoxGame";
+import SpotFloor from "../../common/SpotFloor";
 
 function Spot(props: JSX.IntrinsicElements["group"]) {
-    const texture = useTexture("/assets/textures/spot1.jpg");
+    
     const playerState  = useGameStore((state) => state.playerState);
     const setStageTypeActive = useGameStore((state) => state.setStageTypeActive);
     const stageType = useGameStore((state) => state.stageType);
@@ -44,10 +45,7 @@ function Spot(props: JSX.IntrinsicElements["group"]) {
 
     return (
         <group {...props} dispose={null}>
-            <mesh receiveShadow position={[0,-0.04,0]} rotation={[-Math.PI/2,0,0]}>
-                <planeGeometry args={[5, 5]}/>
-                <meshStandardMaterial map={texture} transparent opacity={0.6}/>
-            </mesh>
+            <SpotFloor/>
             {!isStart ?
             <motion.group
                 initial={{z: -2}}

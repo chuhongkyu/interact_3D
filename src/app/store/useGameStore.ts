@@ -18,10 +18,15 @@ interface GameStore {
     setPlayerState: (state:PlayerState) => void;
     stageType: StageClear[];
     stage1Problem: number;
+    stage2Count: number;
+    setStage2Count: (number:number) => void;
     setStageTypeClear: (stage:StageType) => void;
     setStageTypeActive: (stage:StageType) => void;
     checkPoint: CheckPointType;
-    setCheckPoint: (point:CheckPointType) => void
+    setCheckPoint: (point:CheckPointType) => void;
+    originalRef: any;
+    setOriginalPlayerRef: (ref:any) => void;
+    
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -35,6 +40,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
         { stage: "STAGE3", active: false, clear: false },
     ],
     stage1Problem: 0,
+    stage2Count: 0,
+    setStage2Count: (number) => set({stage2Count: number}),
     setStageTypeClear: (stage) =>
         set((state) => ({
             stageType: state.stageType.map((s) =>
@@ -56,5 +63,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         }
     ),
     checkPoint: "0",
-    setCheckPoint: (point) => set({checkPoint: point})
+    setCheckPoint: (point) => set({checkPoint: point}),
+    originalRef: null,
+    setOriginalPlayerRef: (ref) => set({ originalRef: ref})
 }));

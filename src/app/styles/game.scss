@@ -1,8 +1,52 @@
-.bottom-ui-wrapper{
+.bottom-right-wrapper{
     position: absolute;
     z-index: 1;
     bottom: 0;
     right: 0;
+}
+
+.bottom-left-wrapper{
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+}
+
+.top-right-wrapper{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    .life-wrapper{
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        padding: 10px 18px;
+        background: rgba(0, 0, 0, 0.24);
+        border-radius: 24px;
+        span{
+            width: 40px;
+            height: 40px;
+            display: block;
+            -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+            filter: brightness(0%) drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+            &.active{
+                -webkit-filter: initial;
+                filter: initial;
+            }
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                user-select: none;
+                pointer-events: none;
+            }
+            &:not(:last-of-type){
+                margin-right: 5px;
+            }
+        }
+    }
 }
 
 .text-container-npc{
@@ -11,30 +55,40 @@
 	font-weight: 500;
 	line-height: 130%;
 	text-align: left;
-	width: 180px;
+	width: 200px;
 	height: auto;
 	background: #fff;
-	padding: 16px 20px;
+	padding: 1em 1.25em;
 	border-radius: 25px;
 	transform-origin: center;
     &.big{
         width: 240px;
+    }
+    &.small{
+        width: auto;
+        padding: 0.8em 1.25em;
+        font-size: 18px;
+        white-space: nowrap;
+        pointer-events: none;
+        user-select: none;
     }
 }
 
 .badge-npc-name{
     display: flex;
     justify-content: center;
-    min-width: 120px;
+    min-width: 100px;
     border: 2px solid #fff;
-    background: rgb(246, 230, 0);
+    background: rgb(0, 255, 34);
     color: #333;
-    padding: 0.6rem 0.8rem;
-    font-size: 14px;
+    padding: 0.4rem 0.8rem;
+    font-size: 12px;
     font-weight: 600;
     border-radius: 14px;
     white-space: nowrap;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    pointer-events: none;
+    user-select: none;
 }
 
 
@@ -66,6 +120,38 @@
     }
 }
 
+.ui-stage-2{
+    padding: 20px;
+    .mushroom-example-wrapper{
+        .mushroom-info{
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            width: 140px;
+            font-size: 25px;
+            font-weight: 600;
+            color: #000;
+            .info{
+                display: block;
+                width: 40px;
+                height: 40px;
+                margin-right: 1rem;
+                img{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            b{
+            }
+            p{
+                color: #000000;
+            }
+        }
+    }
+}
+
 .info-wrapper{
     padding: 1rem 1.4rem;
     color: #fff;
@@ -73,4 +159,6 @@
     border-radius: 25px;
     font-size: 18px;
     font-weight: 600;
+    pointer-events: none;
+    user-select: none;
 }
