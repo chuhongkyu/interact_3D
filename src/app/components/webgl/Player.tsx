@@ -138,11 +138,13 @@ export function Player(props: JSX.IntrinsicElements['group']) {
           camera.position.lerp(cameraPosition, 0.1);
           camera.lookAt(new THREE.Vector3(...stage1.spotPosition));
           camera.updateProjectionMatrix();
+          break;
         case "STAGE2" : 
           cameraPosition.copy(new THREE.Vector3(...stage2.spotPosition)).add(cameraOffset);  
           camera.position.lerp(cameraPosition, 0.1);
           camera.lookAt(new THREE.Vector3(...stage2.spotPosition));
           camera.updateProjectionMatrix();
+          break;
         default:
           break;
       }

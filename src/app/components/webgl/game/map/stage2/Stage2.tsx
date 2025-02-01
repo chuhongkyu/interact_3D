@@ -15,12 +15,17 @@ function Stage2() {
     const setPlayerState = useGameStore((state) => state.setPlayerState);
     const stageType = useGameStore((state) => state.stageType);
     const [isSecondStart, setSecondStart] = useState(false);
+    const [isThirdStart, setThirdStart] = useState(false);
 
     useEffect(()=>{
+        const isActiveStage = stageType.some(stage => stage.stage === "STAGE2" && stage.active);
         const isClearStage = stageType.some(stage => stage.stage === "STAGE2" && stage.clear);
+        if (isActiveStage) {
+            setSecondStart(true);
+        }
         if(isClearStage) {
             setPlayerState("DEFAULT")
-            setSecondStart(true);
+            setThirdStart(true);
         }
     },[stageType])
 
@@ -35,15 +40,19 @@ function Stage2() {
                 ]} 
                 text="기획팀 팀장 | 킹 부우"/>}
             <Spot position={mapData[2].position}/>
-            {playerState === "STAGE2" && !isSecondStart && <Sboo/>}
-            {playerState === "STAGE2" && !isSecondStart && <Game position={stage2.spotPosition}/>}
+            {playerState === "STAGE2" && <Sboo/>}
+            {playerState === "STAGE2" && <Game position={stage2.spotPosition}/>}
             <TextWrapper 
                 check="3"
                 textArray={mapData[2].text}
                 textSize={"big"}
                 textArray2={mapData[2].text2}
+                textSize2={"big"}
+                textArray3={mapData[2].text3}
+                textSize3={"big"}
                 secondStart={isSecondStart}
-                position={mapData[2].position}
+                thirdStart={isThirdStart}
+                position={[mapData[2].position[0]+ 1, mapData[2].position[1] -1.5, mapData[2].position[2] + 1]}
                 onComplete={()=> setPlayerState("STAGE2")}
             />
         </>

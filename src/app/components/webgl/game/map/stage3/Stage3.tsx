@@ -18,7 +18,9 @@ function Stage3() {
     useEffect(()=>{
         const isActiveStage = stageType.some(stage => stage.stage === "STAGE3" && stage.active);
         const isClearStage = stageType.some(stage => stage.stage === "STAGE3" && stage.clear);
-
+        if(isActiveStage){
+            setSecondStart(true);
+        }
         if(isClearStage) {
             setThirdStart(true);
         }
@@ -33,9 +35,10 @@ function Stage3() {
                 check="4"
                 textArray={mapData[3].text}
                 textSize={"big"}
-                // textArray2={mapData[3].text2}
+                textArray2={mapData[3].text2}
                 textArray3={mapData[3].text3}
-                // secondStart={isSecondStart}
+                textSize3={"big"}
+                secondStart={isSecondStart}
                 thirdStart={isThirdStart}
                 position={mapData[3].position}
                 onComplete={()=> setPlayerState("STAGE3")}

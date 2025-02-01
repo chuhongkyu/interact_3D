@@ -4,14 +4,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 function Lights() {
     const dirLight = useRef(null);
-    const { scene } = useThree();
 
-    useFrame(() => {
-        if (scene.background) {
-            scene.rotation.y += 0.002;
-        }
-    });
-    
     return (
         <>
             <Environment
@@ -25,11 +18,12 @@ function Lights() {
                     "/assets/images/sky/nz.png",
                 ]}
                 environmentIntensity={0.1}
-                background={false}
+                // background={false}
+                backgroundRotation={[0,10,0]}
                 ground={{
-                    radius: 60,
-                    scale: 20,
-                    height: 0.1,
+                    radius: 40,
+                    scale: 40,
+                    height: 0.05,
                 }}
             />
             <directionalLight

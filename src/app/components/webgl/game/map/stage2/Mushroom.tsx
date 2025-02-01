@@ -64,7 +64,7 @@ export function Mushroom({
       <group name="mushroom" ref={ref} castShadow receiveShadow onClick={onClick}>
         <group ref={group} dispose={null}>
           <motion.group name="Scene" whileHover={{scale: 1.1}} whileTap={{ scale: 1.1}}>
-            <group position={[0, 0, 0]} scale={0.065}>
+            <group position={[0, 0, -0.1]} scale={0.068}>
               <mesh receiveShadow castShadow name="Object_0" geometry={nodes.Object_0.geometry} material={materials.material} />
               <mesh receiveShadow castShadow name="Object_0_1" geometry={nodes.Object_0_1.geometry} material={materials.face} />
               <mesh receiveShadow castShadow name="Object_0_2" geometry={nodes.Object_0_2.geometry} material={materials.head} />

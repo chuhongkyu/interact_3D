@@ -21,7 +21,7 @@ function Game(props: JSX.IntrinsicElements["group"]) {
     useEffect(() => {
         const now: IArray[] = Array.from({ length: mushroomsCount }).map((_, index) => ({
             key: `${index}-mushroom`, 
-            position: [Math.random() * 7 - 3, 1, Math.random() * 7 - 3],
+            position: [Math.random() * 6 - 3, 1, Math.random() * 3],
             clear: false, 
         }));
         setArray(now);
