@@ -30,6 +30,7 @@ function Stage3() {
     return (
         <>
             <M2 position={mapData[3].position}/>
+            <Badge position={[mapData[3].position[0] + 1, mapData[3].position[1], mapData[3].position[2]]} color="orange" text="10년차 개발자 | ???"/>
             <Spot position={mapData[3].position}/>
             <TextWrapper 
                 check="4"

@@ -86,6 +86,7 @@ export function Player(props: JSX.IntrinsicElements['group']) {
       const [x0, y0, z0] = mapData[0].position;
       const [x1, y1, z1] = mapData[1].position;
       const [x2, y2, z2] = mapData[2].position;
+      const [x3, y3, z3] = mapData[3].position;
 
       if (Math.abs(playerPosition.x - x0) < 2 && Math.abs(playerPosition.z - z0) < 2) {
         if (checkPoint !== "1") {
@@ -98,6 +99,10 @@ export function Player(props: JSX.IntrinsicElements['group']) {
       } else if (Math.abs(playerPosition.x - x2) < 2 && Math.abs(playerPosition.z - z2) < 2) {
         if (checkPoint !== "3") {
           setCheckPoint("3");
+        }
+      } else if (Math.abs(playerPosition.x - x3) < 2 && Math.abs(playerPosition.z - z3) < 2) {
+        if (checkPoint !== "4") {
+          setCheckPoint("4");
         }
       }else {
         setCheckPoint("0");

@@ -3,6 +3,7 @@ import { Html } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { ReactTyped, Typed } from "react-typed";
 import { Vector3Tuple } from "three";
+import { AnimatePresence, motion } from "motion/react";
 
 interface ITextProps{
     check: string;
@@ -68,47 +69,59 @@ function TextWrapper(
 
     return (
         <Html center position={[position[0] + 1, position[1] + 3, position[2]]}>
-        {
-            checkPoint === check && !complete &&
-                <div className={"text-container-npc " + textSize}>
-                    <ReactTyped
-                        startWhenVisible
-                        stopped
-                        typedRef={setTyped}
-                        strings={textArray}
-                        onComplete={onCompleteEnd}
-                        typeSpeed={40}
-                    />
-                </div>
-        }
-        {
-            textArray2 && secondStart && !complete2 && 
-                <div className={"text-container-npc " + textSize2}>
-                    <ReactTyped
-                        startWhenVisible
-                        startDelay={0.5}
-                        stopped
-                        typedRef={setTyped2}
-                        strings={textArray2}
-                        onComplete={onCompleteEnd2}
-                        typeSpeed={40}
-                    />
-                </div>
-        }
-        {
-            textArray3 && thirdStart && !complete3 && 
-                <div className={"text-container-npc " + textSize3}>
-                    <ReactTyped
-                        startWhenVisible
-                        startDelay={0.5}
-                        stopped
-                        typedRef={setTyped3}
-                        strings={textArray3}
-                        onComplete={onCompleteEnd3}
-                        typeSpeed={40}
-                    />
-                </div>
-        }
+            <AnimatePresence mode="wait">
+            {
+                checkPoint === check && !complete &&
+                    <motion.div 
+                        exit={{opacity: 0}}
+                        className={"text-container-npc " + textSize}>
+                        <ReactTyped
+                            startWhenVisible
+                            stopped
+                            typedRef={setTyped}
+                            strings={textArray}
+                            onComplete={onCompleteEnd}
+                            typeSpeed={40}
+                        />
+                    </motion.div>
+            }
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+            {
+                textArray2 && secondStart && !complete2 && 
+                    <motion.div 
+                        exit={{opacity: 0}}
+                        className={"text-container-npc " + textSize2}>
+                        <ReactTyped
+                            startWhenVisible
+                            startDelay={0.5}
+                            stopped
+                            typedRef={setTyped2}
+                            strings={textArray2}
+                            onComplete={onCompleteEnd2}
+                            typeSpeed={40}
+                        />
+                    </motion.div>
+            }
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+            {
+                textArray3 && thirdStart && !complete3 && 
+                    <motion.div 
+                        exit={{opacity: 0}}
+                        className={"text-container-npc " + textSize3}>
+                        <ReactTyped
+                            startWhenVisible
+                            startDelay={0.5}
+                            stopped
+                            typedRef={setTyped3}
+                            strings={textArray3}
+                            onComplete={onCompleteEnd3}
+                            typeSpeed={40}
+                        />
+                    </motion.div>
+            }
+            </AnimatePresence>
         </Html>
     )
 }

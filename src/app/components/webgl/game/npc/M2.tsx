@@ -8,6 +8,7 @@ import React, { useEffect } from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
+import Badge from '../common/Badge'
 
 type ActionName = 'stand' | 'tpose'
 
