@@ -29,8 +29,8 @@ export function Flower({color = "0"}:{color?:string}) {
   const skyBlueMaterial = new THREE.MeshToonMaterial({ color: "skyblue" })
 
   return (
-    <group rotation={[1,0,0.2]} dispose={null}>
-      <group rotation={[0,Math.PI/2,0]} position={[-0.35, 0.5, -0.38]} scale={0.3}>
+    <group rotation={[0,0,0]} dispose={null}>
+      <group rotation={[0,0,-2]} position={[0.3, 0.1, 0]} scale={0.3}>
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial.geometry} material={materials['07___Default']} />
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_1.geometry} material={materials['08___Default']} />
         <mesh castShadow receiveShadow geometry={nodes.defaultMaterial_2.geometry} material={materials['09___Default']} />

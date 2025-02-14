@@ -25,7 +25,7 @@ function Weapon() {
         if(userData.weapon){
             if(rightWeapon && modelBone){
                 modelBone?.traverse((obj) => {
-                    if (obj.isObject3D && obj.name === "mixamorigRightHand_010") {
+                    if (obj.isObject3D && obj.name === "mixamorigRightHand_014") {
                         obj.add(rightWeapon?.current);
                     }
                 });
@@ -38,7 +38,6 @@ function Weapon() {
             <>
                 <group ref={weapon}>
                     {userData.weapon?.category === "HAMMER" && <Hammer color={userData.weapon?.color}/>}
-                    
                 </group>
                 <group ref={rightWeapon}>
                     {userData.weapon?.category === "FLOWER" && <Flower color={userData.weapon.color}/>}

@@ -8,8 +8,46 @@
 .bottom-left-wrapper{
     position: absolute;
     z-index: 1;
-    bottom: 0;
-    left: 0;
+    bottom: 20px;
+    left: 20px;
+    .info-icon{
+        cursor: pointer;
+        position: relative;
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.24);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        img{
+            display: block;
+            width: 20px;
+            height: 20px;
+            object-fit: cover;
+        }
+        .info-container{
+            position: absolute;
+            z-index: 1;
+            bottom: calc(100% + 5px);
+            left: 20%;
+            background: #fff;
+            border-radius: 8px;
+            width: 450px;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 130%;
+            p:not(:last-of-type){
+                margin-bottom: 0.4rem;
+            }
+            b{
+                font-weight: 600;
+            }
+        }
+    }
 }
 
 .top-right-wrapper{
