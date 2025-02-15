@@ -6,8 +6,11 @@ import Lights from "./common/Lights";
 import PlayerController from "./PlayerController";
 import Map from "./map/Map";
 import CameraResize from "./common/CameraResize";
+import { useGameStore } from "@/app/store/useGameStore";
 
 function Scene() {
+    const loadGameData = useGameStore(state => state.loadGameData);
+    const resetStageActive = useGameStore(state => state.resetStageActive);
     const sectionRef = useRef<HTMLTableSectionElement>(null);
     const [cameraSettings, setCameraSettings] = useState({
         left: -1,
@@ -38,6 +41,11 @@ function Scene() {
 
         return () => clearTimeout(timeout);
     }, [sectionRef]);
+
+    useEffect(()=>{
+        loadGameData()
+        resetStageActive();
+    },[])
 
     return (
         <section className="view" ref={sectionRef}>

@@ -26,7 +26,10 @@ interface GameStore {
     setCheckPoint: (point:CheckPointType) => void;
     originalRef: any;
     setOriginalPlayerRef: (ref:any) => void;
-    
+    isFirstGame: boolean;
+    setIsFirstGame: (value: boolean) => void;
+    loadGameData: () => void;
+    resetStageActive: () => void;
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -42,15 +45,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
     stage1Problem: 0,
     stage2Count: 0,
     setStage2Count: (number) => set({stage2Count: number}),
-    setStageTypeClear: (stage) =>
-        set((state) => ({
-            stageType: state.stageType.map((s) =>
-                s.stage === stage ? 
-                    { ...s, clear: true, active: false } 
-                    : s
-            ),
-        }
-    )),
+    setStageTypeClear: (stage) => {
+        const updatedStageType = get().stageType.map((s) =>
+            s.stage === stage ? { ...s, clear: true, active: false } : s
+        );
+        localStorage.setItem("stageType", JSON.stringify(updatedStageType));
+        set({ stageType: updatedStageType });
+    },
     setStageTypeActive: (stage) =>
         set((state) => {
             const randomProblem = Math.floor(Math.random() * 3);
@@ -65,5 +66,29 @@ export const useGameStore = create<GameStore>((set, get) => ({
     checkPoint: "0",
     setCheckPoint: (point) => set({checkPoint: point}),
     originalRef: null,
-    setOriginalPlayerRef: (ref) => set({ originalRef: ref})
+    setOriginalPlayerRef: (ref) => set({ originalRef: ref}),
+    isFirstGame: true,
+    setIsFirstGame: (value) => {
+        localStorage.setItem("isFirstGame", JSON.stringify(value));
+        set({ isFirstGame: value });
+    },
+    loadGameData: () => {
+        const savedIsFirstGame = localStorage.getItem("isFirstGame");
+        const savedStageType = localStorage.getItem("stageType");
+
+        if (savedIsFirstGame) {
+            set({ isFirstGame: JSON.parse(savedIsFirstGame) });
+        }
+
+        if (savedStageType) {
+            set({ stageType: JSON.parse(savedStageType) });
+        }
+    },
+    resetStageActive: () => {
+        set((state) => {
+            const resetStages = state.stageType.map((s) => ({ ...s, active: false }));
+            localStorage.setItem("stageType", JSON.stringify(resetStages));
+            return { stageType: resetStages };
+        });
+    },
 }));
